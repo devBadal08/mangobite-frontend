@@ -122,7 +122,7 @@
   width: 100%;
   text-align: center;
   padding: 1rem;
-  background-color: var(--secondary);
+  background-color: var(--accent);
   color: white;
   text-decoration: none;
   border-radius: var(--radius-md);
@@ -133,6 +133,6 @@
 }
 
 .bookButton:hover {
-  background-color: var(--primary);
+  background-color: #D68910;
   transform: translateY(-2px);
 }

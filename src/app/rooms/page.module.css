@@ -64,7 +64,7 @@
 }
 
 .ctaSection {
-  background-color: var(--primary);
+  background-color: var(--secondary);
   color: white;
   padding: 6rem 2rem;
   text-align: center;
@@ -93,8 +93,8 @@
 }
 
 .ctaBtn {
-  background-color: white;
-  color: var(--primary);
+  background-color: var(--accent);
+  color: white;
   padding: 1.2rem 3rem;
   border-radius: 100px;
   font-weight: 700;

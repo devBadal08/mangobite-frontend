@@ -286,8 +286,8 @@
 .keriDecoration {
   position: absolute;
   top: 0px; /* Moved down to start exactly at the card border */
-  left: 2%;
-  width: 130px;
+  left: -1%; /* Adjusted slightly inward */
+  width: 180px; /* Increased width to make it 'moti' */
   height: auto;
   z-index: 20;
   animation: swing 5s ease-in-out infinite alternate;
@@ -299,8 +299,8 @@
 .keriDecoration2 {
   position: absolute;
   top: 0px; /* Moved down to start exactly at the card border */
-  right: 2%;
-  width: 100px;
+  right: -1%; /* Adjusted slightly inward */
+  width: 140px; /* Increased width */
   height: auto;
   z-index: 20;
   animation: swing 7s ease-in-out infinite alternate-reverse;
@@ -333,8 +333,8 @@
   .keriDecoration2 {
     display: block;
     /* Show on mobile */
-    right: 0%;
-    width: 70px;
+    right: -2%; /* Adjusted slightly inward */
+    width: 85px; /* Slightly smaller on mobile as requested */
     top: 0px; /* Starting exactly at the card border */
   }
 }
