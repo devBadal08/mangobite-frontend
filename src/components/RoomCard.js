@@ -3,7 +3,11 @@ import styles from './RoomCard.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function RoomCard({ title, description, amenities, imageSrc, price }) {
+export default function RoomCard({ id, title, description, imageSrc, price, showBookNow = true }) {
+  const whatsappNumber = '918490991577'; // Karan Singh
+  const whatsappMessage = encodeURIComponent(`Hello, I want to book the ${title}.`);
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
@@ -16,22 +20,21 @@ export default function RoomCard({ title, description, amenities, imageSrc, pric
       </div>
       <div className={styles.content}>
         <h3 className={styles.title}>{title}</h3>
-        <p className={styles.description}>{description}</p>
         
-        <div className={styles.amenities}>
-          <h4>Room Amenities</h4>
-          <ul>
-            {amenities.map((amenity, index) => (
-              <li key={index}>
-                <Check size={16} className={styles.checkIcon} />
-                {amenity}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div 
+          className={styles.backendContent} 
+          dangerouslySetInnerHTML={{ __html: description?.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, '') }} 
+        />
         
-        <div className={styles.footer}>
-          <Link href="/contact" className={styles.bookButton}>Check Availability</Link>
+        <div className={styles.footer} style={{ display: 'flex', gap: '10px' }}>
+          <Link href={`/rooms/${id}`} className={styles.bookButton} style={{ background: 'transparent', color: 'var(--primary)', border: '1px solid var(--primary)', fontSize: '0.9rem', padding: '10px 15px' }}>
+            View More Details
+          </Link>
+          {showBookNow && (
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className={styles.bookButton} style={{ fontSize: '0.9rem', padding: '10px 15px' }}>
+              Book Now
+            </a>
+          )}
         </div>
       </div>
     </div>

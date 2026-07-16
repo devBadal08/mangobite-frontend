@@ -45,7 +45,7 @@ export default function Header() {
               </li>
             ))}
             <li>
-              <a href="https://wa.me/919999999999?text=Hello%20Mango%20Bite%20Hotel,%20I%20would%20like%20to%20book%20a%20room." target="_blank" rel="noopener noreferrer" className="btn btn-primary">Book Now</a>
+              <a href="https://wa.me/918490991577?text=Hello%20Mango%20Bite%20Hotel,%20I%20would%20like%20to%20book%20a%20room." target="_blank" rel="noopener noreferrer" className="btn btn-primary">Book Now</a>
             </li>
           </ul>
 
@@ -76,7 +76,7 @@ export default function Header() {
           ))}
           <li>
             <a 
-              href="https://wa.me/919999999999?text=Hello%20Mango%20Bite%20Hotel,%20I%20would%20like%20to%20book%20a%20room." 
+              href="https://wa.me/918490991577?text=Hello%20Mango%20Bite%20Hotel,%20I%20would%20like%20to%20book%20a%20room." 
               target="_blank" rel="noopener noreferrer"
               className="btn btn-primary"
               style={{ width: '100%', marginTop: '1rem', display: 'block', textAlign: 'center' }}

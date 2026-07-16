@@ -69,45 +69,48 @@
   font-family: var(--font-heading);
 }
 
-.description {
+.backendContent {
   color: var(--text-muted);
   margin-bottom: 2rem;
   line-height: 1.6;
   font-size: 1.05rem;
-}
-
-.amenities {
-  margin-bottom: 2rem;
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.amenities h4 {
-  font-size: 1.1rem;
+.backendContent p {
   margin-bottom: 1rem;
-  color: var(--dark);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.9rem;
 }
 
-.amenities ul {
+.backendContent p:last-of-type {
+  margin-bottom: 0;
+}
+
+.backendContent ul {
   list-style: none;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
+  margin-top: 1rem;
 }
 
-.amenities li {
+.backendContent li {
   display: flex;
   align-items: center;
   color: var(--text);
   font-size: 0.95rem;
 }
 
-.checkIcon {
+.backendContent li::before {
+  content: "✓";
   color: var(--accent);
   margin-right: 0.5rem;
+  font-weight: bold;
   flex-shrink: 0;
 }
 
@@ -135,4 +138,11 @@
 .bookButton:hover {
   background-color: #D68910;
   transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    gap: 15px !important;
+  }
 }

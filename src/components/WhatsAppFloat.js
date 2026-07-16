@@ -3,7 +3,7 @@ import styles from './WhatsAppFloat.module.css';
 
 export default function WhatsAppFloat() {
   // Use official number or placeholder
-  const phoneNumber = "919999999999"; 
+  const phoneNumber = "918490991577"; 
   const message = "Hello Mango Bite Hotel, I would like to book a room or request room service.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

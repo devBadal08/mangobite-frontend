@@ -4,8 +4,9 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 export const metadata = {
-  title: 'Facilities | Mango Bite Hotel & Restaurant',
-  description: 'Explore the premium facilities, room amenities, health and wellness services, and common areas at Mango Bite Hotel.',
+  title: 'Facilities | Best Hotel & Banquet in Mandvi Kutch',
+  description: 'Explore the premium facilities, banquet halls, party plot, and health services at Mango Bite Hotel, the best luxury stay in Mandvi Kutch.',
+  keywords: 'party plot in mandvi, banquet hall in kutch, wedding venue mandvi, kitty party place kutch, hotel facilities mandvi, luxury stay in kutch, mango bite amenities',
 };
 
 export default function Facilities() {

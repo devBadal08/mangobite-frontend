@@ -5,8 +5,9 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 export const metadata = {
-  title: 'About Us | Mango Bite Hotel & Restaurant',
-  description: 'Learn about Mango Bite Hotel & Restaurant, our highly rated multi-cuisine restaurant, and our premium heritage rooms in Mandvi, Kutch.',
+  title: 'About Us | Best Hotel & Restaurant in Mandvi Kutch',
+  description: 'Learn about Mango Bite Hotel & Restaurant, the best place for a luxury stay and pure-veg dining in Mandvi, Kutch. Discover our Kutchi heritage and world-class hospitality.',
+  keywords: 'about mango bite hotel, best hotel in kutch, mandvi tourism stay, kutchi hospitality, top pure veg restaurant mandvi',
 };
 
 export default function About() {
@@ -65,8 +66,8 @@ export default function About() {
           </div>
           <div className={styles.storyImageWrapper}>
             <Image 
-              src="/images/mandvi-landscape.jpg" 
-              alt="Beautiful Mandvi Landscape" 
+              src="/images/about.png" 
+              alt="About Mango Bite" 
               fill 
               className={styles.storyImage}
             />

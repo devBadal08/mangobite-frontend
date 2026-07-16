@@ -3,8 +3,31 @@ import Link from 'next/link';
 import { ArrowRight, MapPin, Coffee, BedDouble, Calendar, Users, PhoneCall } from 'lucide-react';
 import styles from './page.module.css';
 import RoomCard from '@/components/RoomCard';
+import MenuSlider from '@/components/MenuSlider';
 
-export default function Home() {
+export default async function Home() {
+  let rooms = [];
+  let menusData = [];
+  try {
+    const resRooms = await fetch('https://themangobitehotel.com/api/rooms');
+    if (resRooms.ok) {
+      const data = await resRooms.json();
+      if (data && data.status && data.data) {
+        rooms = data.data.slice(0, 3);
+      }
+    }
+    
+    const resMenus = await fetch('https://themangobitehotel.com/api/menus');
+    if (resMenus.ok) {
+      const data = await resMenus.json();
+      if (data && data.status && data.data) {
+        menusData = data.data;
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch data for home:', error);
+  }
+
   return (
     <>
       {/* Hero Section */}
@@ -93,75 +116,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Infinite Scrolling Menu Marquee */}
-      <section className={styles.marqueeSection}>
-        <div className="container" style={{ marginBottom: '2rem' }}>
+      {/* Dynamic Menu Slider (Replaces Marquee) */}
+      <section className={styles.marqueeSection} style={{ padding: '0' }}>
+        <div className="container" style={{ marginBottom: '1rem', marginTop: '4rem' }}>
           <h2 className="section-title">Our Menu Specialties</h2>
         </div>
-        <div className={styles.marqueeContainer}>
-          {/* Track 1 */}
-          <div className={styles.marqueeTrack}>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_indian.jpg" alt="North Indian" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>North Indian</h3>
-                <p>Rich, buttery, and authentic flavors.</p>
-              </div>
-            </Link>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_southindian.jpg" alt="South Indian" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>South Indian</h3>
-                <p>Crispy dosas and authentic chutneys.</p>
-              </div>
-            </Link>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_chinese.jpg" alt="Chinese" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>Chinese</h3>
-                <p>Spicy, tangy, and perfectly wok-tossed.</p>
-              </div>
-            </Link>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_fastfood.jpg" alt="Fast Food" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>Fast Food</h3>
-                <p>Quick bites to satisfy your cravings.</p>
-              </div>
-            </Link>
-          </div>
-          {/* Track 2 (Duplicate for seamless infinite scroll) */}
-          <div className={styles.marqueeTrack} aria-hidden="true">
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_indian.jpg" alt="North Indian" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>North Indian</h3>
-                <p>Rich, buttery, and authentic flavors.</p>
-              </div>
-            </Link>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_southindian.jpg" alt="South Indian" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>South Indian</h3>
-                <p>Crispy dosas and authentic chutneys.</p>
-              </div>
-            </Link>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_chinese.jpg" alt="Chinese" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>Chinese</h3>
-                <p>Spicy, tangy, and perfectly wok-tossed.</p>
-              </div>
-            </Link>
-            <Link href="/menu" className={styles.marqueeItem}>
-              <Image src="/images/menu_fastfood.jpg" alt="Fast Food" fill className={styles.marqueeImage} />
-              <div className={styles.marqueeOverlay}>
-                <h3>Fast Food</h3>
-                <p>Quick bites to satisfy your cravings.</p>
-              </div>
-            </Link>
-          </div>
-        </div>
+        <MenuSlider menus={menusData} />
       </section>
 
       {/* Featured Rooms (Fern Residency Inspired) */}
@@ -170,28 +130,31 @@ export default function Home() {
         <div className={`container ${styles.roomsContentContainer}`}>
           <h2 className="section-title">Premium Heritage Rooms</h2>
           <div className={styles.roomsGrid}>
-            <RoomCard 
-              title="Deluxe Room"
-              description="A beautiful blend of traditional Kutchi textiles and modern comfort."
-              amenities={['Air Conditioning', 'Free Wi-Fi', 'Mineral Water']}
-              imageSrc="/images/kutchi_deluxe_room.jpg"
-            />
-            <RoomCard 
-              title="Super Deluxe Room"
-              description="Spacious comfort featuring exquisite Lippan mud wall art and premium furnishings."
-              amenities={['Balcony', 'Air Conditioning', 'Free Wi-Fi', 'Bathtub']}
-              imageSrc="/images/kutchi_super_deluxe.jpg"
-            />
-            <RoomCard 
-              title="Suite Room"
-              description="Our most luxurious offering with rich Indigo and Terracotta decor and a private lounge."
-              amenities={['Terrace', 'Lounge Access', 'Bathtub', 'Premium Services']}
-              imageSrc="/images/kutchi_suite.jpg"
-            />
+            {rooms.length > 0 ? (
+              rooms.map((room) => {
+                let imageUrl = room.image;
+                if (!imageUrl.startsWith('/images/')) {
+                  imageUrl = imageUrl.startsWith('/storage') 
+                    ? `https://themangobitehotel.com${imageUrl}` 
+                    : `https://themangobitehotel.com/storage/${imageUrl}`;
+                }
+                return (
+                  <RoomCard 
+                    key={room.id}
+                    id={room.id}
+                    title={room.title}
+                    description={room.description}
+                    imageSrc={imageUrl}
+                    price={`From ₹${parseInt(room.price).toLocaleString('en-IN')}/night`}
+                    showBookNow={false}
+                  />
+                );
+              })
+            ) : (
+              <p style={{ textAlign: 'center', width: '100%', color: 'white' }}>No rooms available at the moment.</p>
+            )}
           </div>
-          <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-            <Link href="/rooms" className="btn btn-secondary">View All Rooms</Link>
-          </div>
+
         </div>
       </section>
     </>

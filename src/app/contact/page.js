@@ -1,8 +1,10 @@
 import { MapPin, Phone, Mail } from 'lucide-react';
+import ContactForm from '@/components/ContactForm';
 
 export const metadata = {
-  title: 'Contact Us | Mango Bite Hotel & Restaurant',
-  description: 'Get in touch with Mango Bite Hotel & Restaurant in Mandvi, Gujarat for room bookings and reservations.',
+  title: 'Contact Us | Mango Bite Hotel & Restaurant Mandvi',
+  description: 'Get in touch with Mango Bite Hotel & Restaurant in Mandvi, Gujarat for room bookings, restaurant reservations, and banquet hall inquiries.',
+  keywords: 'contact mango bite hotel, hotel booking mandvi kutch, restaurant reservation mandvi, best hotel in kutch contact, mandvi gujarat hotel number',
 };
 
 export default function Contact() {
@@ -28,44 +30,41 @@ export default function Contact() {
               <MapPin style={{ color: 'var(--primary)' }} />
               <div>
                 <strong>Address</strong>
-                <p style={{ color: 'var(--text-muted)' }}>Mandvi Highway, Maska, Gujarat</p>
+                <p style={{ color: 'var(--text-muted)' }}>Usha Park, Nr. Reliance Petrol Pump, Mandvi-Bhuj Highway, Mandvi-Kutch. 370465</p>
               </div>
             </li>
             <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
               <Phone style={{ color: 'var(--primary)' }} />
               <div>
-                <strong>Phone</strong>
-                <p style={{ color: 'var(--text-muted)' }}>+91 99999 99999 (Booking & Room Service)</p>
+                <strong>Phone (Karan Singh)</strong>
+                <p style={{ color: 'var(--text-muted)' }}>+91 84909 91577<br/>+91 73599 73699</p>
               </div>
             </li>
             <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
               <Mail style={{ color: 'var(--primary)' }} />
               <div>
                 <strong>Email</strong>
-                <p style={{ color: 'var(--text-muted)' }}>info@mangobitehotel.com</p>
+                <p style={{ color: 'var(--text-muted)' }}>themangobitehotelandrestaurant<br/>@gmail.com</p>
+              </div>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary)' }}><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              <div>
+                <strong>Instagram</strong>
+                <p style={{ color: 'var(--text-muted)' }}>
+                  <a href="https://instagram.com/mango_bite_mandvi" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    @mango_bite_mandvi
+                  </a>
+                </p>
               </div>
             </li>
           </ul>
         </div>
 
-        {/* Contact Form Placeholder */}
+        {/* Contact Form */}
         <div className="card" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1.5rem', color: 'var(--primary)' }}>Send us a Message</h2>
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Name</label>
-              <input type="text" style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} placeholder="Your Name" />
-            </div>
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Email</label>
-              <input type="email" style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} placeholder="Your Email" />
-            </div>
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Message</label>
-              <textarea rows="4" style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} placeholder="How can we help you?"></textarea>
-            </div>
-            <button type="button" className="btn btn-primary" style={{ marginTop: '1rem' }}>Send Message</button>
-          </form>
+          <ContactForm />
         </div>
         </div>
       </div>

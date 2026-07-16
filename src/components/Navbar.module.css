@@ -67,15 +67,16 @@
     background-color: var(--surface);
     flex-direction: column;
     gap: 0;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     max-height: 0;
-    transition: max-height 0.3s ease-in-out;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
   .navLinks.navOpen {
-    max-height: 100vh;
-    padding-bottom: 1.5rem;
+    max-height: 80vh;
+    padding-bottom: 1rem;
   }
 
   .navLinks li {
@@ -85,14 +86,14 @@
 
   .navLinks a {
     display: block;
-    padding: 1.2rem;
-    font-size: 1.1rem;
+    padding: 0.8rem 1rem; /* Compact padding */
+    font-size: 1rem; /* Smaller font */
     border-bottom: 1px solid var(--border);
   }
 
   .navLinks li:last-child a {
     border-bottom: none;
-    margin: 1rem auto;
+    margin: 0.5rem auto 0.5rem; /* Compact margin */
     width: fit-content;
   }
 }

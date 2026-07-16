@@ -4,11 +4,25 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 export const metadata = {
-  title: 'Our Premium Rooms | Mango Bite Hotel & Restaurant',
-  description: 'Discover the luxurious room types available at Mango Bite Hotel & Restaurant in Mandvi Kutch, featuring traditional artistry and modern comfort.',
+  title: 'Our Premium Rooms | Best Hotel in Mandvi Kutch',
+  description: 'Discover the luxurious room types available at Mango Bite Hotel & Restaurant in Mandvi Kutch. The best luxury rooms and cheap stays featuring traditional artistry.',
+  keywords: 'best luxury rooms in mandvi, a.c. rooms in kutch, deluxe hotel rooms mandvi, cheap and best stay in kutch, mango bite hotel rooms, mandvi beach hotel rooms',
 };
 
-export default function Rooms() {
+export default async function Rooms() {
+  let rooms = [];
+  try {
+    const res = await fetch('https://themangobitehotel.com/api/rooms');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.status && data.data) {
+        rooms = data.data;
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch rooms:', error);
+  }
+
   return (
     <>
       {/* Hero Section */}
@@ -41,27 +55,28 @@ export default function Rooms() {
           </div>
 
           <div className={styles.roomsGrid}>
-            <RoomCard 
-              title="Deluxe Room"
-              description="A beautiful, well-appointed room featuring all basic modern amenities. Perfect for couples or single travelers looking for a cozy and elegant stay."
-              amenities={['Air Conditioning', 'Free High-Speed Wi-Fi', 'Premium Toiletries', 'Mineral Water (Paid)']}
-              imageSrc="/images/kutchi_deluxe_room.jpg"
-              price="From ₹2,500/night"
-            />
-            <RoomCard 
-              title="Super Deluxe Room"
-              description="Experience enhanced comfort with additional space and exquisite Lippan mud wall art. Some of these rooms come with a beautiful balcony to relax."
-              amenities={['Private Balcony (Subject to availability)', 'Air Conditioning', 'Free High-Speed Wi-Fi', 'Bathtub (Subject to availability)']}
-              imageSrc="/images/kutchi_super_deluxe.jpg"
-              price="From ₹3,500/night"
-            />
-            <RoomCard 
-              title="Suite Room"
-              description="Our most luxurious offering, featuring a private terrace, a premium lounge area, and rich Indigo & Terracotta furnishings for a truly majestic experience."
-              amenities={['Private Terrace', 'Lounge Access', 'Plush Bathtub', 'Premium Room Service']}
-              imageSrc="/images/kutchi_suite.jpg"
-              price="From ₹5,000/night"
-            />
+            {rooms.length > 0 ? (
+              rooms.map((room) => {
+                let imageUrl = room.image;
+                if (!imageUrl.startsWith('/images/')) {
+                  imageUrl = imageUrl.startsWith('/storage') 
+                    ? `https://themangobitehotel.com${imageUrl}` 
+                    : `https://themangobitehotel.com/storage/${imageUrl}`;
+                }
+                return (
+                  <RoomCard 
+                    key={room.id}
+                    id={room.id}
+                    title={room.title}
+                    description={room.description}
+                    imageSrc={imageUrl}
+                    price={`From ₹${parseInt(room.price).toLocaleString('en-IN')}/night`}
+                  />
+                );
+              })
+            ) : (
+              <p style={{ textAlign: 'center', width: '100%', color: 'var(--text-muted)' }}>No rooms available at the moment.</p>
+            )}
           </div>
         </div>
       </section>

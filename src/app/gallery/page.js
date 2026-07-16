@@ -1,30 +1,35 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import GalleryViewer from '@/components/GalleryViewer';
 import styles from './page.module.css';
 
 export const metadata = {
-  title: 'Gallery | Mango Bite Hotel & Restaurant',
-  description: 'Explore the visual journey of Mango Bite Hotel & Restaurant. View photos of our premium rooms, multi-cuisine restaurant, and beautiful exterior.',
+  title: 'Gallery | Best Hotel & Restaurant in Mandvi Kutch',
+  description: 'Explore the visual journey of Mango Bite Hotel & Restaurant. View photos of our premium rooms, multi-cuisine restaurant, banquet hall, and beautiful exterior in Mandvi.',
+  keywords: 'mango bite hotel gallery, mandvi hotel photos, best hotel in kutch, party plot in mandvi, banquet hall in kutch, wedding venue mandvi, pure veg restaurant photos',
 };
 
-export default function Gallery() {
-  const images = [
-    { src: '/images/hotel_hero.jpg', title: 'Hotel Exterior & Ambiance' },
-    { src: '/images/kutchi_suite.jpg', title: 'Premium Suite Room' },
-    { src: '/images/kutchi_restaurant.jpg', title: 'Multi-Cuisine Restaurant' },
-    { src: '/images/kutchi_deluxe_room.jpg', title: 'Deluxe Heritage Room' },
-    { src: '/images/mandvi-landscape.jpg', title: 'Beautiful Mandvi Surroundings' },
-    { src: '/images/menu_indian.jpg', title: 'Authentic Indian Cuisine' },
-    { src: '/images/kutchi_super_deluxe.jpg', title: 'Super Deluxe Comfort' },
-    { src: '/images/menu_chinese.jpg', title: 'Wok Tossed Chinese Delicacies' },
-  ];
+export default async function Gallery() {
+  let galleries = [];
+  try {
+    const res = await fetch('https://themangobitehotel.com/api/galleries');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.status && data.data) {
+        galleries = data.data;
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch galleries:', error);
+  }
 
   return (
     <>
       {/* Hero Section */}
       <section className={styles.hero}>
         <Image 
-          src="/images/hotel_hero.jpg" 
+          src="/images/kutchi_hotel_hero.jpg" 
           alt="Mango Bite Gallery" 
           fill 
           className={styles.heroBg}
@@ -38,24 +43,13 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Masonry Gallery Grid */}
+      {/* Dynamic Gallery Viewer */}
       <section className="section bg-light">
         <div className="container">
-          <div className={styles.galleryGrid}>
-            {images.map((img, index) => (
-              <div key={index} className={styles.galleryItem}>
-                <Image 
-                  src={img.src}
-                  alt={img.title}
-                  fill
-                  className={styles.galleryImage}
-                />
-                <div className={styles.itemOverlay}>
-                  <h3 className={styles.itemTitle}>{img.title}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
+          
+          <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Loading Gallery...</div>}>
+            <GalleryViewer galleries={galleries} />
+          </Suspense>
 
           <div style={{ textAlign: 'center', marginTop: '3rem', padding: '4rem 0', borderTop: '1px solid var(--border)' }}>
             <h2 style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--dark)' }}>Like what you see?</h2>

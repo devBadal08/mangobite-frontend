@@ -1,23 +1,68 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import styles from './MenuGallery.module.css';
 
 export default function MenuGallery({ menuData }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryIdParam = searchParams.get('category');
   const [activeCategory, setActiveCategory] = useState(null);
 
+  // Sync state with URL
+  useEffect(() => {
+    if (categoryIdParam) {
+      const category = menuData.find(c => c.id.toString() === categoryIdParam);
+      if (category) {
+        setActiveCategory(category);
+      } else {
+        setActiveCategory(null);
+      }
+    } else {
+      setActiveCategory(null);
+    }
+  }, [categoryIdParam, menuData]);
+
+  const handleCategoryClick = (category) => {
+    // Add query parameter to URL so back button works
+    router.push(`?category=${category.id}`, { scroll: false });
+  };
+
+  const handleBackClick = () => {
+    // Remove query parameter
+    router.back();
+  };
+
   if (activeCategory) {
+    const currentIndex = menuData.findIndex(c => c.id === activeCategory.id);
+    const prevCategory = menuData[(currentIndex - 1 + menuData.length) % menuData.length];
+    const nextCategory = menuData[(currentIndex + 1) % menuData.length];
+
     // Detail View
     return (
       <div className={`${styles.detailView} animate-fade-in-up`}>
-        <button 
-          className={`btn btn-outline ${styles.backBtn}`}
-          onClick={() => setActiveCategory(null)}
-        >
-          <ArrowLeft size={18} style={{ marginRight: '8px' }} />
-          Back to Categories
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+          <button 
+            className="btn btn-outline"
+            onClick={() => handleCategoryClick(prevCategory)}
+            style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '5px', margin: 0 }}
+            title={`Previous: ${prevCategory.name}`}
+          >
+            &larr; Prev
+          </button>
+
+
+          <button 
+            className="btn btn-outline"
+            onClick={() => handleCategoryClick(nextCategory)}
+            style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '5px', margin: 0 }}
+            title={`Next: ${nextCategory.name}`}
+          >
+            Next &rarr;
+          </button>
+        </div>
 
         <div className={styles.categoryHeroDetail}>
           <Image 
@@ -42,6 +87,17 @@ export default function MenuGallery({ menuData }) {
             ))}
           </ul>
         </div>
+
+        <div style={{ textAlign: 'center', marginTop: '30px' }}>
+          <button 
+            className={`btn btn-outline ${styles.backBtn}`}
+            onClick={handleBackClick}
+            style={{ margin: '0 auto' }}
+          >
+            <ArrowLeft size={18} style={{ marginRight: '8px' }} />
+            Back to Categories
+          </button>
+        </div>
       </div>
     );
   }
@@ -53,7 +109,7 @@ export default function MenuGallery({ menuData }) {
         <div 
           key={category.id} 
           className={`card ${styles.galleryCard}`}
-          onClick={() => setActiveCategory(category)}
+          onClick={() => handleCategoryClick(category)}
         >
           <div className={styles.cardImageWrapper}>
             <Image 
