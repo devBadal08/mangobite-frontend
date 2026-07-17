@@ -118,7 +118,16 @@
   border-bottom: 1px solid var(--border);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .desktopNav {
+    gap: 1.25rem; /* Reduce gap on small laptops */
+  }
+  .navLink {
+    font-size: 0.95rem; /* Slightly smaller text */
+  }
+}
+
+@media (max-width: 1024px) {
   .desktopNav {
     display: none;
   }
@@ -126,3 +135,61 @@
     display: block;
   }
 }
+
+/* 4K / Ultra-Wide Header Scaling */
+@media (min-width: 1800px) {
+  .header {
+    padding: 1.2rem 0;
+  }
+
+  .header.scrolled {
+    padding: 0.9rem 0;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+
+  .logoSubtitle {
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    margin-top: 3px;
+  }
+
+  .desktopNav {
+    gap: 2.5rem;
+  }
+
+  .navLink {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 2500px) {
+  .header {
+    padding: 1.4rem 0;
+  }
+
+  .header.scrolled {
+    padding: 1rem 0;
+  }
+
+  .logo {
+    font-size: 2.4rem;
+  }
+
+  .logoSubtitle {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .desktopNav {
+    gap: 3rem;
+  }
+
+  .navLink {
+    font-size: 1.4rem;
+  }
+}
+

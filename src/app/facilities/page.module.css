@@ -58,6 +58,54 @@
   z-index: 10;
 }
 
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+    gap: 1.5rem;
+  }
+
+  .hero {
+    height: 40vh;
+    min-height: 280px;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  .facilityCard {
+    padding: 1.8rem;
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  .ctaSection {
+    padding: 3rem 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .ctaTitle {
+    font-size: 1.8rem;
+  }
+
+  .ctaSubtitle {
+    font-size: 1rem;
+  }
+
+  .ctaActions {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
 .facilityCard {
   background: var(--surface);
   border-radius: var(--radius-lg);

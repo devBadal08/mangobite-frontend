@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Coffee, BedDouble, Calendar, Users, PhoneCall } from 'lucide-react';
+import { ArrowRight, MapPin, Coffee, BedDouble, Calendar, Users, PhoneCall, Utensils } from 'lucide-react';
 import styles from './page.module.css';
 import RoomCard from '@/components/RoomCard';
 import MenuSlider from '@/components/MenuSlider';
@@ -41,7 +41,7 @@ export default async function Home() {
           <source src="/videos/a.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay}></div>
-        <div className={`container ${styles.heroContent} animate-fade-in-up`}>
+        <div className={`container ${styles.homeContainer} ${styles.heroContent} animate-fade-in-up`}>
           <h1 className={styles.heroTitle}>
             Experience Authentic Kutch Heritage at <span className={styles.highlight}>Mango Bite</span>
           </h1>
@@ -61,7 +61,7 @@ export default async function Home() {
 
       {/* Features Overview with Kutchi Pattern */}
       <section className="section bg-light bg-kutchi-pattern">
-        <div className="container">
+        <div className={`container ${styles.homeContainer}`}>
           <div className={styles.featuresGrid}>
             <div className={`card ${styles.featureCard}`}>
               <div className={styles.featureIcon}><MapPin size={40} /></div>
@@ -88,17 +88,17 @@ export default async function Home() {
         <img src="/images/keri.png?v=5" alt="Mango Decoration" className={styles.keriDecoration} />
         <img src="/images/keri.png?v=5" alt="Mango Decoration 2" className={styles.keriDecoration2} />
 
-        <div className={`container ${styles.restaurantSection}`}>
+        <div className={`container ${styles.homeContainer} ${styles.restaurantSection}`}>
           <div className={styles.restaurantContent}>
             <h4 className={styles.sectionEyebrow}>Culinary Excellence</h4>
-            <h2 className="section-title" style={{ textAlign: 'left', left: '0', transform: 'none', marginBottom: '1rem' }}>
+            <h2 className="section-title left-title" style={{ textAlign: 'left', marginBottom: '1rem' }}>
               The Mango Bite Experience
             </h2>
             <p className={styles.descriptionText}>
               Indulge in a culinary journey at our highly rated, pure-vegetarian multi-cuisine restaurant. Inspired by legendary Indian eateries, we offer a vibrant, rich, and modern dining atmosphere. Enjoy our signature dishes surrounded by traditional Kutchi colors and warm hospitality.
             </p>
-            <Link href="/menu" className="btn btn-primary" style={{ marginTop: '2rem' }}>
-              Explore Our Menu
+            <Link href="/menu" className="btn btn-primary highlight-btn" style={{ marginTop: '2rem' }}>
+              <Utensils size={18} style={{ marginRight: '8px' }} /> Explore Our Menu <ArrowRight size={18} style={{ marginLeft: '8px' }} />
             </Link>
           </div>
           <div className={styles.restaurantImageWrapper}>
@@ -118,7 +118,7 @@ export default async function Home() {
 
       {/* Dynamic Menu Slider (Replaces Marquee) */}
       <section className={styles.marqueeSection} style={{ padding: '0' }}>
-        <div className="container" style={{ marginBottom: '1rem', marginTop: '4rem' }}>
+        <div className={`container ${styles.homeContainer}`} style={{ marginBottom: '1rem', marginTop: '4rem' }}>
           <h2 className="section-title">Our Menu Specialties</h2>
         </div>
         <MenuSlider menus={menusData} />
@@ -127,7 +127,7 @@ export default async function Home() {
       {/* Featured Rooms (Fern Residency Inspired) */}
       <section className={`section ${styles.roomsSectionWithBg}`}>
         <div className={styles.roomsSectionOverlay}></div>
-        <div className={`container ${styles.roomsContentContainer}`}>
+        <div className={`container ${styles.homeContainer} ${styles.roomsContentContainer}`}>
           <h2 className="section-title">Premium Heritage Rooms</h2>
           <div className={styles.roomsGrid}>
             {rooms.length > 0 ? (

@@ -42,4 +42,23 @@
   font-family: var(--font-heading);
 }
 
+@media (max-width: 1024px) {
+  .hero {
+    height: 35vh;
+    min-height: 250px;
+  }
 
+  .heroTitle {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+}
+
+@media (max-width: 425px) {
+  .hero {
+    min-height: 200px;
+  }
+
+  .heroTitle {
+    font-size: 1.5rem;
+  }
+}

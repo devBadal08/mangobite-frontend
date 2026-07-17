@@ -125,8 +125,60 @@
   padding: 4rem 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .storyGrid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero {
+    height: 40vh;
+    min-height: 280px;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+
+  .storyContent h2 {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .storyContent p {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .storyImageWrapper {
+    height: 320px;
+  }
+
+  .storySection {
+    padding: 3rem 0;
+  }
+
+  .ratingSection {
+    padding: 2.5rem 1rem;
+  }
+
+  .ratingText {
+    font-size: 1.4rem;
+  }
+
+  .faqSection {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 425px) {
+  .ratingSection {
+    padding: 2rem 1rem;
+  }
+  .storyImageWrapper {
+    height: 250px;
+  }
+  .storyContent h2 {
+    font-size: 1.3rem;
   }
 }

@@ -109,3 +109,43 @@
   transform: translateY(-3px);
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
+
+@media (max-width: 1024px) {
+  .hero {
+    height: 45vh;
+    min-height: 320px;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    letter-spacing: 1px;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+  }
+
+  .roomsGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .ctaSection {
+    padding: 3.5rem 1.5rem;
+  }
+
+  .ctaTitle {
+    font-size: 1.8rem;
+  }
+
+  .ctaSubtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .ctaBtn {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}
+

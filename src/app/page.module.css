@@ -53,10 +53,16 @@
 }
 
 .heroTitle {
-  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-size: clamp(2rem, 4vw, 3.5rem);
   color: white;
   margin-bottom: 1.5rem;
   letter-spacing: -1px;
+}
+
+@media (min-width: 1800px) {
+  .heroTitle {
+    font-size: clamp(3.5rem, 5vw, 6rem);
+  }
 }
 
 .highlight {
@@ -64,10 +70,16 @@
 }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
   color: #e2e8f0;
   margin-bottom: 2.5rem;
   font-weight: 300;
+}
+
+@media (min-width: 1800px) {
+  .heroSubtitle {
+    font-size: clamp(1.2rem, 2vw, 2rem);
+  }
 }
 
 .heroActions {
@@ -82,16 +94,79 @@
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: 56.25vw;
+    /* Maintain 16:9 aspect ratio of the video */
+    min-height: 250px;
+    padding: 1rem 0;
+    align-items: center;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+    margin-bottom: 0.5rem;
+    padding: 0 10px;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(0.75rem, 3vw, 0.95rem);
+    margin-bottom: 1rem;
+    padding: 0 15px;
+    line-height: 1.4;
+  }
+
+  .heroActions {
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    /* Keep buttons side by side to save height */
+    padding: 0 10px;
+  }
+
+  .heroActions .btn {
+    width: auto;
+    margin-bottom: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .hero {
+    height: auto; /* Prevent content overflowing out of hero */
+    min-height: 350px; 
+    padding: 3rem 1rem;
+  }
+}
+
 .featuresGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
-  margin-top: -2rem; /* Moved down from -5rem */
+  margin-top: -2rem;
+  /* Moved down from -5rem */
   position: relative;
   z-index: 10;
 }
 
+@media (max-width: 1024px) {
+  .featuresGrid {
+    margin-top: 2.5rem; /* Push cards below video — no overlap */
+  }
+}
+
+@media (max-width: 768px) {
+  .featuresGrid {
+    margin-top: 2rem;
+  }
+}
+
 .featureCard {
+  flex: 1 1 300px;
+  max-width: 380px;
+  width: 100%;
   padding: 3rem 2rem;
   text-align: center;
   background: rgba(255, 255, 255, 0.85);
@@ -121,15 +196,15 @@
 }
 
 .featureCard h3 {
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
   color: var(--secondary);
 }
 
 .featureCard p {
   color: var(--text-muted);
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .restaurantWrapper {
@@ -139,9 +214,59 @@
 
 .restaurantSection {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr; /* Gives more space to text, makes image smaller */
   gap: 5rem;
   align-items: center;
+}
+
+.restaurantContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+
+
+@media (max-width: 1440px) {
+  .restaurantSection {
+    gap: 3rem;
+  }
+  .restaurantImageWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Perfect Square */
+    max-width: 450px;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .restaurantSection {
+    gap: 2rem;
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+  .restaurantImageWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Perfect Square */
+    max-width: 350px; /* Reduced width to make height smaller too */
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .restaurantSection {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .restaurantImageWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Perfect Square */
+    max-width: 380px;
+    margin: 0 auto;
+  }
 }
 
 .sectionEyebrow {
@@ -152,25 +277,31 @@
   font-weight: 600;
   margin-bottom: 0.5rem;
   display: block;
+  position: relative;
+  z-index: 2;
 }
 
 .descriptionText {
   color: var(--text-muted);
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
 }
 
 .restaurantImageWrapper {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: auto;
+  aspect-ratio: 1 / 1; /* Perfect Square */
+  max-width: 500px; /* Base limit */
   border-radius: var(--radius-lg);
-  overflow: hidden;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
   z-index: 1;
 }
 
 .roundedImage {
+  border-radius: var(--radius-lg);
   object-fit: cover;
   transition: transform 0.8s ease;
 }
@@ -181,31 +312,31 @@
 
 .experienceBadge {
   position: absolute;
-  bottom: 30px;
-  left: -30px;
+  bottom: clamp(-15px, -2vw, 30px);
+  left: clamp(-15px, -2vw, -30px);
   background-color: var(--primary);
   color: white;
-  padding: 1.5rem;
+  padding: clamp(0.8rem, 2vw, 1.5rem);
   border-radius: 50%;
-  width: 140px;
-  height: 140px;
+  width: clamp(80px, 15vw, 140px);
+  height: clamp(80px, 15vw, 140px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  border: 4px solid white;
+  border: clamp(2px, 0.5vw, 4px) solid white;
 }
 
 .badgeNumber {
-  font-size: 2.5rem;
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
   font-weight: 700;
   line-height: 1;
 }
 
 .badgeText {
-  font-size: 0.8rem;
+  font-size: clamp(0.55rem, 1vw, 0.8rem);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 0.2rem;
@@ -223,7 +354,8 @@
 .roomsSectionWithBg::after {
   content: '';
   position: absolute;
-  bottom: -45px; /* Pushed down slightly more due to scaled up image */
+  bottom: -45px;
+  /* Pushed down slightly more due to scaled up image */
   width: 900px;
   height: 900px;
   background-image: url('/images/back-img.png');
@@ -234,12 +366,15 @@
 }
 
 .roomsSectionWithBg::before {
-  left: -350px; /* Pushed further out for the bigger size */
-  transform: scaleX(-1); /* Inverted for the left side */
+  left: -350px;
+  /* Pushed further out for the bigger size */
+  transform: scaleX(-1);
+  /* Inverted for the left side */
 }
 
 .roomsSectionWithBg::after {
-  right: -350px; /* Pushed further out for the bigger size */
+  right: -350px;
+  /* Pushed further out for the bigger size */
 }
 
 /* Glass layer overlay */
@@ -265,17 +400,21 @@
 }
 
 @media (max-width: 900px) {
+
   .roomsSectionWithBg::before,
   .roomsSectionWithBg::after {
     width: 250px;
     height: 250px;
     bottom: auto;
   }
+
   .roomsSectionWithBg::before {
     top: -50px;
     left: -100px;
-    transform: scaleX(-1) scaleY(-1); /* Added scaleY(-1) to make it hang upside down from the top */
+    transform: scaleX(-1) scaleY(-1);
+    /* Added scaleY(-1) to make it hang upside down from the top */
   }
+
   .roomsSectionWithBg::after {
     bottom: -50px;
     right: -100px;
@@ -285,22 +424,75 @@
 /* Mango Branch Decoration */
 .keriDecoration {
   position: absolute;
-  top: 0px; /* Moved down to start exactly at the card border */
-  left: -1%; /* Adjusted slightly inward */
-  width: 180px; /* Increased width to make it 'moti' */
+  top: 0px;
+  left: 10px;
+  width: 180px;
   height: auto;
   z-index: 20;
-  animation: swing 2.5s ease-in-out infinite alternate; /* Sped up from 5s */
+  animation: swing 2.5s ease-in-out infinite alternate;
   transform-origin: top center;
   filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.2));
   display: block;
 }
 
+/* Fix spacing for laptops and tablets so keri doesn't overlap content */
+@media (max-width: 1440px) {
+  .keriDecoration {
+    width: 140px;
+  }
+  .restaurantContent {
+    padding-left: 130px; /* Space for keri decoration */
+  }
+}
+
+@media (max-width: 1280px) {
+  .keriDecoration {
+    width: 120px;
+  }
+  .restaurantContent {
+    padding-left: 110px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .keriDecoration {
+    width: 100px;
+    left: 5px;
+  }
+  .restaurantContent {
+    padding-left: 110px; /* Space for keri decoration */
+  }
+}
+
+@media (max-width: 768px) {
+  .keriDecoration {
+    width: 80px;
+    left: 0;
+  }
+  .restaurantContent {
+    padding-left: 0; /* Text moves below keri in 1-column layout */
+    padding-top: 60px; /* Space above text */
+  }
+  .restaurantContent .sectionEyebrow,
+  .restaurantContent .section-title {
+    text-align: left !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+  .restaurantContent .section-title::after {
+    left: 0 !important;
+    transform: none !important;
+  }
+}
+
 .keriDecoration2 {
   position: absolute;
-  top: 0px; /* Moved down to start exactly at the card border */
-  right: -1%; /* Adjusted slightly inward */
-  width: 140px; /* Increased width */
+  top: 0px;
+  /* Moved down to start exactly at the card border */
+  right: -1%;
+  /* Adjusted slightly inward */
+  width: 140px;
+  /* Increased width */
   height: auto;
   z-index: 20;
   animation: swing 7s ease-in-out infinite alternate-reverse;
@@ -323,19 +515,29 @@
 @media (max-width: 900px) {
   .restaurantSection {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
+    /* Reduced gap for smaller screens */
+  }
+
+  .restaurantContent {
+    padding-left: 100px;
+    /* Increased space to fit the thicker mango */
+    padding-top: 20px;
+    /* Added top space so Culinary Excellence aligns nicely with the mango */
   }
 
   .keriDecoration {
-    display: none;
-    /* Hidden on mobile */
+    display: block;
+    width: 85px;
+    /* Made thicker (moti) as requested */
+    left: 0;
+    top: 0px;
+    /* Starts exactly from the card border */
   }
 
   .keriDecoration2 {
-    display: block;
-    /* Show on mobile */
-    right: -2%; /* Adjusted slightly inward */
-    width: 85px; /* Slightly smaller on mobile as requested */
-    top: 0px; /* Starting exactly at the card border */
+    display: none;
+    /* Hide right mango */
   }
 }
 
@@ -426,9 +628,194 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .marqueeItem {
     width: 260px;
     height: 350px;
+  }
+}
+
+@media (max-width: 425px) {
+  .marqueeItem {
+    width: 220px;
+    height: 240px; /* Reduced height significantly */
+  }
+  
+  .marqueeSection {
+    padding: 2rem 0; /* Reduced from 4rem 0 6rem 0 */
+  }
+  
+  .featuresGrid {
+    gap: 1rem;
+  }
+
+  .featureCard {
+    padding: 1.5rem 1rem; /* Reduced massive padding on mobile */
+  }
+
+  .roomsGrid {
+    gap: 1rem;
+  }
+
+  .restaurantSection {
+    gap: 2rem;
+  }
+
+  .restaurantImageWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Perfect square */
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .heroActions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 4K and Ultra-Wide Specific Adjustments for Home Page */
+.homeContainer {
+  /* Inherits from standard .container */
+}
+
+@media (min-width: 1800px) {
+  .homeContainer {
+    max-width: 1600px !important;
+  }
+  
+  .featuresGrid {
+    gap: 4rem;
+  }
+  
+  .featureCard {
+    max-width: 480px;
+    padding: 4rem 3rem;
+  }
+
+  .featureIcon {
+    transform: scale(1.3);
+    margin-bottom: 2.5rem;
+  }
+  
+  .featureCard h3 {
+    font-size: 1.6rem;
+  }
+  
+  .featureCard p {
+    font-size: 1.1rem;
+  }
+  
+  .restaurantSection {
+    gap: 8rem;
+  }
+  
+  .restaurantImageWrapper {
+    height: 700px;
+  }
+  
+  .descriptionText {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .experienceBadge {
+    width: 180px;
+    height: 180px;
+    bottom: 50px;
+    left: -50px;
+  }
+
+  .badgeNumber {
+    font-size: 3.5rem;
+  }
+
+  .badgeText {
+    font-size: 1rem;
+  }
+  
+  .keriDecoration {
+    width: 250px;
+  }
+  
+  .keriDecoration2 {
+    width: 180px;
+  }
+}
+
+@media (min-width: 2500px) {
+  .homeContainer {
+    max-width: 2000px !important;
+  }
+  
+  .homeContainer :global(.section-title) {
+    font-size: 4.5rem !important;
+    margin-bottom: 3.5rem;
+  }
+  
+  .homeContainer :global(.btn) {
+    font-size: 1.4rem;
+    padding: 1.2rem 3rem;
+  }
+  
+  .heroTitle {
+    font-size: clamp(4.5rem, 6vw, 7.5rem) !important;
+  }
+  
+  .heroSubtitle {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem) !important;
+  }
+  
+  .featureCard {
+    max-width: 600px;
+    padding: 5rem 4rem;
+  }
+  
+  .featureIcon {
+    transform: scale(1.6);
+    margin-bottom: 3rem;
+  }
+  
+  .featureCard h3 {
+    font-size: 2rem;
+  }
+  
+  .featureCard p {
+    font-size: 1.3rem;
+  }
+  
+  .sectionEyebrow {
+    font-size: 1.4rem;
+  }
+  
+  .descriptionText {
+    font-size: 1.6rem;
+    line-height: 2;
+  }
+  
+  .restaurantImageWrapper {
+    height: 900px;
+  }
+  
+  .badgeNumber {
+    font-size: 4.5rem;
+  }
+  
+  .badgeText {
+    font-size: 1.2rem;
+  }
+  
+  .keriDecoration {
+    width: 320px;
+  }
+  
+  .keriDecoration2 {
+    width: 220px;
   }
 }

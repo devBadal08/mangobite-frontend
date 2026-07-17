@@ -50,7 +50,7 @@ export default function About() {
       </section>
 
       {/* Story Section */}
-      <section className={styles.storySection}>
+      <section className={styles.storySection} style={{ position: 'relative' }}>
         <div className={`container ${styles.storyGrid}`}>
           <div className={styles.storyContent}>
             <h2>Welcome to Mango Bite</h2>

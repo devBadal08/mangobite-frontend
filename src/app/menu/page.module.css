@@ -157,12 +157,58 @@
   z-index: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .subcategoriesGrid {
     grid-template-columns: 1fr;
     padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .hero {
+    height: 35vh;
+    min-height: 250px;
+    margin-bottom: 2rem;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+
+  .heroOverlay h2 {
+    font-size: 1.8rem;
+  }
+
+  .heroOverlay p {
+    font-size: 1rem;
+  }
+
+  .categoryHero {
+    height: 220px;
+  }
+
+  .menuList {
+    gap: 3rem;
+  }
+
+  .subTitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .subcategoriesGrid {
+    padding: 1rem;
   }
   .heroOverlay h2 {
-    font-size: 2rem;
+    font-size: 1.4rem;
+  }
+  .itemName {
+    font-size: 0.9rem;
+  }
+  .itemPrice {
+    font-size: 0.9rem;
+  }
+  .categoryHero {
+    height: 180px;
   }
 }
