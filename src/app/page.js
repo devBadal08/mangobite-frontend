@@ -10,7 +10,7 @@ export default async function Home() {
   let menusData = [];
   try {
     const resRooms = await fetch('https://themangobitehotel.com/api/rooms');
-    if (resRooms.ok) {
+    if (resRooms.ok && resRooms.headers.get('content-type')?.includes('application/json')) {
       const data = await resRooms.json();
       if (data && data.status && data.data) {
         rooms = data.data.slice(0, 3);
@@ -18,7 +18,7 @@ export default async function Home() {
     }
     
     const resMenus = await fetch('https://themangobitehotel.com/api/menus');
-    if (resMenus.ok) {
+    if (resMenus.ok && resMenus.headers.get('content-type')?.includes('application/json')) {
       const data = await resMenus.json();
       if (data && data.status && data.data) {
         menusData = data.data;

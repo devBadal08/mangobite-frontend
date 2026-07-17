@@ -6,8 +6,9 @@ import BackButton from '@/components/BackButton';
 export async function generateStaticParams() {
   try {
     const res = await fetch('http://127.0.0.1:8000/api/rooms');
-    const data = await res.json();
-    if (data && data.status && data.data) {
+    if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
+      const data = await res.json();
+      if (data && data.status && data.data) {
       return data.data.map((room) => ({
         id: room.id.toString(),
       }));
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }) {
   let title = 'Room Details | Best Hotel in Mandvi Kutch';
   try {
     const res = await fetch(`https://themangobitehotel.com/api/rooms/${id}`);
-    if (res.ok) {
+    if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
         title = `${data.data.title} | Mango Bite Hotel Mandvi`;
@@ -44,7 +45,7 @@ export default async function RoomDetails({ params }) {
   let room = null;
   try {
     const res = await fetch(`https://themangobitehotel.com/api/rooms/${id}`);
-    if (res.ok) {
+    if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
         room = data.data;

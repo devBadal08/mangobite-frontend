@@ -13,7 +13,7 @@ export default async function Rooms() {
   let rooms = [];
   try {
     const res = await fetch('https://themangobitehotel.com/api/rooms');
-    if (res.ok) {
+    if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
         rooms = data.data;
