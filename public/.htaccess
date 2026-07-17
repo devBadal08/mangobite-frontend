@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Disable directory listing
+  Options -Indexes
+
+  # Serve the actual file if it exists
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # If a .html file exists with the same name, serve it
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  # Fallback to index.html for React/Next.js router
+  RewriteRule ^ index.html [L]
+</IfModule>
