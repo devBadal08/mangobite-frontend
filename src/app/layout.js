@@ -1,11 +1,11 @@
-import { Inter, Outfit } from 'next/font/google';
+import { Playfair_Display, Lato } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-heading' });
+const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'], variable: '--font-body' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-heading' });
 
 export const metadata = {
   title: 'Mango Bite Hotel & Restaurant | Best Hotel in Kutch, Mandvi',
@@ -29,7 +29,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${outfit.variable}`}>
+      <body className={`${lato.variable} ${playfair.variable}`}>
         <Header />
         <main className="main-content">
           {children}

@@ -70,7 +70,7 @@
 }
 
 .heroSubtitle {
-  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
   color: #e2e8f0;
   margin-bottom: 2.5rem;
   font-weight: 300;
@@ -78,7 +78,7 @@
 
 @media (min-width: 1800px) {
   .heroSubtitle {
-    font-size: clamp(1.2rem, 2vw, 2rem);
+    font-size: clamp(1.35rem, 2.2vw, 2.15rem);
   }
 }
 
@@ -104,16 +104,16 @@
   }
 
   .heroTitle {
-    font-size: clamp(1.4rem, 4.5vw, 1.8rem);
-    margin-bottom: 0.5rem;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    margin-bottom: 0.8rem;
     padding: 0 10px;
   }
 
   .heroSubtitle {
-    font-size: clamp(0.75rem, 3vw, 0.95rem);
-    margin-bottom: 1rem;
+    font-size: clamp(0.9rem, 3.5vw, 1.15rem);
+    margin-bottom: 1.2rem;
     padding: 0 15px;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   .heroActions {
@@ -127,8 +127,8 @@
   .heroActions .btn {
     width: auto;
     margin-bottom: 0;
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -197,14 +197,26 @@
 
 .featureCard h3 {
   margin-bottom: 0.8rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--secondary);
 }
 
 .featureCard p {
   color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 425px) {
+  .featureCard {
+    padding: 2rem 1.5rem;
+  }
+  .featureCard h3 {
+    font-size: 1.4rem;
+  }
+  .featureCard p {
+    font-size: 1.1rem;
+  }
 }
 
 .restaurantWrapper {
@@ -283,8 +295,8 @@
 
 .descriptionText {
   color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  line-height: 1.7;
   position: relative;
   z-index: 2;
 }
@@ -482,6 +494,18 @@
   .restaurantContent .section-title::after {
     left: 0 !important;
     transform: none !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .restaurantSection {
+    gap: 2rem;
+  }
+  .restaurantContent {
+    padding-top: 40px;
+  }
+  .keriDecoration {
+    width: 60px;
   }
 }
 
