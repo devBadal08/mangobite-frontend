@@ -9,9 +9,10 @@ export async function generateStaticParams() {
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
-      return data.data.map((room) => ({
-        id: room.id.toString(),
-      }));
+        return data.data.map((room) => ({
+          id: room.id.toString(),
+        }));
+      }
     }
   } catch (error) {
     console.error('Failed to fetch rooms for static params:', error);
