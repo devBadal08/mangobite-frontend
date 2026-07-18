@@ -16,7 +16,15 @@ export default async function Rooms() {
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
-        rooms = data.data;
+        // Sort rooms by price (low to high). If price is same, sort by ID (newer rooms at the end)
+        rooms = data.data.sort((a, b) => {
+          const priceA = parseInt(a.price) || 0;
+          const priceB = parseInt(b.price) || 0;
+          if (priceA !== priceB) {
+            return priceA - priceB;
+          }
+          return a.id - b.id;
+        });
       }
     }
   } catch (error) {
@@ -25,25 +33,18 @@ export default async function Rooms() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <Image 
-          src="/images/kutchi_suite.jpg" 
-          alt="Premium Suite at Mango Bite" 
-          fill 
-          className={styles.heroBg}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={`container ${styles.heroContent} animate-fade-in-up`}>
-          <h1 className={styles.heroTitle}>Heritage Luxury Rooms</h1>
-          <p className={styles.heroSubtitle}>
-            Experience authentic Kutchi artistry seamlessly blended with world-class modern comfort. Your unforgettable stay in Mandvi begins here.
-          </p>
-        </div>
-      </section>
+      <div className="container animate-fade-in-up" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '0.2rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+          Heritage Luxury Rooms
+        </h1>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
+          Experience authentic Kutchi artistry seamlessly blended with world-class modern comfort. Your unforgettable stay in Mandvi begins here.
+        </p>
+        <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
+      </div>
 
       {/* Main Rooms Content */}
-      <section className="section bg-light">
+      <section className="bg-light" style={{ paddingBottom: '5rem', paddingTop: '1rem' }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 4rem', color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: '1.8' }}>
             <p>
@@ -59,12 +60,12 @@ export default async function Rooms() {
               rooms.map((room) => {
                 let imageUrl = room.image;
                 if (!imageUrl.startsWith('/images/')) {
-                  imageUrl = imageUrl.startsWith('/storage') 
-                    ? `https://admin.themangobitehotel.com${imageUrl}` 
+                  imageUrl = imageUrl.startsWith('/storage')
+                    ? `https://admin.themangobitehotel.com${imageUrl}`
                     : `https://admin.themangobitehotel.com/storage/${imageUrl}`;
                 }
                 return (
-                  <RoomCard 
+                  <RoomCard
                     key={room.id}
                     id={room.id}
                     title={room.title}

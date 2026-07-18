@@ -10,7 +10,7 @@ export const metadata = {
 export default function Contact() {
   return (
     <div className="container section animate-fade-in-up">
-      <h1 className="section-title">Contact Us</h1>
+      <h1 className="section-title" style={{ color: '#000' }}>Contact Us</h1>
       
       <div className="contact-wrapper">
         {/* Camel sitting on the card */}

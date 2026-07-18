@@ -32,22 +32,15 @@ export default function About() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <Image 
-          src="/images/hotel_hero.jpg" 
-          alt="Mango Bite Hotel Exterior" 
-          fill 
-          className={styles.heroBg}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={`container ${styles.heroContent} animate-fade-in-up`}>
-          <h1 className={styles.heroTitle}>Our Heritage Story</h1>
-          <p style={{ fontSize: '1.2rem', fontWeight: '300', opacity: '0.9' }}>
-            Where traditional Kutchi warmth meets world-class modern hospitality.
-          </p>
-        </div>
-      </section>
+      <div className="container animate-fade-in-up" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '1rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+          Our Heritage Story
+        </h1>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
+          Where traditional Kutchi warmth meets world-class modern hospitality.
+        </p>
+        <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
+      </div>
 
       {/* Story Section */}
       <section className={styles.storySection} style={{ position: 'relative' }}>
@@ -65,10 +58,10 @@ export default function About() {
             </Link>
           </div>
           <div className={styles.storyImageWrapper}>
-            <Image 
-              src="/images/about.png" 
-              alt="About Mango Bite" 
-              fill 
+            <Image
+              src="/images/about.png"
+              alt="About Mango Bite"
+              fill
               className={styles.storyImage}
             />
           </div>

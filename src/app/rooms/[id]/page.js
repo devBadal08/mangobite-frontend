@@ -5,7 +5,7 @@ import BackButton from '@/components/BackButton';
 
 export async function generateStaticParams() {
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/rooms');
+    const res = await fetch('https://admin.themangobitehotel.com/api/rooms');
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
@@ -24,14 +24,14 @@ export async function generateMetadata({ params }) {
   const { id } = await params;
   let title = 'Room Details | Best Hotel in Mandvi Kutch';
   try {
-    const res = await fetch(`https://themangobitehotel.com/api/rooms/${id}`);
+    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms/${id}`);
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
         title = `${data.data.title} | Mango Bite Hotel Mandvi`;
       }
     }
-  } catch (error) {}
+  } catch (error) { }
 
   return {
     title,
@@ -42,10 +42,10 @@ export async function generateMetadata({ params }) {
 
 export default async function RoomDetails({ params }) {
   const { id } = await params;
-  
+
   let room = null;
   try {
-    const res = await fetch(`https://themangobitehotel.com/api/rooms/${id}`);
+    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms/${id}`);
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
@@ -63,9 +63,9 @@ export default async function RoomDetails({ params }) {
   // Handle Main Image URL
   let mainImageUrl = room.image;
   if (mainImageUrl && !mainImageUrl.startsWith('/images/')) {
-    mainImageUrl = mainImageUrl.startsWith('/storage') 
-      ? `https://themangobitehotel.com${mainImageUrl}` 
-      : `https://themangobitehotel.com/storage/${mainImageUrl}`;
+    mainImageUrl = mainImageUrl.startsWith('/storage')
+      ? `https://admin.themangobitehotel.com${mainImageUrl}`
+      : `https://admin.themangobitehotel.com/storage/${mainImageUrl}`;
   }
 
   // WhatsApp setup
@@ -112,9 +112,9 @@ export default async function RoomDetails({ params }) {
 
               return (
                 <>
-                  <div 
+                  <div
                     style={{ lineHeight: '1.8', color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '30px' }}
-                    dangerouslySetInnerHTML={{ __html: descriptionWithoutUl }} 
+                    dangerouslySetInnerHTML={{ __html: descriptionWithoutUl }}
                   />
 
                   {listItems.length > 0 && (
@@ -122,13 +122,13 @@ export default async function RoomDetails({ params }) {
                       <h3 style={{ color: 'var(--dark)', marginBottom: '20px', fontSize: '1.3rem' }}>Key Features & Amenities</h3>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '15px' }}>
                         {listItems.map((item, idx) => (
-                          <div key={idx} style={{ 
-                            backgroundColor: '#fdfdfd', 
-                            border: '1px solid #eaeaea', 
-                            borderRadius: '10px', 
-                            padding: '15px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
+                          <div key={idx} style={{
+                            backgroundColor: '#fdfdfd',
+                            border: '1px solid #eaeaea',
+                            borderRadius: '10px',
+                            padding: '15px',
+                            display: 'flex',
+                            alignItems: 'center',
                             gap: '12px',
                             color: 'var(--dark)',
                             fontWeight: '500',
@@ -150,7 +150,7 @@ export default async function RoomDetails({ params }) {
             {/* Action Buttons */}
             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#25D366', color: '#fff', padding: '12px 30px', borderRadius: '50px', textDecoration: 'none', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '10px', transition: 'all 0.3s ease' }}>
-                <svg xmlns="http://www.w3.org/-2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <svg xmlns="http://www.w3.org/-2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
                 Book Now via WhatsApp
               </a>
             </div>
@@ -163,13 +163,13 @@ export default async function RoomDetails({ params }) {
                   {room.sub_images.map((img, idx) => {
                     let subImgUrl = img;
                     if (!subImgUrl.startsWith('/images/')) {
-                      subImgUrl = subImgUrl.startsWith('/storage') 
-                        ? `https://themangobitehotel.com${subImgUrl}` 
-                        : `https://themangobitehotel.com/storage/${subImgUrl}`;
+                      subImgUrl = subImgUrl.startsWith('/storage')
+                        ? `https://admin.themangobitehotel.com${subImgUrl}`
+                        : `https://admin.themangobitehotel.com/storage/${subImgUrl}`;
                     }
                     return (
                       <div key={idx} style={{ position: 'relative', height: '200px', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
-                        <Image src={subImgUrl} alt={`${room.title} - Image ${idx+1}`} fill style={{ objectFit: 'cover' }} />
+                        <Image src={subImgUrl} alt={`${room.title} - Image ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
                       </div>
                     );
                   })}

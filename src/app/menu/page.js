@@ -17,10 +17,10 @@ export default async function MenuPage() {
       const data = await res.json();
       if (data && data.status && data.data) {
         menuData = data.data.map(category => {
-          const imageUrl = category.image.startsWith('/storage') 
-            ? `https://admin.themangobitehotel.com${category.image}` 
+          const imageUrl = category.image.startsWith('/storage')
+            ? `https://admin.themangobitehotel.com${category.image}`
             : `https://admin.themangobitehotel.com/storage/${category.image}`;
-            
+
           return {
             id: category.id,
             name: category.name,
@@ -39,28 +39,23 @@ export default async function MenuPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <Image 
-          src="/images/kutchi_restaurant.jpg" 
-          alt="Mango Bite Restaurant" 
-          fill 
-          className={styles.heroBg}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={`container ${styles.heroContent} animate-fade-in-up`}>
-          <h1 className={styles.heroTitle}>A Culinary Journey</h1>
-          <p style={{ fontSize: '1.2rem', fontWeight: '300', opacity: '0.9' }}>
-            Discover our rich, pure-vegetarian multi-cuisine menu crafted with authentic flavors.
-          </p>
+      <div className="container animate-fade-in-up" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '2rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+          A Culinary Journey
+        </h1>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
+          Discover our rich, pure-vegetarian multi-cuisine menu crafted with authentic flavors.
+        </p>
+        <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
+      </div>
+
+      <section className={styles.doodleSection}>
+        <div className={`container ${styles.menuContainer}`}>
+          <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Loading Menu...</div>}>
+            <MenuGallery menuData={menuData} />
+          </Suspense>
         </div>
       </section>
-
-      <div className={`container ${styles.menuContainer}`}>
-        <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Loading Menu...</div>}>
-          <MenuGallery menuData={menuData} />
-        </Suspense>
-      </div>
     </>
   );
 }

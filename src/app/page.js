@@ -16,7 +16,7 @@ export default async function Home() {
         rooms = data.data.slice(0, 3);
       }
     }
-    
+
     const resMenus = await fetch('https://admin.themangobitehotel.com/api/menus');
     if (resMenus.ok && resMenus.headers.get('content-type')?.includes('application/json')) {
       const data = await resMenus.json();
@@ -102,10 +102,10 @@ export default async function Home() {
             </Link>
           </div>
           <div className={styles.restaurantImageWrapper}>
-            <Image 
-              src="/images/kutchi_restaurant.jpg" 
-              alt="Mango Bite Restaurant Interior" 
-              fill 
+            <Image
+              src="/images/kutchi_restaurant.jpg"
+              alt="Mango Bite Restaurant Interior"
+              fill
               className={styles.roundedImage}
             />
             <div className={styles.experienceBadge}>
@@ -134,12 +134,12 @@ export default async function Home() {
               rooms.map((room) => {
                 let imageUrl = room.image;
                 if (!imageUrl.startsWith('/images/')) {
-                  imageUrl = imageUrl.startsWith('/storage') 
-                    ? `https://admin.themangobitehotel.com${imageUrl}` 
+                  imageUrl = imageUrl.startsWith('/storage')
+                    ? `https://admin.themangobitehotel.com${imageUrl}`
                     : `https://admin.themangobitehotel.com/storage/${imageUrl}`;
                 }
                 return (
-                  <RoomCard 
+                  <RoomCard
                     key={room.id}
                     id={room.id}
                     title={room.title}

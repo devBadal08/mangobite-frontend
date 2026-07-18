@@ -1,73 +1,279 @@
-/* Gallery View */
-.galleryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 1rem 0;
+/* Book Cover View */
+.coverContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 2rem;
+  perspective: 2500px;
+  position: relative; /* So absolute fake pages sit correctly */
 }
 
-.galleryCard {
-  cursor: pointer;
-  padding: 0;
-  border-radius: var(--radius-lg);
-}
-
-.cardImageWrapper {
-  position: relative;
+.fakePages {
+  position: absolute;
   width: 100%;
-  height: 250px;
+  max-width: 450px;
+  height: 550px;
+  background: rgba(253, 245, 230, 0.85); /* Glass effect vintage paper */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 10px 30px 30px 10px;
+  box-shadow: 
+    10px 10px 30px rgba(0,0,0,0.1),
+    inset -10px 0 20px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  z-index: 1;
   overflow: hidden;
 }
 
-.cardImage {
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.galleryCard:hover .cardImage {
-  transform: scale(1.1);
-}
-
-.cardOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 100%);
+.fakePagesContent {
+  padding: 3rem;
   display: flex;
-  align-items: flex-end;
-  padding: 1.5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  opacity: 0.9;
 }
 
-.cardTitle {
+.fakeLogoText {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800; /* Match header weight */
+  color: var(--primary); /* Match header main color */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.fakeLogoSubtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600; /* Match header weight */
+  letter-spacing: 2px; /* Match header spacing style */
+  color: var(--secondary); /* Match header subtitle color */
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.fakeWelcomeText {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.bookCover {
+  width: 100%;
+  max-width: 450px; /* Smaller cover width */
+  height: 550px; /* Smaller cover height */
+  background: linear-gradient(135deg, rgba(62, 39, 35, 0.85) 0%, rgba(26, 15, 13, 0.95) 100%), url('/images/custom_restaurant.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px 30px 30px 10px;
+  box-shadow: 
+    inset 4px 0 10px rgba(0,0,0,0.5), /* spine fold */
+    inset -10px 0 20px rgba(255,255,255,0.05),
+    20px 20px 40px rgba(0,0,0,0.3);
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 215, 0, 0.2); /* Subtle gold border */
+  z-index: 2; /* Sits above fake pages */
+}
+
+.bookCover::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(0,0,0,0.4);
+  box-shadow: 1px 0 2px rgba(255,255,255,0.1);
+}
+
+.bookCover:hover {
+  transform: rotateY(-10deg) scale(1.02);
+  box-shadow: 
+    inset 4px 0 10px rgba(0,0,0,0.5),
+    25px 25px 45px rgba(0,0,0,0.4),
+    0 0 30px rgba(255, 215, 0, 0.3); /* Gold glow on hover */
+}
+
+.bookCover:active {
+  transform: scale(0.98);
+  box-shadow: 
+    inset 4px 0 10px rgba(0,0,0,0.5),
+    10px 10px 20px rgba(0,0,0,0.3);
+}
+
+.coverOpening {
+  animation: coverOpenAnim 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes coverOpenAnim {
+  0% { transform: rotateY(0deg); opacity: 1; }
+  100% { transform: rotateY(-180deg); opacity: 0; }
+}
+
+.coverContent {
+  text-align: center;
+  padding: 3rem;
+  border: 2px solid rgba(255, 215, 0, 0.4); /* Gold border */
+  border-radius: 10px;
+  width: 85%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.coverLogoText {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 700;
   color: white;
-  font-size: 1.6rem;
-  margin: 0;
-  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.coverLogoSubtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: var(--primary);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+}
+
+.coverTitle {
+  color: #FFD700; /* Gold */
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.coverSubtitle {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 /* Detail View */
 .detailView {
   width: 100%;
-  max-width: 900px;
+  max-width: 950px; /* Smaller open book width */
   margin: 0 auto;
 }
 
-.backBtn {
+/* Internal Category Nav Bar */
+.categoryNavBarWrapper {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 0.5rem 1rem;
   margin-bottom: 2rem;
-  display: inline-flex;
-  align-items: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.categoryNavBar {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+.categoryNavBar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.categoryNavBtn {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.categoryNavBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.activeNavBtn {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.detailLayout {
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: stretch;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+@keyframes bookOpenLeft {
+  0% { transform: rotateY(90deg) scale(0.95); opacity: 0; }
+  100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+}
+
+@keyframes bookFadeInRight {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
 }
 
 .categoryHeroDetail {
+  flex: 1;
   position: relative;
-  width: 100%;
-  height: 300px;
-  border-radius: var(--radius-lg);
+  height: 500px; /* Smaller open book height */
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
   overflow: hidden;
-  margin-bottom: 3rem;
-  box-shadow: var(--shadow-md);
+  box-shadow: 
+    -10px 10px 30px rgba(0,0,0,0.15),
+    inset -25px 0 30px rgba(0,0,0,0.4); /* Spine shadow effect */
+  transform-origin: right center;
+  animation: bookOpenLeft 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  z-index: 2;
+  backface-visibility: hidden;
 }
 
 .heroImage {
@@ -80,24 +286,49 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
   display: flex;
-  align-items: flex-end;
-  padding: 2rem;
+  align-items: flex-start;
+  padding: 2.5rem;
 }
 
 .detailTitle {
   color: white;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin: 0;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
 .itemsWrapper {
-  background: var(--surface);
-  border-radius: var(--radius-lg);
+  flex: 1;
+  height: 500px; /* Smaller open book height */
+  overflow-y: auto; /* Scroll if items are too long */
+  background: rgba(253, 245, 230, 0.9); /* Vintage paper/warm feel */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   padding: 3rem;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border);
+  box-shadow: 
+    10px 10px 30px rgba(0,0,0,0.1),
+    inset 15px 0 20px rgba(0,0,0,0.08); /* Right spine shadow */
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-left: none;
+  position: relative;
+  animation: bookFadeInRight 0.6s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.itemsWrapper::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.15) 20%, rgba(0,0,0,0.15) 80%, transparent);
 }
 
 .itemList {
@@ -119,25 +350,84 @@
   font-weight: 600;
   font-size: 1.1rem;
   color: var(--text-main);
-  background: var(--surface);
-  padding-right: 1rem;
+  background: transparent;
+  padding-right: 0.5rem;
   z-index: 1;
 }
 
 .itemDots {
   flex-grow: 1;
-  border-bottom: 2px dotted var(--border);
+  border-bottom: 2px dotted rgba(0, 0, 0, 0.2);
   position: relative;
-  top: -6px;
 }
 
 .itemPrice {
   font-weight: 700;
   font-size: 1.2rem;
   color: var(--primary);
-  background: var(--surface);
-  padding-left: 1rem;
+  background: transparent;
+  padding-left: 0.5rem;
   z-index: 1;
+}
+
+/* Page Turn Buttons */
+.pageTurnBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--dark);
+  width: 50px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.pageTurnBtn:hover {
+  background: var(--primary);
+  color: white;
+  width: 60px;
+}
+
+.pageTurnPrev {
+  left: 0;
+  border-radius: 0 10px 10px 0;
+}
+
+.pageTurnNext {
+  right: 0;
+  border-radius: 10px 0 0 10px;
+}
+
+/* Full Page Flipping Animations - Removed as we now use instant DOM remount with key trick */
+
+@media (max-width: 900px) {
+  .detailLayout {
+    flex-direction: column;
+  }
+  .categoryHeroDetail {
+    min-height: 300px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: var(--shadow-md);
+    transform: none !important;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .itemsWrapper {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    border-left: 1px solid rgba(255, 255, 255, 0.6);
+    border-top: none;
+    box-shadow: var(--shadow-md);
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .itemsWrapper::before {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -145,7 +435,7 @@
     padding: 1.5rem;
   }
   .categoryHeroDetail {
-    height: 200px;
+    height: 250px;
   }
   .detailTitle {
     font-size: 2rem;
