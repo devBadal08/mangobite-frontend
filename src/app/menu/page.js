@@ -12,14 +12,14 @@ export const metadata = {
 export default async function MenuPage() {
   let menuData = [];
   try {
-    const res = await fetch('https://themangobitehotel.com/api/menus');
+    const res = await fetch('https://admin.themangobitehotel.com/api/menus');
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
         menuData = data.data.map(category => {
           const imageUrl = category.image.startsWith('/storage') 
-            ? `https://themangobitehotel.com${category.image}` 
-            : `https://themangobitehotel.com/storage/${category.image}`;
+            ? `https://admin.themangobitehotel.com${category.image}` 
+            : `https://admin.themangobitehotel.com/storage/${category.image}`;
             
           return {
             id: category.id,

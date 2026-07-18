@@ -9,7 +9,7 @@ export default async function Home() {
   let rooms = [];
   let menusData = [];
   try {
-    const resRooms = await fetch('https://themangobitehotel.com/api/rooms');
+    const resRooms = await fetch('https://admin.themangobitehotel.com/api/rooms');
     if (resRooms.ok && resRooms.headers.get('content-type')?.includes('application/json')) {
       const data = await resRooms.json();
       if (data && data.status && data.data) {
@@ -17,7 +17,7 @@ export default async function Home() {
       }
     }
     
-    const resMenus = await fetch('https://themangobitehotel.com/api/menus');
+    const resMenus = await fetch('https://admin.themangobitehotel.com/api/menus');
     if (resMenus.ok && resMenus.headers.get('content-type')?.includes('application/json')) {
       const data = await resMenus.json();
       if (data && data.status && data.data) {
@@ -135,8 +135,8 @@ export default async function Home() {
                 let imageUrl = room.image;
                 if (!imageUrl.startsWith('/images/')) {
                   imageUrl = imageUrl.startsWith('/storage') 
-                    ? `https://themangobitehotel.com${imageUrl}` 
-                    : `https://themangobitehotel.com/storage/${imageUrl}`;
+                    ? `https://admin.themangobitehotel.com${imageUrl}` 
+                    : `https://admin.themangobitehotel.com/storage/${imageUrl}`;
                 }
                 return (
                   <RoomCard 

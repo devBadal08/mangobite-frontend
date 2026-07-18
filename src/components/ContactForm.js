@@ -26,7 +26,7 @@ export default function ContactForm() {
 
     try {
       // 1. Send data to Backend
-      const res = await fetch('https://themangobitehotel.com/api/contacts', {
+      const res = await fetch('https://admin.themangobitehotel.com/api/contacts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

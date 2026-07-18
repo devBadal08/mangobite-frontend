@@ -12,7 +12,7 @@ export const metadata = {
 export default async function Rooms() {
   let rooms = [];
   try {
-    const res = await fetch('https://themangobitehotel.com/api/rooms');
+    const res = await fetch('https://admin.themangobitehotel.com/api/rooms');
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
@@ -60,8 +60,8 @@ export default async function Rooms() {
                 let imageUrl = room.image;
                 if (!imageUrl.startsWith('/images/')) {
                   imageUrl = imageUrl.startsWith('/storage') 
-                    ? `https://themangobitehotel.com${imageUrl}` 
-                    : `https://themangobitehotel.com/storage/${imageUrl}`;
+                    ? `https://admin.themangobitehotel.com${imageUrl}` 
+                    : `https://admin.themangobitehotel.com/storage/${imageUrl}`;
                 }
                 return (
                   <RoomCard 
