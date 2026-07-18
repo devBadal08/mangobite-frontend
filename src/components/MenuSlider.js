@@ -103,8 +103,8 @@ export default function MenuSlider({ menus }) {
           let imageUrl = menu.image;
           if (imageUrl && !imageUrl.startsWith('/images/')) {
             imageUrl = imageUrl.startsWith('/storage') 
-              ? `http://127.0.0.1:8000${imageUrl}` 
-              : `http://127.0.0.1:8000/storage/${imageUrl}`;
+              ? `https://admin.themangobitehotel.com${imageUrl}` 
+              : `https://admin.themangobitehotel.com/storage/${imageUrl}`;
           }
 
           // We use modulo to ensure the same original item gets the active class 

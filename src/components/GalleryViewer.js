@@ -40,8 +40,8 @@ export default function GalleryViewer({ galleries }) {
     if (!img) return '/images/custom_restaurant.jpg';
     if (img.startsWith('/images/')) return img;
     return img.startsWith('/storage') 
-      ? `https://themangobitehotel.com${img}` 
-      : `https://themangobitehotel.com/storage/${img}`;
+      ? `https://admin.themangobitehotel.com${img}` 
+      : `https://admin.themangobitehotel.com/storage/${img}`;
   };
 
   if (activeEvent) {

@@ -13,7 +13,7 @@ export const metadata = {
 export default async function Gallery() {
   let galleries = [];
   try {
-    const res = await fetch('https://themangobitehotel.com/api/galleries');
+    const res = await fetch('https://admin.themangobitehotel.com/api/galleries');
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
