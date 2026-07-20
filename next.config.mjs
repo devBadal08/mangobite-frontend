@@ -3,15 +3,15 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
 
-  allowedDevOrigins: ['192.168.1.7', 'localhost', '127.0.0.1'],
+  allowedDevOrigins: ['192.168.1.11', 'localhost', '127.0.0.1', 'themangobitehotel.com'],
   images: {
     unoptimized: true,
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'themangobitehotel.com',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "admin.themangobitehotel.com",
+        port: "8000",
+        pathname: "/storage/**",
       },
     ],
   },

@@ -12,7 +12,7 @@ export const metadata = {
 export default async function MenuPage() {
   let menuData = [];
   try {
-    const res = await fetch('https://admin.themangobitehotel.com/api/menus');
+    const res = await fetch('https://admin.themangobitehotel.com/api/menus', { cache: 'no-store' });
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
