@@ -2,6 +2,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
+import { Check, Maximize, Users, BedDouble, Snowflake, Wifi, Tv, Bath, Droplet, Sparkles, Shirt, Ban, Heart, Coffee, Star, Smile, Bell } from 'lucide-react';
+
+const getAmenityIcon = (text) => {
+  const t = text.toLowerCase();
+  if (t.includes('room size')) return <Maximize size={18} color="var(--primary)" />;
+  if (t.includes('occupancy') || t.includes('adult') || t.includes('family') || t.includes('families') || t.includes('group') || t.includes('friend')) return <Users size={18} color="var(--primary)" />;
+  if (t.includes('couple')) return <Heart size={18} color="var(--primary)" />;
+  if (t.includes('bed')) return <BedDouble size={18} color="var(--primary)" />;
+  if (t.includes('air conditioning') || t.includes(' ac ') || t.includes('ac room')) return <Snowflake size={18} color="var(--primary)" />;
+  if (t.includes('wi-fi') || t.includes('wifi')) return <Wifi size={18} color="var(--primary)" />;
+  if (t.includes('tv') || t.includes('television')) return <Tv size={18} color="var(--primary)" />;
+  if (t.includes('bathroom') || t.includes('hot & cold') || t.includes('shower')) return <Bath size={18} color="var(--primary)" />;
+  if (t.includes('drinking water') || t.includes('room service') || t.includes('tea')) return <Coffee size={18} color="var(--primary)" />;
+  if (t.includes('toiletries') || t.includes('towel')) return <Droplet size={18} color="var(--primary)" />;
+  if (t.includes('housekeeping')) return <Sparkles size={18} color="var(--primary)" />;
+  if (t.includes('wardrobe')) return <Shirt size={18} color="var(--primary)" />;
+  if (t.includes('smoking')) return <Ban size={18} color="var(--primary)" />;
+  if (t.includes('recommend')) return <Star size={18} color="var(--primary)" />;
+  if (t.includes('comfort') || t.includes('peaceful') || t.includes('relaxing')) return <Smile size={18} color="var(--primary)" />;
+  return <Check size={18} color="var(--primary)" />;
+};
 
 export async function generateStaticParams() {
   try {
@@ -134,10 +155,10 @@ export default async function RoomDetails({ params }) {
                             fontWeight: '500',
                             boxShadow: '0 2px 5px rgba(0,0,0,0.02)'
                           }}>
-                            <div style={{ backgroundColor: 'rgba(197, 85, 59, 0.1)', padding: '6px', borderRadius: '50%', display: 'flex' }}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <div style={{ backgroundColor: 'rgba(197, 85, 59, 0.1)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              {getAmenityIcon(item)}
                             </div>
-                            {item}
+                            <span style={{ flex: 1 }}>{item}</span>
                           </div>
                         ))}
                       </div>

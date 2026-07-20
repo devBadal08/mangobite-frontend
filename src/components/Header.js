@@ -39,7 +39,11 @@ export default function Header() {
           <ul className={styles.desktopNav}>
             {navLinks.map((link) => (
               <li key={link.name}>
-                <Link href={link.path} className={styles.navLink}>
+                <Link 
+                  href={link.path} 
+                  className={styles.navLink}
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   {link.name}
                 </Link>
               </li>
@@ -68,7 +72,10 @@ export default function Header() {
               <Link 
                 href={link.path} 
                 className={styles.mobileNavLink}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               >
                 {link.name}
               </Link>
