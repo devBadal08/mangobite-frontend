@@ -21,6 +21,7 @@ export default function MenuGallery({ menuData }) {
   const [windowWidth, setWindowWidth] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const book = useRef();
+  const bookContainerRef = useRef(null);
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -55,144 +56,183 @@ export default function MenuGallery({ menuData }) {
   const isClosedCover = !usePortrait && currentPage === 0;
   const transformStyle = isClosedCover ? `translateX(-${bookWidth / 2}px)` : 'translateX(0)';
 
+  const handleCategoryClick = (idx) => {
+    // Jump to specific category. 
+    // Page 0: Cover, Page 1: Inner Cover, Page 2: Welcome
+    // Category 0 Image is Page 3.
+    const targetPage = 3 + (idx * 2);
+    if (book.current) {
+      book.current.pageFlip().turnToPage(targetPage);
+    }
+    // Scroll down to the book
+    if (bookContainerRef.current) {
+      setTimeout(() => {
+        const yOffset = -80; // Offset for sticky header
+        const element = bookContainerRef.current;
+        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }, 100);
+    }
+  };
+
   return (
-    <div
-      className={`${styles.bookContainer} animate-fade-in-up`}
-      style={{
-        transform: transformStyle,
-        transition: 'transform 0.8s ease-in-out'
-      }}
-    >
-      <button
-        className={`${styles.navBtn} ${styles.navPrev}`}
-        style={{
-          opacity: currentPage === 0 ? 0 : 1,
-          pointerEvents: currentPage === 0 ? 'none' : 'auto'
-        }}
-        onClick={() => {
-          if (book.current) book.current.pageFlip().flipPrev();
-        }}
-      >
-        <ChevronLeft size={36} />
-      </button>
-
-      <HTMLFlipBook
-        ref={book}
-        width={bookWidth}
-        height={bookHeight}
-        size="stretch"
-        minWidth={100}
-        maxWidth={500}
-        minHeight={140}
-        maxHeight={750}
-        maxShadowOpacity={0.5}
-        showCover={true}
-        mobileScrollSupport={true}
-        className={styles.flipBook}
-        usePortrait={usePortrait}
-        drawShadow={true}
-        flippingTime={1000}
-        onFlip={(e) => setCurrentPage(e.data)}
-      >
-        {/* Front Cover */}
-        <Page density="hard">
-          <div className={styles.coverFront}>
-            <div className={styles.coverLogoText}>
-              Mango Bite
-              <span className={styles.coverLogoSubtitle}>Hotel & Restaurant</span>
-            </div>
-            <h1 className={styles.coverTitle}>Menu</h1>
-            <p className={styles.coverSubtitle}>Swipe or click to open</p>
-          </div>
-        </Page>
-
-        {/* Inner Front Cover (Left Side) */}
-        <Page density="hard">
-          <div className={styles.coverInner}>
-            <div className={styles.coverLogoText} style={{ opacity: 0.3, transform: 'scale(0.7)', textShadow: 'none', marginBottom: '1rem' }}>
-              Mango Bite
-              <span className={styles.coverLogoSubtitle}>Hotel & Restaurant</span>
-            </div>
-            <h1 className={styles.coverTitle} style={{ opacity: 0.15, borderBottom: 'none', letterSpacing: '2px', fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}>MENU</h1>
-          </div>
-        </Page>
-
-        {/* Intro Page (Right Side) */}
-        <Page>
-          <div className={`${styles.itemsPage} ${styles.centerPage}`}>
-            <h2 className={styles.welcomeTitle}>Welcome</h2>
-            <p className={styles.welcomeText}>
-              Explore our carefully curated pure vegetarian delights. Fresh ingredients, authentic recipes, and a passion for perfection.
-            </p>
-            <div className={styles.swipeHint}>
-              ( Swipe or click arrow to explore next &rarr; )
-            </div>
-          </div>
-        </Page>
-
-        {/* Generate Pages for Each Category */}
-        {menuData.flatMap((category) => [
-          /* Left Page: Category Image & Title */
-          <Page key={`${category.id}-left`}>
-            <div className={styles.categoryHeroPage}>
+    <div className={styles.galleryWrapper}>
+      {/* Visual Category Index (Clickable Photos) */}
+      <div className={`${styles.categoryIndexContainer} animate-fade-in-up`}>
+        {menuData.map((category, idx) => (
+          <div key={`idx-${category.id}`} className={styles.categoryIndexItem} onClick={() => handleCategoryClick(idx)}>
+            <div className={styles.categoryThumbWrapper}>
               <Image
                 src={category.image || '/images/custom_restaurant.jpg'}
                 alt={category.name}
                 fill
-                className={styles.pageImage}
+                className={styles.categoryThumb}
               />
-              <div className={styles.pageImageOverlay}>
-                <h2 className={styles.pageCategoryTitle}>{category.name}</h2>
-              </div>
             </div>
-          </Page>,
-
-          /* Right Page: Category Items */
-          <Page key={`${category.id}-right`}>
-            <div className={styles.itemsPage}>
-              <h3 className={styles.itemsPageHeader}>{category.name}</h3>
-              <ul className={styles.itemList}>
-                {category.items.map((item, i) => (
-                  <li key={i} className={styles.itemRow}>
-                    <span className={styles.itemName}>{item.name}</span>
-                    <span className={styles.itemDots}></span>
-                    <span className={styles.itemPrice}>₹{item.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Page>
-        ])}
-
-        {/* Inner Back Cover */}
-        <Page density="hard">
-          <div className={styles.coverInner}>
-            <h2 className={styles.welcomeTitle} style={{ color: '#FFD700' }}>Thank You!</h2>
-            <p className={styles.welcomeText} style={{ color: '#d7ccc8' }}>
-              We hope you enjoyed our menu. Please ask our staff if you have any special dietary requirements.
-            </p>
+            <span className={styles.categoryIndexName}>{category.name}</span>
           </div>
-        </Page>
+        ))}
+      </div>
 
-        {/* Back Cover */}
-        <Page density="hard">
-          <div className={styles.coverBack}>
-            <div className={styles.coverLogoText}>
-              Mango Bite
-              <span className={styles.coverLogoSubtitle}>Hotel & Restaurant</span>
-            </div>
-          </div>
-        </Page>
-      </HTMLFlipBook>
-
-      <button
-        className={`${styles.navBtn} ${styles.navNext}`}
-        onClick={() => {
-          if (book.current) book.current.pageFlip().flipNext();
+      <div
+        ref={bookContainerRef}
+        className={`${styles.bookContainer} animate-fade-in-up`}
+        style={{
+          transform: transformStyle,
+          transition: 'transform 0.8s ease-in-out'
         }}
       >
-        <ChevronRight size={36} />
-      </button>
+        <button
+          className={`${styles.navBtn} ${styles.navPrev}`}
+          style={{
+            opacity: currentPage === 0 ? 0 : 1,
+            pointerEvents: currentPage === 0 ? 'none' : 'auto'
+          }}
+          onClick={() => {
+            if (book.current) book.current.pageFlip().flipPrev();
+          }}
+        >
+          <ChevronLeft size={36} />
+        </button>
+
+        <HTMLFlipBook
+          ref={book}
+          width={bookWidth}
+          height={bookHeight}
+          size="stretch"
+          minWidth={100}
+          maxWidth={500}
+          minHeight={140}
+          maxHeight={750}
+          maxShadowOpacity={0.5}
+          showCover={true}
+          mobileScrollSupport={true}
+          className={styles.flipBook}
+          usePortrait={usePortrait}
+          drawShadow={true}
+          flippingTime={1000}
+          onFlip={(e) => setCurrentPage(e.data)}
+        >
+          {/* Front Cover */}
+          <Page density="hard">
+            <div className={styles.coverFront}>
+              <div className={styles.coverLogoText}>
+                Mango Bite
+                <span className={styles.coverLogoSubtitle}>Hotel & Restaurant</span>
+              </div>
+              <h1 className={styles.coverTitle}>Menu</h1>
+              <p className={styles.coverSubtitle}>Swipe or click to open</p>
+            </div>
+          </Page>
+
+          {/* Inner Front Cover (Left Side) */}
+          <Page density="hard">
+            <div className={styles.coverInner}>
+              <div className={styles.coverLogoText} style={{ opacity: 0.3, transform: 'scale(0.7)', textShadow: 'none', marginBottom: '1rem' }}>
+                Mango Bite
+                <span className={styles.coverLogoSubtitle}>Hotel & Restaurant</span>
+              </div>
+              <h1 className={styles.coverTitle} style={{ opacity: 0.15, borderBottom: 'none', letterSpacing: '2px', fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}>MENU</h1>
+            </div>
+          </Page>
+
+          {/* Intro Page (Right Side) */}
+          <Page>
+            <div className={`${styles.itemsPage} ${styles.centerPage}`}>
+              <h2 className={styles.welcomeTitle}>Welcome</h2>
+              <p className={styles.welcomeText}>
+                Explore our carefully curated pure vegetarian delights. Fresh ingredients, authentic recipes, and a passion for perfection.
+              </p>
+              <div className={styles.swipeHint}>
+                ( Swipe or click arrow to explore next &rarr; )
+              </div>
+            </div>
+          </Page>
+
+          {/* Generate Pages for Each Category */}
+          {menuData.flatMap((category) => [
+            /* Left Page: Category Image & Title */
+            <Page key={`${category.id}-left`}>
+              <div className={styles.categoryHeroPage}>
+                <Image
+                  src={category.image || '/images/custom_restaurant.jpg'}
+                  alt={category.name}
+                  fill
+                  className={styles.pageImage}
+                />
+                <div className={styles.pageImageOverlay}>
+                  <h2 className={styles.pageCategoryTitle}>{category.name}</h2>
+                </div>
+              </div>
+            </Page>,
+
+            /* Right Page: Category Items */
+            <Page key={`${category.id}-right`}>
+              <div className={styles.itemsPage}>
+                <h3 className={styles.itemsPageHeader}>{category.name}</h3>
+                <ul className={styles.itemList}>
+                  {category.items.map((item, i) => (
+                    <li key={i} className={styles.itemRow}>
+                      <span className={styles.itemName}>{item.name}</span>
+                      <span className={styles.itemDots}></span>
+                      <span className={styles.itemPrice}>₹{item.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Page>
+          ])}
+
+          {/* Inner Back Cover */}
+          <Page density="hard">
+            <div className={styles.coverInner}>
+              <h2 className={styles.welcomeTitle} style={{ color: '#FFD700' }}>Thank You!</h2>
+              <p className={styles.welcomeText} style={{ color: '#d7ccc8' }}>
+                We hope you enjoyed our menu. Please ask our staff if you have any special dietary requirements.
+              </p>
+            </div>
+          </Page>
+
+          {/* Back Cover */}
+          <Page density="hard">
+            <div className={styles.coverBack}>
+              <div className={styles.coverLogoText}>
+                Mango Bite
+                <span className={styles.coverLogoSubtitle}>Hotel & Restaurant</span>
+              </div>
+            </div>
+          </Page>
+        </HTMLFlipBook>
+
+        <button
+          className={`${styles.navBtn} ${styles.navNext}`}
+          onClick={() => {
+            if (book.current) book.current.pageFlip().flipNext();
+          }}
+        >
+          <ChevronRight size={36} />
+        </button>
+      </div>
     </div>
   );
 }
