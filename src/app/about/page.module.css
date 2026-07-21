@@ -43,7 +43,7 @@
 }
 
 .storySection {
-  padding: 6rem 0;
+  padding: 1rem 0 6rem 0;
   background-color: var(--background);
 }
 
@@ -155,7 +155,7 @@
   }
 
   .storySection {
-    padding: 3rem 0;
+    padding: 1rem 0 3rem 0;
   }
 
   .ratingSection {

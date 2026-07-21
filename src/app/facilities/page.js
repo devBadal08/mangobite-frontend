@@ -45,25 +45,18 @@ export default function Facilities() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <Image 
-          src="/images/premium_facilities_hero.jpg" 
-          alt="Mango Bite Facilities" 
-          fill 
-          className={styles.heroBg}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={`container ${styles.heroContent} animate-fade-in-up`}>
-          <h1 className={styles.heroTitle}>World-Class Facilities</h1>
-          <p className={styles.heroSubtitle}>
-            Experience the perfect blend of modern luxury and traditional Kutch hospitality, designed for your utmost comfort and convenience.
-          </p>
-        </div>
-      </section>
+      <div className="container animate-fade-in-up" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '1rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+          World-Class Facilities
+        </h1>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
+          Experience the perfect blend of modern luxury and traditional Kutch hospitality, designed for your utmost comfort and convenience.
+        </p>
+        <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
+      </div>
 
       {/* Main Facilities Grid */}
-      <section className="section bg-light">
+      <section className="bg-light" style={{ paddingBottom: '5rem', paddingTop: '1.8rem' }}>
         <div className="container">
           <div className={styles.grid}>
             {facilityCategories.map((cat, index) => (

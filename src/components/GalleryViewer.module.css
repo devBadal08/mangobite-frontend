@@ -168,3 +168,70 @@
     font-size: 2rem;
   }
 }
+
+/* Lightbox Popup Styles */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 999999; /* Massive z-index to cover the header completely */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.lightboxContent {
+  position: relative;
+  max-width: 80vw;
+  max-height: 75vh;
+  animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lightboxMedia {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: block;
+}
+
+.closeBtn {
+  position: absolute; /* Relative to .lightbox which is fixed */
+  top: 120px; /* Brought further down */
+  right: 35px;
+  background: var(--primary); /* Terracotta Red */
+  color: white;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  z-index: 9999999; /* Extremely high to stay above everything */
+}
+
+.closeBtn:hover {
+  background: #A93226; /* Darker red */
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

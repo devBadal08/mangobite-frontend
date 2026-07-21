@@ -8,7 +8,6 @@
   text-align: center;
   background-color: var(--dark);
   overflow: hidden;
-  margin-bottom: 4rem;
 }
 
 .heroBg {
@@ -41,6 +40,14 @@
   color: white;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   font-family: var(--font-heading);
+}
+
+.doodleSection {
+  background-image: url('/images/user_doodle_bg.png');
+  background-size: 350px;
+  background-repeat: repeat;
+  background-attachment: fixed; /* Parallax effect */
+  padding: 1rem 0 4rem 0;
 }
 
 .menuContainer {
@@ -167,7 +174,6 @@
   .hero {
     height: 35vh;
     min-height: 250px;
-    margin-bottom: 2rem;
   }
 
   .heroTitle {
