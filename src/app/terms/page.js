@@ -4,7 +4,7 @@ export const metadata = {
 
 export default function TermsAndConditions() {
   return (
-    <div className="container" style={{ paddingTop: 'px', paddingBottom: '80px', minHeight: '80vh' }}>
+    <div className="container" style={{ paddingTop: '80px', paddingBottom: '80px', minHeight: '80vh' }}>
       <h1 style={{ color: 'var(--primary)', marginBottom: '40px', borderBottom: '2px solid rgba(197, 85, 59, 0.2)', paddingBottom: '15px', fontSize: '2.5rem' }}>
         Terms and Conditions
       </h1>
