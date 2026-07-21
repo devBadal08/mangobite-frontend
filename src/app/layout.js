@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
+import ScrollToTop from '@/components/ScrollToTop';
 
 const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'], variable: '--font-body' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-heading' });
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <WhatsAppFloat />
+        <ScrollToTop />
       </body>
     </html>
   );

@@ -96,11 +96,26 @@
 
 @media (max-width: 768px) {
   .hero {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .heroBgImage {
+    position: relative;
     height: 56.25vw;
-    /* Maintain 16:9 aspect ratio of the video */
     min-height: 250px;
-    padding: 1rem 0;
-    align-items: center;
+    animation: none;
+  }
+
+  .heroOverlay {
+    display: none;
+  }
+
+  .heroContent {
+    padding: 2.5rem 15px 3.5rem 15px;
   }
 
   .heroTitle {
@@ -133,10 +148,8 @@
 }
 
 @media (max-width: 425px) {
-  .hero {
-    height: auto; /* Prevent content overflowing out of hero */
-    min-height: 350px; 
-    padding: 3rem 1rem;
+  .heroContent {
+    padding: 2rem 10px 3rem 10px;
   }
 }
 

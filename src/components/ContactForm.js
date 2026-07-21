@@ -41,7 +41,7 @@ export default function ContactForm() {
         const waNumber = "918490991577"; // Karan Singh
         const text = `*New Contact Form Inquiry*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone_no}%0A*Message:* ${formData.message}`;
         window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
-        
+
         // 3. Show Success State
         setIsSuccess(true);
       } else {
@@ -64,8 +64,8 @@ export default function ContactForm() {
         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: '1.6' }}>
           Thanks for visited our web site and contact to us shortly
         </p>
-        <button 
-          className="btn btn-outline" 
+        <button
+          className="btn btn-outline"
           style={{ marginTop: '2rem' }}
           onClick={() => {
             setIsSuccess(false);
@@ -87,55 +87,55 @@ export default function ContactForm() {
       )}
       <div>
         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Name</label>
-        <input 
-          type="text" 
+        <input
+          type="text"
           name="name"
           required
           value={formData.name}
           onChange={handleChange}
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} 
-          placeholder="Your Name" 
+          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+          placeholder="Your Name"
         />
       </div>
       <div>
         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Email</label>
-        <input 
-          type="email" 
+        <input
+          type="email"
           name="email"
           required
           value={formData.email}
           onChange={handleChange}
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} 
-          placeholder="Your Email" 
+          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+          placeholder="Your Email"
         />
       </div>
       <div>
         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Phone Number</label>
-        <input 
-          type="tel" 
+        <input
+          type="tel"
           name="phone_no"
           required
           value={formData.phone_no}
           onChange={handleChange}
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} 
-          placeholder="Your Phone Number" 
+          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+          placeholder="Your Phone Number"
         />
       </div>
       <div>
         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Message</label>
-        <textarea 
+        <textarea
           name="message"
           required
           value={formData.message}
           onChange={handleChange}
-          rows="4" 
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', resize: 'vertical' }} 
+          rows="4"
+          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', resize: 'vertical' }}
           placeholder="How can we help you?"
         ></textarea>
       </div>
-      <button 
-        type="submit" 
-        className="btn btn-primary" 
+      <button
+        type="submit"
+        className="btn btn-primary"
         style={{ marginTop: '1rem', opacity: isSubmitting ? 0.7 : 1 }}
         disabled={isSubmitting}
       >

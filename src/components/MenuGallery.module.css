@@ -1,103 +1,565 @@
-/* Gallery View */
-.galleryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 1rem 0;
+.galleryWrapper {
+  width: 100%;
 }
 
-.galleryCard {
-  cursor: pointer;
-  padding: 0;
-  border-radius: var(--radius-lg);
+.glassIndexWrapper {
+  margin: 2rem auto 4rem auto;
+  max-width: 1000px;
+  padding: 2rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  
+  /* Giant Thick Spiral Book Theme */
+  background: 
+    linear-gradient(to right, #6d4c41 0px, #6d4c41 45px, transparent 45px), /* Brown strip for spiral */
+    linear-gradient(to right, #2a1a17 0%, #3e2723 3%, #4e342e 10%, #3e2723 90%, #2a1a17 100%);
+  border-radius: 5px 15px 15px 5px;
+  padding-left: 3rem; /* Space for spiral */
+  
+  /* Giant 3D Page Stacking Effect */
+  box-shadow: 
+    inset 15px 0 20px rgba(0, 0, 0, 0.4), /* Inner spine shadow */
+    1px 1px 0px #fff, 
+    2px 2px 0px #d7ccc8, 
+    3px 3px 0px #fff, 
+    4px 4px 0px #d7ccc8, 
+    5px 5px 0px #fff, 
+    6px 6px 0px #d7ccc8, 
+    7px 7px 0px #fff,
+    8px 8px 0px #d7ccc8,
+    9px 9px 0px #fff,
+    10px 10px 0px #d7ccc8,
+    20px 25px 40px rgba(0,0,0,0.6); /* Ground shadow */
+    
+  transform-style: preserve-3d;
+  transform: perspective(1500px) rotateX(2deg) rotateY(-2deg); /* Laying flat like a giant book */
 }
 
-.cardImageWrapper {
+/* Giant Spiral Holes */
+.glassIndexWrapper::before {
+  content: '';
+  position: absolute;
+  top: 15px; bottom: 15px; left: 10px;
+  width: 15px;
+  background-image: radial-gradient(circle at center, #111 40%, transparent 45%);
+  background-size: 100% 30px;
+  background-position: center;
+  z-index: 2;
+}
+
+/* Giant Silver Wire Coils */
+.glassIndexWrapper::after {
+  content: '';
+  position: absolute;
+  top: 15px; bottom: 15px; left: -5px;
+  width: 25px;
+  background-image: linear-gradient(-20deg, transparent 35%, #777 38%, #eee 45%, #555 52%, transparent 55%);
+  background-size: 100% 30px;
+  background-position: center;
+  z-index: 3;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+}
+
+.glassIndexHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.glassLogo {
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.glassTitle {
+  font-family: var(--font-heading);
+  color: #FFD700; /* Gold ink on dark paper */
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Category Scrolling Wrapper */
+.categoryScrollWrapper {
   position: relative;
   width: 100%;
-  height: 250px;
-  overflow: hidden;
-}
-
-.cardImage {
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.galleryCard:hover .cardImage {
-  transform: scale(1.1);
-}
-
-.cardOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 100%);
   display: flex;
-  align-items: flex-end;
-  padding: 1.5rem;
-}
-
-.cardTitle {
-  color: white;
-  font-size: 1.6rem;
-  margin: 0;
-  line-height: 1.2;
-}
-
-/* Detail View */
-.detailView {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.backBtn {
-  margin-bottom: 2rem;
-  display: inline-flex;
   align-items: center;
 }
 
-.categoryHeroDetail {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-bottom: 3rem;
-  box-shadow: var(--shadow-md);
+.catScrollBtn {
+  display: none; /* Hidden on desktop by default because of Grid layout */
 }
 
-.heroImage {
+/* Category Visual Index */
+.categoryIndexContainer {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.2rem;
+  padding: 1rem 1rem 1.5rem 1rem;
+  justify-content: flex-start;
+  width: 100%;
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+.categoryIndexContainer::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .categoryIndexContainer {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem 1rem;
+    padding: 1rem;
+    justify-items: center;
+    overflow-x: visible;
+  }
+}
+
+@media (min-width: 1024px) {
+  .categoryIndexContainer {
+    justify-content: center;
+    flex-wrap: wrap;
+    /* Wrap on large screens to avoid scrolling if possible */
+  }
+}
+
+.categoryIndexItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.categoryIndexItem:hover {
+  transform: translateY(-5px);
+}
+
+.categoryThumbWrapper {
+  width: 85px;
+  height: 120px;
+  border-radius: 2px 10px 10px 2px;
+  position: relative;
+  margin-bottom: 0.8rem;
+  background: linear-gradient(to right, #6d4c41 0px, #6d4c41 12px, #3e2723 12px); /* Brown strip for spiral */
+  padding-left: 10px; /* Space for mini spiral */
+
+  /* Advanced 3D Page Stacking Effect */
+  box-shadow:
+    inset 4px 0 10px rgba(0, 0, 0, 0.2),
+    1px 0px 0px #fff,
+    2px 0px 0px #ccc,
+    3px 0px 0px #fff,
+    4px 0px 0px #ccc,
+    5px 0px 0px #fff,
+    6px 0px 0px #ccc,
+    8px 5px 10px rgba(0, 0, 0, 0.3);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: perspective(600px) rotateY(-10deg);
+}
+
+/* Mini Spiral Background & Holes */
+.categoryThumbWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 16px;
+  background-color: #3e2723; /* Solid dark brown leather strip over the image */
+  background-image: radial-gradient(circle at 10px center, #0a0503 38%, transparent 45%);
+  background-size: 100% 10px; /* Perfect tight spacing scaled up */
+  background-position: left center;
+  z-index: 2;
+  border-right: 1.5px solid rgba(0,0,0,0.5);
+  box-shadow: 2px 0 5px rgba(0,0,0,0.4); /* Shadow onto the book cover */
+}
+
+/* Mini Silver Wire Coils */
+.categoryThumbWrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: -5px;
+  width: 18px;
+  background-image: linear-gradient(-12deg, transparent 40%, #777 42%, #fff 48%, #444 54%, transparent 56%);
+  background-size: 100% 10px; /* Matching tight spacing scaled up */
+  background-position: left center;
+  z-index: 3;
+  filter: drop-shadow(1.5px 2px 2px rgba(0,0,0,0.6));
+  pointer-events: none;
+}
+
+.categoryIndexItem:hover .categoryThumbWrapper {
+  transform: perspective(600px) rotateY(0deg) translateY(-5px) scale(1.05);
+  box-shadow:
+    inset 4px 0 10px rgba(0, 0, 0, 0.2),
+    1px 0px 0px #fff,
+    2px 0px 0px #ccc,
+    3px 0px 0px #fff,
+    4px 0px 0px #ccc,
+    5px 0px 0px #fff,
+    6px 0px 0px #ccc,
+    10px 8px 15px rgba(255, 140, 0, 0.4);
+}
+
+.categoryThumb {
+  object-fit: cover;
+  border-radius: 0 8px 8px 0;
+  z-index: 1;
+}
+
+.categoryIndexName {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: #fff; /* White text on dark book */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  max-width: 110px;
+  line-height: 1.2;
+  margin-top: 0.5rem;
+}
+
+/* 3D Flipbook Core */
+.bookContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto 4rem auto;
+  perspective: 2000px;
+  /* Essential for 3D realism */
+  padding: 0 1rem;
+  gap: 1.5rem;
+  /* Space for arrows */
+  position: relative;
+}
+
+.navBtn {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid #FFD700;
+  color: #FF8C00;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 10;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.navBtn:hover {
+  background: #FFD700;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+}
+
+.flipBook {
+  /* Removed box-shadow here because it casts a shadow on the invisible left page when closed */
+}
+
+.page {
+  background-color: #fdfbf7;
+  /* Cream paper color */
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05), 1px 1px 3px rgba(0,0,0,0.1);
+  /* Slight page shading */
+  overflow: hidden;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  /* Subtle page edge */
+  border-radius: 2px 6px 6px 2px;
+}
+
+/* Ensure even numbered pages (left side) have border on left instead */
+.page:nth-child(even) {
+  border-right: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px 2px 2px 6px;
+}
+
+.pageContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Front Cover */
+.coverFront {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('/images/custom_restaurant.jpg') center/cover;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #FFD700;
+  text-align: center;
+  padding: 2rem;
+  
+  /* 3D Book Cover Styles */
+  border-left: 20px solid #1a0f0a; /* Thick dark spine */
+  border-radius: 2px 12px 12px 2px;
+  box-shadow: 
+    inset 15px 0 20px rgba(0, 0, 0, 0.5), /* Spine rounding shadow */
+    1px 1px 0px #fff, 
+    2px 2px 0px #ccc, 
+    3px 3px 0px #fff, 
+    4px 4px 0px #ccc, 
+    5px 5px 0px #fff, 
+    6px 6px 0px #ccc, 
+    7px 7px 0px #fff,
+    8px 8px 0px #ccc,
+    20px 25px 40px rgba(0,0,0,0.6); /* Ground drop shadow */
+}
+
+.coverLogoText {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-align: center;
+}
+
+.coverLogoSubtitle {
+  font-size: clamp(0.7rem, 2vw, 1.1rem);
+  font-family: var(--font-body);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+  margin-top: 0.5rem;
+}
+
+.coverTitle {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-family: var(--font-heading);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin: 0;
+  color: white;
+  border-bottom: 2px solid #FFD700;
+  padding-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.coverSubtitle {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Inner Covers */
+.coverInner {
+  background: #3e2723;
+  /* Dark brown cardboard inside cover */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #d7ccc8;
+  padding: 2rem;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+.innerIntroText h2 {
+  font-family: var(--font-heading);
+  color: #FFD700;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.innerIntroText p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.coverBack {
+  background: #3e2723;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 3D Back Cover Styles */
+  border-right: 20px solid #1a0f0a; /* Thick spine opposite side */
+  border-radius: 12px 2px 2px 12px;
+  box-shadow: 
+    inset -15px 0 20px rgba(0, 0, 0, 0.5), 
+    -1px 1px 0px #fff, 
+    -2px 2px 0px #ccc, 
+    -3px 3px 0px #fff, 
+    -4px 4px 0px #ccc, 
+    -5px 5px 0px #fff, 
+    -6px 6px 0px #ccc, 
+    -7px 7px 0px #fff,
+    -8px 8px 0px #ccc,
+    -20px 25px 40px rgba(0,0,0,0.6);
+}
+
+/* Category Image Page */
+.categoryHeroPage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pageImage {
   object-fit: cover;
 }
 
-.heroOverlay {
+.pageImageOverlay {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  padding: 3rem 2rem 2rem 2rem;
+  text-align: left;
+}
+
+.pageCategoryTitle {
+  color: white;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Items List Page */
+.itemsPage {
+  padding: 2.5rem;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  background-color: #fdfbf7;
+  overflow-y: auto;
+  /* Allow scrolling for items */
+  position: relative;
+}
+
+/* Custom scrollbar for items list */
+.itemsPage::-webkit-scrollbar {
+  width: 6px;
+}
+
+.itemsPage::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.itemsPage::-webkit-scrollbar-thumb {
+  background: rgba(255, 140, 0, 0.4);
+  border-radius: 3px;
+}
+
+/* Decorative corner ornaments */
+.itemsPage::before,
+.itemsPage::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 140, 0, 0.2);
+}
+
+.itemsPage::before {
+  top: 15px;
+  left: 15px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.itemsPage::after {
+  bottom: 15px;
+  right: 15px;
+  border-left: none;
+  border-top: none;
+}
+
+.itemsPageHeader {
+  color: var(--primary);
+  /* Terracotta */
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.8rem;
+}
+
+.itemsPageHeader::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+/* Welcome Page Specifics */
+.centerPage {
   display: flex;
-  align-items: flex-end;
-  padding: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.5rem;
 }
 
-.detailTitle {
-  color: white;
-  font-size: 2.5rem;
-  margin: 0;
+.welcomeTitle {
+  font-family: var(--font-heading);
+  color: var(--primary);
+  font-size: clamp(1.2rem, 4vw, 2.5rem);
+  margin-bottom: 0.5rem;
 }
 
-.itemsWrapper {
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  padding: 3rem;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border);
+.welcomeText {
+  color: var(--dark);
+  font-size: clamp(0.7rem, 2vw, 1.2rem);
+  padding: 0 0.5rem;
+  line-height: 1.4;
+}
+
+.swipeHint {
+  margin-top: 1rem;
+  color: var(--primary);
+  font-size: clamp(0.6rem, 1.5vw, 1rem);
+  font-style: italic;
+  opacity: 0.8;
+  animation: pulse 2s infinite;
 }
 
 .itemList {
@@ -106,60 +568,182 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .itemRow {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  width: 100%;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: var(--dark);
 }
 
 .itemName {
   font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-main);
-  background: var(--surface);
-  padding-right: 1rem;
-  z-index: 1;
+  flex-shrink: 0;
+  max-width: 70%;
 }
 
 .itemDots {
   flex-grow: 1;
-  border-bottom: 2px dotted var(--border);
+  border-bottom: 2px dotted #ccc;
+  margin: 0 10px;
   position: relative;
-  top: -6px;
+  top: -4px;
 }
 
 .itemPrice {
   font-weight: 700;
-  font-size: 1.2rem;
   color: var(--primary);
-  background: var(--surface);
-  padding-left: 1rem;
-  z-index: 1;
+  flex-shrink: 0;
+}
+
+.emptyMenu {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.2rem;
+  color: var(--text-muted);
 }
 
 @media (max-width: 768px) {
-  .itemsWrapper {
+  .itemsPage {
+    padding: 1rem 0.5rem;
+  }
+
+  .itemsPage::before,
+  .itemsPage::after {
+    width: 15px;
+    height: 15px;
+  }
+
+  .itemsPage::before {
+    top: 5px;
+    left: 5px;
+  }
+
+  .itemsPage::after {
+    bottom: 5px;
+    right: 5px;
+  }
+
+  .itemsPageHeader {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .itemList {
+    gap: 0.5rem;
+  }
+
+  .itemRow {
+    font-size: clamp(0.6rem, 2vw, 0.9rem);
+  }
+
+  .itemDots {
+    margin: 0 5px;
+  }
+
+  .pageCategoryTitle {
+    font-size: clamp(1rem, 4vw, 1.8rem);
+  }
+
+  .coverTitle {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .coverLogoText {
+    font-size: clamp(1rem, 4vw, 2rem);
+    margin-bottom: 1rem;
+  }
+
+  .coverLogoSubtitle {
+    font-size: clamp(0.5rem, 1.5vw, 0.8rem);
+  }
+
+  .categoryIndexContainer {
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
+  }
+
+  .categoryThumbWrapper {
+    width: 75px;
+    height: 105px;
+  }
+
+  .categoryIndexName {
+    font-size: 1rem;
+    max-width: 90px;
+  }
+
+  .bookContainer {
+    gap: 0;
+    padding: 0;
+    margin: 1rem auto 2rem auto;
+  }
+
+  .navBtn {
+    position: absolute;
+    top: 10px;
+    /* Moved to upper side as requested */
+    transform: none;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    z-index: 99;
+  }
+
+  .navBtn:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+  }
+
+  .navPrev {
+    left: 2px;
+  }
+
+  .navNext {
+    right: 2px;
+  }
+
+  .coverFront {
     padding: 1.5rem;
   }
-  .categoryHeroDetail {
-    height: 200px;
-  }
-  .detailTitle {
-    font-size: 2rem;
-  }
-}
 
-@media (max-width: 425px) {
-  .itemsWrapper {
+  .coverInner {
     padding: 1rem;
   }
-  .itemName {
-    font-size: 0.95rem;
+
+  /* Show category arrows on mobile */
+  .catScrollBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    background: rgba(255, 215, 0, 0.8);
+    color: #3e2723;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    z-index: 10;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
-  .itemPrice {
-    font-size: 1rem;
+  
+  .catScrollBtn:active {
+    background: #FF8C00;
+  }
+
+  .catScrollLeft {
+    left: -10px;
+  }
+
+  .catScrollRight {
+    right: -10px;
   }
 }

@@ -1,64 +1,97 @@
-.hero {
+/* Mandala Decorations */
+.gallerySection {
   position: relative;
-  height: 40vh;
-  min-height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: var(--dark);
   overflow: hidden;
+  min-height: 80vh;
+  /* Ensures tall enough for big mandalas */
 }
 
-.heroBg {
+.mandalaWrapperLeft,
+.mandalaWrapperRight {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: 38%;
+  transform: translateY(-50%);
+  width: 600px;
+  opacity: 0.15;
   z-index: 1;
+  pointer-events: none;
 }
 
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
-  z-index: 2;
+.mandalaWrapperLeft {
+  left: -300px;
 }
 
-.heroContent {
-  position: relative;
-  z-index: 3;
-  color: white;
-  padding: 2rem;
+.mandalaWrapperRight {
+  right: -300px;
 }
 
-.heroTitle {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: 0.5rem;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  font-family: var(--font-heading);
+.mandalaImage {
+  width: 100%;
+  height: auto;
+  animation: spin 60s linear infinite;
+}
+
+.mandalaWrapperRight .mandalaImage {
+  animation: spin-reverse 60s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (max-width: 1440px) {
+
+  .mandalaWrapperLeft,
+  .mandalaWrapperRight {
+    width: 500px;
+  }
+
+  .mandalaWrapperLeft {
+    left: -250px;
+  }
+
+  .mandalaWrapperRight {
+    right: -250px;
+  }
 }
 
 @media (max-width: 1024px) {
-  .hero {
-    height: 35vh;
-    min-height: 250px;
+
+  .mandalaWrapperLeft,
+  .mandalaWrapperRight {
+    width: 400px;
   }
 
-  .heroTitle {
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  .mandalaWrapperLeft {
+    left: -200px;
+  }
+
+  .mandalaWrapperRight {
+    right: -200px;
   }
 }
 
-@media (max-width: 425px) {
-  .hero {
-    min-height: 200px;
+@media (max-width: 768px) {
+
+  .mandalaWrapperLeft,
+  .mandalaWrapperRight {
+    width: 250px;
+    opacity: 0.1;
   }
 
-  .heroTitle {
-    font-size: 1.5rem;
+  .mandalaWrapperLeft {
+    left: -125px;
+  }
+
+  .mandalaWrapperRight {
+    right: -125px;
   }
 }
