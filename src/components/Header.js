@@ -20,9 +20,9 @@ export default function Header() {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Facilities', path: '/facilities' },
+    { name: 'Menu', path: '/menu' },
     { name: 'Rooms', path: '/rooms' },
     { name: 'Gallery', path: '/gallery' },
-    { name: 'Menu', path: '/menu' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -39,7 +39,11 @@ export default function Header() {
           <ul className={styles.desktopNav}>
             {navLinks.map((link) => (
               <li key={link.name}>
-                <Link href={link.path} className={styles.navLink}>
+                <Link
+                  href={link.path}
+                  className={styles.navLink}
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
                   {link.name}
                 </Link>
               </li>
@@ -50,7 +54,7 @@ export default function Header() {
           </ul>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             className={styles.mobileToggle}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
@@ -65,18 +69,21 @@ export default function Header() {
         <ul>
           {navLinks.map((link) => (
             <li key={link.name}>
-              <Link 
-                href={link.path} 
+              <Link
+                href={link.path}
                 className={styles.mobileNavLink}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               >
                 {link.name}
               </Link>
             </li>
           ))}
           <li>
-            <a 
-              href="https://wa.me/918490991577?text=Hello%20Mango%20Bite%20Hotel,%20I%20would%20like%20to%20book%20a%20room." 
+            <a
+              href="https://wa.me/918490991577?text=Hello%20Mango%20Bite%20Hotel,%20I%20would%20like%20to%20book%20a%20room."
               target="_blank" rel="noopener noreferrer"
               className="btn btn-primary"
               style={{ width: '100%', marginTop: '1rem', display: 'block', textAlign: 'center' }}

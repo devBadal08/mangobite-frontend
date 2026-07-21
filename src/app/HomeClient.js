@@ -51,15 +51,15 @@ export default function HomeClient() {
         <div className={styles.heroOverlay}></div>
         <div className={`container ${styles.homeContainer} ${styles.heroContent} animate-fade-in-up`}>
           <h1 className={styles.heroTitle}>
-            Experience Authentic Kutch Heritage at <span className={styles.highlight}>Mango Bite</span>
+            Experience Authentic Kutch Heritage at <span className={styles.highlight}>The Mango Bite</span>
           </h1>
           <p className={styles.heroSubtitle}>
             A premium pure-vegetarian hotel & multi-cuisine restaurant in Mandvi, blending modern luxury with traditional artistry.
           </p>
           <div className={styles.heroActions}>
-            <Link href="/rooms" className="btn btn-primary">
-              Book a Room <ArrowRight size={20} className="ml-2" />
-            </Link>
+            <a href="https://wa.me/918490991577?text=Hello,%20I%20would%20like%20to%20book%20a%20stay." target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              Book Your Stay Now <ArrowRight size={20} className="ml-2" />
+            </a>
             <Link href="/menu" className="btn btn-outline" style={{ color: 'white', borderColor: 'white' }}>
               Explore Menu
             </Link>
@@ -161,6 +161,13 @@ export default function HomeClient() {
             ) : (
               <p style={{ textAlign: 'center', width: '100%', color: 'white' }}>No rooms available at the moment.</p>
             )}
+          </div>
+          
+          {/* View More Rooms Button */}
+          <div style={{ textAlign: 'center', marginTop: '50px' }}>
+            <Link href="/rooms" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', padding: '12px 35px', fontSize: '1.2rem', borderRadius: '50px', boxShadow: '0 10px 25px rgba(197, 85, 59, 0.3)', transition: 'all 0.3s ease' }}>
+              View All Rooms <ArrowRight size={20} style={{ marginLeft: '10px' }} />
+            </Link>
           </div>
 
         </div>
