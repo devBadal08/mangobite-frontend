@@ -145,9 +145,9 @@
 }
 
 .categoryThumbWrapper {
-  width: 65px;
-  height: 90px;
-  border-radius: 2px 8px 8px 2px;
+  width: 85px;
+  height: 120px;
+  border-radius: 2px 10px 10px 2px;
   position: relative;
   margin-bottom: 0.8rem;
   background: linear-gradient(to right, #6d4c41 0px, #6d4c41 12px, #3e2723 12px); /* Brown strip for spiral */
@@ -173,13 +173,13 @@
   content: '';
   position: absolute;
   top: 0; bottom: 0; left: 0;
-  width: 14px;
+  width: 16px;
   background-color: #3e2723; /* Solid dark brown leather strip over the image */
-  background-image: radial-gradient(circle at 10px center, #0a0503 35%, transparent 45%);
-  background-size: 100% 8px; /* Perfect tight spacing */
+  background-image: radial-gradient(circle at 10px center, #0a0503 38%, transparent 45%);
+  background-size: 100% 10px; /* Perfect tight spacing scaled up */
   background-position: left center;
   z-index: 2;
-  border-right: 1px solid rgba(0,0,0,0.5);
+  border-right: 1.5px solid rgba(0,0,0,0.5);
   box-shadow: 2px 0 5px rgba(0,0,0,0.4); /* Shadow onto the book cover */
 }
 
@@ -187,13 +187,13 @@
 .categoryThumbWrapper::after {
   content: '';
   position: absolute;
-  top: 0; bottom: 0; left: -4px;
-  width: 16px;
+  top: 0; bottom: 0; left: -5px;
+  width: 18px;
   background-image: linear-gradient(-12deg, transparent 40%, #777 42%, #fff 48%, #444 54%, transparent 56%);
-  background-size: 100% 8px; /* Matching tight spacing */
+  background-size: 100% 10px; /* Matching tight spacing scaled up */
   background-position: left center;
   z-index: 3;
-  filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.6));
+  filter: drop-shadow(1.5px 2px 2px rgba(0,0,0,0.6));
   pointer-events: none;
 }
 
@@ -218,11 +218,11 @@
 
 .categoryIndexName {
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   color: #fff; /* White text on dark book */
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
   text-align: center;
-  max-width: 100px;
+  max-width: 110px;
   line-height: 1.2;
   margin-top: 0.5rem;
 }
@@ -667,13 +667,13 @@
   }
 
   .categoryThumbWrapper {
-    width: 60px;
-    height: 85px;
+    width: 75px;
+    height: 105px;
   }
 
   .categoryIndexName {
-    font-size: 0.9rem;
-    max-width: 80px;
+    font-size: 1rem;
+    max-width: 90px;
   }
 
   .bookContainer {

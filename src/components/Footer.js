@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import styles from './Footer.module.css';
@@ -74,8 +75,13 @@ export default function Footer() {
       </div>
       
       <div className={styles.footerBottom}>
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Mango Bite Hotel & Restaurant. All rights reserved.</p>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <p style={{ margin: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '6px' }}>
+            <span>&copy; {new Date().getFullYear()} The Mango Bite Hotel & Restaurant. | </span>
+            <Link href="/terms" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 'bold' }}>T&C</Link>
+            <span> | All rights reserved. | Developed 🫶 by</span>
+            <a href="https://techstrota.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', fontWeight: 'bold', textDecoration: 'none' }}>Techstrota</a>
+          </p>
         </div>
       </div>
     </footer>

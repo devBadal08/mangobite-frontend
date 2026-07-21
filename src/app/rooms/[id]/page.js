@@ -95,35 +95,55 @@ export default async function RoomDetails({ params }) {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
-    <div style={{ backgroundColor: '#fafafa', minHeight: '100vh', padding: '120px 0 60px' }}>
-      <div className="container">
+    <div style={{ 
+      background: 'linear-gradient(135deg, #fcfaf8 0%, #f4eee6 100%)',
+      minHeight: '100vh', 
+      padding: '120px 0 60px',
+      position: 'relative'
+    }}>
+      
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Back Button */}
-        <BackButton style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', marginBottom: '20px', textDecoration: 'none', fontWeight: '500' }}>
+        <BackButton style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', marginBottom: '20px', textDecoration: 'none', fontWeight: '600', backgroundColor: '#fff', padding: '8px 16px', borderRadius: '50px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
           &larr; Back
         </BackButton>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-          {/* Main Image */}
-          <div style={{ position: 'relative', width: '100%', height: '50vh', minHeight: '400px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', backgroundColor: '#ffffff', border: '1px solid rgba(197, 85, 59, 0.2)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 0 50px rgba(0,0,0,0.08)' }}>
+          {/* Main Image Hero */}
+          <div style={{ position: 'relative', width: '100%', height: '55vh', minHeight: '450px' }}>
             {mainImageUrl ? (
               <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'cover' }} />
             ) : (
               <div style={{ width: '100%', height: '100%', backgroundColor: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image Available</div>
             )}
+            
+            {/* Elegant Gradient Overlay */}
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)' }}></div>
+            
+            {/* Floating Title & Price Badge */}
+            <div style={{ position: 'absolute', bottom: '30px', left: '40px', right: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
+              <div>
+                <div style={{ display: 'inline-block', backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(5px)', color: '#fff', padding: '6px 15px', borderRadius: '20px', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>Premium Stay</div>
+                <h1 style={{ color: '#ffffff', fontSize: 'clamp(2rem, 5vw, 3.5rem)', margin: 0, textShadow: '2px 2px 10px rgba(0,0,0,0.5)', fontFamily: 'var(--font-heading)' }}>{room.title}</h1>
+              </div>
+              <div style={{ backgroundColor: 'var(--primary)', color: '#fff', padding: '12px 25px', borderRadius: '30px', fontSize: '1.5rem', fontWeight: '700', boxShadow: '0 8px 25px rgba(197, 85, 59, 0.4)', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
+                ₹{parseInt(room.price).toLocaleString('en-IN')} <span style={{ fontSize: '1rem', fontWeight: '500', opacity: 0.9 }}>/night</span>
+              </div>
+            </div>
           </div>
 
           {/* Content Area */}
-          <div style={{ padding: '40px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', marginBottom: '30px' }}>
-              <h1 style={{ color: 'var(--primary)', fontSize: '2.5rem', margin: 0 }}>{room.title}</h1>
-              <div style={{ fontSize: '1.5rem', fontWeight: '600', color: 'var(--dark)' }}>
-                ₹{parseInt(room.price).toLocaleString('en-IN')}<span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/night</span>
-              </div>
-            </div>
+          <div style={{ padding: '0 40px 40px 40px', marginTop: '30px' }}>
 
             {/* Extracted Description logic */}
             {(() => {
-              const descriptionWithoutUl = room.description?.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, '') || '';
+              let cleanDesc = room.description || '';
+              // Remove the very first heading (which is a duplicate title)
+              cleanDesc = cleanDesc.replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/i, '');
+              // Remove orphaned paragraphs that were titles for the lists
+              cleanDesc = cleanDesc.replace(/<p>[^<]*?(?:<strong>)?(?:Room Information|Why Choose This Room\?|Room Amenities|Room Features)(?:<\/strong>)?[^<]*?<\/p>/gi, '');
+              
+              // Extract lists
               const listItems = [];
               const liRegex = /<li[^>]*>(.*?)<\/li>/gi;
               let match;
@@ -131,34 +151,42 @@ export default async function RoomDetails({ params }) {
                 listItems.push(match[1].replace(/<[^>]*>?/gm, '').trim());
               }
 
+              // Remove the lists from the clean description
+              cleanDesc = cleanDesc.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, '');
+
               return (
                 <>
                   <div
                     style={{ lineHeight: '1.8', color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '30px' }}
-                    dangerouslySetInnerHTML={{ __html: descriptionWithoutUl }}
+                    dangerouslySetInnerHTML={{ __html: cleanDesc }}
                   />
 
                   {listItems.length > 0 && (
                     <div style={{ marginBottom: '40px' }}>
-                      <h3 style={{ color: 'var(--dark)', marginBottom: '20px', fontSize: '1.3rem' }}>Key Features & Amenities</h3>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '15px' }}>
+                      <h3 style={{ color: 'var(--primary)', marginBottom: '25px', fontSize: '1.5rem', borderBottom: '2px solid rgba(197, 85, 59, 0.2)', paddingBottom: '10px', display: 'inline-block' }}>Key Features & Amenities</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '20px' }}>
                         {listItems.map((item, idx) => (
                           <div key={idx} style={{
-                            backgroundColor: '#fdfdfd',
-                            border: '1px solid #eaeaea',
-                            borderRadius: '10px',
-                            padding: '15px',
+                            backgroundColor: '#fff',
+                            backgroundImage: 'linear-gradient(to right, rgba(197, 85, 59, 0.05), rgba(255, 255, 255, 0))',
+                            borderTop: '1px solid rgba(197, 85, 59, 0.15)',
+                            borderRight: '1px solid rgba(197, 85, 59, 0.15)',
+                            borderBottom: '1px solid rgba(197, 85, 59, 0.15)',
+                            borderLeft: '4px solid var(--primary)',
+                            borderRadius: '12px',
+                            padding: '16px',
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '12px',
-                            color: 'var(--dark)',
-                            fontWeight: '500',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.02)'
+                            gap: '15px',
+                            color: '#333',
+                            fontWeight: '600',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
+                            transition: 'all 0.3s ease'
                           }}>
-                            <div style={{ backgroundColor: 'rgba(197, 85, 59, 0.1)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(197, 85, 59, 0.15)' }}>
                               {getAmenityIcon(item)}
                             </div>
-                            <span style={{ flex: 1 }}>{item}</span>
+                            <span style={{ flex: 1, fontSize: '0.95rem', lineHeight: '1.4' }}>{item}</span>
                           </div>
                         ))}
                       </div>
