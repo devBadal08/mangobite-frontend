@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import styles from './GalleryViewer.module.css';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function GalleryViewer({ galleries }) {
   const router = useRouter();
@@ -107,30 +108,31 @@ export default function GalleryViewer({ galleries }) {
               return images.map((img, index) => {
                 const mediaUrl = getMediaUrl(img);
                 return (
-                  <div
-                    key={index}
-                    className={styles.masonryItem}
-                    onClick={() => setSelectedMedia(mediaUrl)}
-                  >
-                    {isVideo(mediaUrl) ? (
-                      <video
-                        src={mediaUrl}
-                        className={styles.masonryImage}
-                        autoPlay muted loop playsInline
-                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                      />
-                    ) : (
-                      <img
-                        src={mediaUrl || '/images/custom_restaurant.jpg'}
-                        alt={`${activeEvent.title} - Item ${index + 1}`}
-                        className={styles.masonryImage}
-                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                      />
-                    )}
-                    <div className={styles.itemOverlay}>
-                      <h3 className={styles.itemTitle}>{activeEvent.title}</h3>
+                  <ScrollReveal animation="fade-up" delay={(index % 4) * 100} key={index}>
+                    <div
+                      className={styles.masonryItem}
+                      onClick={() => setSelectedMedia(mediaUrl)}
+                    >
+                      {isVideo(mediaUrl) ? (
+                        <video
+                          src={mediaUrl}
+                          className={styles.masonryImage}
+                          autoPlay muted loop playsInline
+                          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        />
+                      ) : (
+                        <img
+                          src={mediaUrl || '/images/custom_restaurant.jpg'}
+                          alt={`${activeEvent.title} - Item ${index + 1}`}
+                          className={styles.masonryImage}
+                          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        />
+                      )}
+                      <div className={styles.itemOverlay}>
+                        <h3 className={styles.itemTitle}>{activeEvent.title}</h3>
+                      </div>
                     </div>
-                  </div>
+                  </ScrollReveal>
                 );
               });
             } else {
@@ -168,24 +170,25 @@ export default function GalleryViewer({ galleries }) {
   return (
     <div className={styles.categoryGrid}>
       {galleries && galleries.length > 0 ? (
-        galleries.map((gallery) => (
-          <div
-            key={gallery.id}
-            className={`card ${styles.categoryCard}`}
-            onClick={() => handleEventClick(gallery)}
-          >
-            <div className={styles.cardImageWrapper}>
-              <img
-                src={getMediaUrl(gallery.main_image) || '/images/custom_restaurant.jpg'}
-                alt={gallery.title}
-                className={styles.cardImage}
-                style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
-              />
-              <div className={styles.cardOverlay}>
-                <h3 className={styles.cardTitle}>{gallery.title}</h3>
+        galleries.map((gallery, idx) => (
+          <ScrollReveal animation="fade-up" delay={(idx % 3) * 100} key={gallery.id}>
+            <div
+              className={`card ${styles.categoryCard}`}
+              onClick={() => handleEventClick(gallery)}
+            >
+              <div className={styles.cardImageWrapper}>
+                <img
+                  src={getMediaUrl(gallery.main_image) || '/images/custom_restaurant.jpg'}
+                  alt={gallery.title}
+                  className={styles.cardImage}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+                />
+                <div className={styles.cardOverlay}>
+                  <h3 className={styles.cardTitle}>{gallery.title}</h3>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         ))
       ) : (
         <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'var(--text-muted)' }}>

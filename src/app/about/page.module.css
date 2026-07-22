@@ -85,24 +85,35 @@
   transform: scale(1.05);
 }
 
-.ratingSection {
-  background: var(--surface);
-  border-radius: var(--radius-lg);
+.ctaSection {
+  background-color: var(--secondary);
+  color: white;
   padding: 4rem 2rem;
   text-align: center;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.05);
-  margin-bottom: 4rem;
   position: relative;
   overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 4rem;
 }
 
-.ratingSection::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+.ctaContent {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  color: white;
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.ctaSubtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.6;
 }
 
 .stars {
@@ -114,15 +125,8 @@
   margin-bottom: 1rem;
 }
 
-.ratingText {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--dark);
-  font-family: var(--font-heading);
-}
-
 .faqSection {
-  padding: 4rem 0;
+  padding: 1rem 0 4rem 0;
 }
 
 @media (max-width: 1024px) {
@@ -158,12 +162,14 @@
     padding: 1rem 0 3rem 0;
   }
 
-  .ratingSection {
-    padding: 2.5rem 1rem;
+  .ctaSection {
+    padding: 3.5rem 1.5rem;
   }
-
-  .ratingText {
-    font-size: 1.4rem;
+  .ctaTitle {
+    font-size: 1.8rem;
+  }
+  .ctaSubtitle {
+    font-size: 1rem;
   }
 
   .faqSection {
@@ -172,8 +178,11 @@
 }
 
 @media (max-width: 425px) {
-  .ratingSection {
-    padding: 2rem 1rem;
+  .ctaSection {
+    padding: 2.5rem 1rem;
+  }
+  .ctaTitle {
+    font-size: 1.6rem;
   }
   .storyImageWrapper {
     height: 250px;
