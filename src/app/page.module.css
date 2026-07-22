@@ -691,10 +691,10 @@
   }
 
   .roomsGrid {
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: 1rem; /* For scrollbar */
-    /* On mobile, if we keep repeat(3, 1fr), they will be tiny. We could use min-width on cards if they want scrolling, but the prompt says '3 hi cards dikhne chaiye', meaning exactly 3 cards on screen without scrolling out of view if possible. So we let them squish. */
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    overflow-x: visible;
+    padding-bottom: 0;
   }
 
   .restaurantSection {
