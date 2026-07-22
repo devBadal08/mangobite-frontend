@@ -5,13 +5,13 @@
   width: 100%;
   z-index: 1000;
   transition: all 0.3s ease;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid transparent;
+  padding: 1rem 0; /* Reduced from 1.5rem to make header smaller */
+  border-bottom: 5px solid #C0392B;
 }
 
 .header.scrolled {
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0.5rem 0; /* Reduced from 1rem */
+  border-bottom: 5px solid #C0392B;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
