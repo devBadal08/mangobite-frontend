@@ -95,12 +95,119 @@ export default async function RoomDetails({ params }) {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
-    <div style={{ 
+    <div className="room-page-wrapper" style={{ 
       background: 'linear-gradient(135deg, #fcfaf8 0%, #f4eee6 100%)',
       minHeight: '100vh', 
-      padding: '120px 0 60px',
       position: 'relative'
     }}>
+      <style>{`
+        /* Mobile First Styles */
+        .room-page-wrapper {
+          padding: 100px 15px 40px;
+        }
+        .room-main-card {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          background-color: #ffffff;
+          border: 1px solid rgba(197, 85, 59, 0.2);
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+          padding: 15px;
+        }
+        .hero-split-layout {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
+        .hero-image-box {
+          position: relative;
+          width: 100%;
+          min-height: 250px;
+          border-radius: 12px;
+          overflow: hidden;
+          background-color: #fcfaf8;
+          border: 1px solid rgba(0,0,0,0.05);
+        }
+        .hero-details-box {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          background-color: #fdfdfd;
+          border-radius: 12px;
+          padding: 20px;
+          border: 1px solid rgba(197, 85, 59, 0.1);
+          box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+        }
+        .hero-title-text {
+          color: var(--dark);
+          font-size: 2rem;
+          margin: 0 0 15px 0;
+          font-family: var(--font-heading);
+          line-height: 1.2;
+        }
+        .hero-price-badge {
+          background-color: var(--primary);
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 12px;
+          font-size: 1.4rem;
+          font-weight: 700;
+          box-shadow: 0 8px 25px rgba(197, 85, 59, 0.3);
+          display: inline-flex;
+          align-items: baseline;
+          gap: 5px;
+          align-self: flex-start;
+          margin-bottom: 25px;
+        }
+        .room-content-area {
+          padding: 10px;
+          margin-top: 15px;
+        }
+
+        /* Tablet & Desktop Styles */
+        @media (min-width: 768px) {
+          .room-page-wrapper {
+            padding: 120px 0 60px;
+          }
+          .room-main-card {
+            padding: 30px;
+            gap: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.08);
+          }
+          .hero-split-layout {
+            flex-direction: row;
+            align-items: stretch;
+            gap: 30px;
+          }
+          .hero-image-box {
+            flex: 1 1 55%;
+            min-height: 400px;
+            border-radius: 15px;
+          }
+          .hero-details-box {
+            flex: 1 1 35%;
+            padding: 40px;
+            border-radius: 15px;
+          }
+          .hero-title-text {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+          }
+          .hero-price-badge {
+            font-size: 1.8rem;
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+          }
+          .room-content-area {
+            padding: 0 20px;
+            margin-top: 20px;
+          }
+        }
+      `}</style>
       
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Back Button */}
@@ -108,13 +215,13 @@ export default async function RoomDetails({ params }) {
           &larr; Back
         </BackButton>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', backgroundColor: '#ffffff', border: '1px solid rgba(197, 85, 59, 0.2)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 0 50px rgba(0,0,0,0.08)', padding: '30px' }}>
+        <div className="room-main-card">
           
           {/* Top Section: Split Layout */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', alignItems: 'stretch' }}>
+          <div className="hero-split-layout">
             
             {/* Left: Full Main Image */}
-            <div style={{ flex: '1 1 55%', position: 'relative', minHeight: '400px', borderRadius: '15px', overflow: 'hidden', backgroundColor: '#fcfaf8', border: '1px solid rgba(0,0,0,0.05)' }}>
+            <div className="hero-image-box">
               {mainImageUrl ? (
                 <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'contain' }} />
               ) : (
@@ -123,11 +230,11 @@ export default async function RoomDetails({ params }) {
             </div>
             
             {/* Right: Name, Price and Actions Card */}
-            <div style={{ flex: '1 1 35%', display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fdfdfd', borderRadius: '15px', padding: '40px', border: '1px solid rgba(197, 85, 59, 0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
+            <div className="hero-details-box">
                <div style={{ display: 'inline-block', backgroundColor: 'rgba(197, 85, 59, 0.1)', color: 'var(--primary)', padding: '6px 15px', borderRadius: '20px', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px', alignSelf: 'flex-start', fontWeight: '700' }}>Premium Stay</div>
-               <h1 style={{ color: 'var(--dark)', fontSize: '2.8rem', margin: '0 0 20px 0', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>{room.title}</h1>
-               <div style={{ backgroundColor: 'var(--primary)', color: '#fff', padding: '15px 30px', borderRadius: '15px', fontSize: '1.8rem', fontWeight: '700', boxShadow: '0 8px 25px rgba(197, 85, 59, 0.3)', display: 'inline-flex', alignItems: 'baseline', gap: '5px', alignSelf: 'flex-start', marginBottom: '40px' }}>
-                 ₹{parseInt(room.price).toLocaleString('en-IN')} <span style={{ fontSize: '1.1rem', fontWeight: '500', opacity: 0.9 }}>/night</span>
+               <h1 className="hero-title-text">{room.title}</h1>
+               <div className="hero-price-badge">
+                 ₹{parseInt(room.price).toLocaleString('en-IN')} <span style={{ fontSize: '1rem', fontWeight: '500', opacity: 0.9 }}>/night</span>
                </div>
                
                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#25D366', color: '#fff', padding: '15px 30px', borderRadius: '50px', textDecoration: 'none', fontWeight: '600', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: 'all 0.3s ease', fontSize: '1.1rem', boxShadow: '0 5px 15px rgba(37, 211, 102, 0.3)' }}>
@@ -139,7 +246,7 @@ export default async function RoomDetails({ params }) {
           </div>
 
           {/* Content Area */}
-          <div style={{ padding: '0 10px', marginTop: '10px' }}>
+          <div className="room-content-area">
 
             {/* Extracted Description logic */}
             {(() => {

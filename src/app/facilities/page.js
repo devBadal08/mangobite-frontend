@@ -2,6 +2,7 @@ import { Wifi, Car, Wind, ShieldAlert, Briefcase, HeartPulse, Droplet, Coffee, C
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.css';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export const metadata = {
   title: 'Facilities | Best Hotel & Banquet in Mandvi Kutch',
@@ -45,53 +46,59 @@ export default function Facilities() {
 
   return (
     <>
-      <div className="container animate-fade-in-up" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '1rem' }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
-          World-Class Facilities
-        </h1>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
-          Experience the perfect blend of modern luxury and traditional Kutch hospitality, designed for your utmost comfort and convenience.
-        </p>
-        <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
-      </div>
+      <ScrollReveal animation="fade-down" duration={1000}>
+        <div className="container" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '1rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+            World-Class Facilities
+          </h1>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
+            Experience the perfect blend of modern luxury and traditional Kutch hospitality, designed for your utmost comfort and convenience.
+          </p>
+          <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
+        </div>
+      </ScrollReveal>
 
       {/* Main Facilities Grid */}
       <section className="bg-light" style={{ paddingBottom: '5rem', paddingTop: '1.8rem' }}>
         <div className="container">
           <div className={styles.grid}>
             {facilityCategories.map((cat, index) => (
-              <div key={index} className={styles.facilityCard}>
-                <div className={styles.iconWrapper}>
-                  {cat.icon}
+              <ScrollReveal animation="fade-up" delay={(index % 3) * 150} key={index}>
+                <div className={styles.facilityCard}>
+                  <div className={styles.iconWrapper}>
+                    {cat.icon}
+                  </div>
+                  <h3 className={styles.cardTitle}>{cat.category}</h3>
+                  <ul className={styles.itemList}>
+                    {cat.items.map((item, i) => (
+                      <li key={i} className={styles.item}>
+                        <Check size={18} color="var(--accent)" style={{ flexShrink: 0, marginTop: '4px' }} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className={styles.cardTitle}>{cat.category}</h3>
-                <ul className={styles.itemList}>
-                  {cat.items.map((item, i) => (
-                    <li key={i} className={styles.item}>
-                      <Check size={18} color="var(--accent)" style={{ flexShrink: 0, marginTop: '4px' }} />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
 
           {/* High Impact CTA */}
-          <div className={styles.ctaSection}>
-            <h2 className={styles.ctaTitle}>Ready to Experience Mango Bite?</h2>
-            <p className={styles.ctaSubtitle}>
-              Whether you are planning a relaxing getaway, a business trip, or a special dining experience, our world-class facilities and warm hospitality await you. Get in touch with us today!
-            </p>
-            <div className={styles.ctaActions}>
-              <Link href="/contact" className="btn btn-primary">
-                Contact Us <ArrowRight size={20} className="ml-2" />
-              </Link>
-              <Link href="/rooms" className="btn btn-outline" style={{ color: 'white', borderColor: 'white' }}>
-                Explore Rooms
-              </Link>
+          <ScrollReveal animation="zoom-in" delay={200}>
+            <div className={styles.ctaSection}>
+              <h2 className={styles.ctaTitle}>Ready to Experience Mango Bite?</h2>
+              <p className={styles.ctaSubtitle}>
+                Whether you are planning a relaxing getaway, a business trip, or a special dining experience, our world-class facilities and warm hospitality await you. Get in touch with us today!
+              </p>
+              <div className={styles.ctaActions}>
+                <Link href="/contact" className="btn btn-primary">
+                  Contact Us <ArrowRight size={20} className="ml-2" />
+                </Link>
+                <Link href="/rooms" className="btn btn-outline" style={{ color: 'white', borderColor: 'white' }}>
+                  Explore Rooms
+                </Link>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
