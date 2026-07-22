@@ -23,7 +23,12 @@ export default function RoomCard({ id, title, description, imageSrc, price, show
         
         <div 
           className={styles.backendContent} 
-          dangerouslySetInnerHTML={{ __html: description?.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, '') }} 
+          dangerouslySetInnerHTML={{ 
+            __html: description
+              ?.replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/gi, '') // Remove heading (duplicate title)
+              ?.replace(/<p>[^<]*?(?:<strong>)?(?:Room Information|Why Choose This Room\?|Room Amenities|Room Features)(?:<\/strong>)?[^<]*?<\/p>/gi, '') // Remove orphaned list titles
+              ?.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, '') // Remove bullet lists
+          }} 
         />
         
         <div className={styles.footer} style={{ display: 'flex', gap: '10px' }}>

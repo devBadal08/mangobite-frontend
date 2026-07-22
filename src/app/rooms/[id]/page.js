@@ -4,24 +4,24 @@ import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import { Check, Maximize, Users, BedDouble, Snowflake, Wifi, Tv, Bath, Droplet, Sparkles, Shirt, Ban, Heart, Coffee, Star, Smile, Bell } from 'lucide-react';
 
-const getAmenityIcon = (text) => {
+const getAmenityEmoji = (text) => {
   const t = text.toLowerCase();
-  if (t.includes('room size')) return <Maximize size={18} color="var(--primary)" />;
-  if (t.includes('occupancy') || t.includes('adult') || t.includes('family') || t.includes('families') || t.includes('group') || t.includes('friend')) return <Users size={18} color="var(--primary)" />;
-  if (t.includes('couple')) return <Heart size={18} color="var(--primary)" />;
-  if (t.includes('bed')) return <BedDouble size={18} color="var(--primary)" />;
-  if (t.includes('air conditioning') || t.includes(' ac ') || t.includes('ac room')) return <Snowflake size={18} color="var(--primary)" />;
-  if (t.includes('wi-fi') || t.includes('wifi')) return <Wifi size={18} color="var(--primary)" />;
-  if (t.includes('tv') || t.includes('television')) return <Tv size={18} color="var(--primary)" />;
-  if (t.includes('bathroom') || t.includes('hot & cold') || t.includes('shower')) return <Bath size={18} color="var(--primary)" />;
-  if (t.includes('drinking water') || t.includes('room service') || t.includes('tea')) return <Coffee size={18} color="var(--primary)" />;
-  if (t.includes('toiletries') || t.includes('towel')) return <Droplet size={18} color="var(--primary)" />;
-  if (t.includes('housekeeping')) return <Sparkles size={18} color="var(--primary)" />;
-  if (t.includes('wardrobe')) return <Shirt size={18} color="var(--primary)" />;
-  if (t.includes('smoking')) return <Ban size={18} color="var(--primary)" />;
-  if (t.includes('recommend')) return <Star size={18} color="var(--primary)" />;
-  if (t.includes('comfort') || t.includes('peaceful') || t.includes('relaxing')) return <Smile size={18} color="var(--primary)" />;
-  return <Check size={18} color="var(--primary)" />;
+  if (t.includes('room size')) return '📏';
+  if (t.includes('occupancy') || t.includes('adult') || t.includes('family') || t.includes('families') || t.includes('group') || t.includes('friend')) return '👥';
+  if (t.includes('couple')) return '💑';
+  if (t.includes('bed')) return '🛏️';
+  if (t.includes('air conditioning') || t.includes(' ac ') || t.includes('ac room')) return '❄️';
+  if (t.includes('wi-fi') || t.includes('wifi')) return '📶';
+  if (t.includes('tv') || t.includes('television')) return '📺';
+  if (t.includes('bathroom') || t.includes('hot & cold') || t.includes('shower')) return '🛀';
+  if (t.includes('drinking water') || t.includes('room service') || t.includes('tea')) return '☕';
+  if (t.includes('toiletries') || t.includes('towel')) return '🧴';
+  if (t.includes('housekeeping')) return '🧹';
+  if (t.includes('wardrobe')) return '🚪';
+  if (t.includes('smoking')) return '🚭';
+  if (t.includes('recommend')) return '⭐';
+  if (t.includes('comfort') || t.includes('peaceful') || t.includes('relaxing')) return '😌';
+  return '✨';
 };
 
 export async function generateStaticParams() {
@@ -66,7 +66,7 @@ export default async function RoomDetails({ params }) {
 
   let room = null;
   try {
-    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms/${id}`);
+    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms/${id}`, { cache: 'no-store' });
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
@@ -108,32 +108,38 @@ export default async function RoomDetails({ params }) {
           &larr; Back
         </BackButton>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', backgroundColor: '#ffffff', border: '1px solid rgba(197, 85, 59, 0.2)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 0 50px rgba(0,0,0,0.08)' }}>
-          {/* Main Image Hero */}
-          <div style={{ position: 'relative', width: '100%', height: '55vh', minHeight: '450px' }}>
-            {mainImageUrl ? (
-              <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'cover' }} />
-            ) : (
-              <div style={{ width: '100%', height: '100%', backgroundColor: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image Available</div>
-            )}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', backgroundColor: '#ffffff', border: '1px solid rgba(197, 85, 59, 0.2)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 0 50px rgba(0,0,0,0.08)', padding: '30px' }}>
+          
+          {/* Top Section: Split Layout */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', alignItems: 'stretch' }}>
             
-            {/* Elegant Gradient Overlay */}
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)' }}></div>
-            
-            {/* Floating Title & Price Badge */}
-            <div style={{ position: 'absolute', bottom: '30px', left: '40px', right: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
-              <div>
-                <div style={{ display: 'inline-block', backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(5px)', color: '#fff', padding: '6px 15px', borderRadius: '20px', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>Premium Stay</div>
-                <h1 style={{ color: '#ffffff', fontSize: 'clamp(2rem, 5vw, 3.5rem)', margin: 0, textShadow: '2px 2px 10px rgba(0,0,0,0.5)', fontFamily: 'var(--font-heading)' }}>{room.title}</h1>
-              </div>
-              <div style={{ backgroundColor: 'var(--primary)', color: '#fff', padding: '12px 25px', borderRadius: '30px', fontSize: '1.5rem', fontWeight: '700', boxShadow: '0 8px 25px rgba(197, 85, 59, 0.4)', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
-                ₹{parseInt(room.price).toLocaleString('en-IN')} <span style={{ fontSize: '1rem', fontWeight: '500', opacity: 0.9 }}>/night</span>
-              </div>
+            {/* Left: Full Main Image */}
+            <div style={{ flex: '1 1 55%', position: 'relative', minHeight: '400px', borderRadius: '15px', overflow: 'hidden', backgroundColor: '#fcfaf8', border: '1px solid rgba(0,0,0,0.05)' }}>
+              {mainImageUrl ? (
+                <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'contain' }} />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image Available</div>
+              )}
             </div>
+            
+            {/* Right: Name, Price and Actions Card */}
+            <div style={{ flex: '1 1 35%', display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fdfdfd', borderRadius: '15px', padding: '40px', border: '1px solid rgba(197, 85, 59, 0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
+               <div style={{ display: 'inline-block', backgroundColor: 'rgba(197, 85, 59, 0.1)', color: 'var(--primary)', padding: '6px 15px', borderRadius: '20px', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px', alignSelf: 'flex-start', fontWeight: '700' }}>Premium Stay</div>
+               <h1 style={{ color: 'var(--dark)', fontSize: '2.8rem', margin: '0 0 20px 0', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>{room.title}</h1>
+               <div style={{ backgroundColor: 'var(--primary)', color: '#fff', padding: '15px 30px', borderRadius: '15px', fontSize: '1.8rem', fontWeight: '700', boxShadow: '0 8px 25px rgba(197, 85, 59, 0.3)', display: 'inline-flex', alignItems: 'baseline', gap: '5px', alignSelf: 'flex-start', marginBottom: '40px' }}>
+                 ₹{parseInt(room.price).toLocaleString('en-IN')} <span style={{ fontSize: '1.1rem', fontWeight: '500', opacity: 0.9 }}>/night</span>
+               </div>
+               
+               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#25D366', color: '#fff', padding: '15px 30px', borderRadius: '50px', textDecoration: 'none', fontWeight: '600', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: 'all 0.3s ease', fontSize: '1.1rem', boxShadow: '0 5px 15px rgba(37, 211, 102, 0.3)' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+                  Book Now via WhatsApp
+               </a>
+            </div>
+
           </div>
 
           {/* Content Area */}
-          <div style={{ padding: '0 40px 40px 40px', marginTop: '30px' }}>
+          <div style={{ padding: '0 10px', marginTop: '10px' }}>
 
             {/* Extracted Description logic */}
             {(() => {
@@ -164,29 +170,35 @@ export default async function RoomDetails({ params }) {
                   {listItems.length > 0 && (
                     <div style={{ marginBottom: '40px' }}>
                       <h3 style={{ color: 'var(--primary)', marginBottom: '25px', fontSize: '1.5rem', borderBottom: '2px solid rgba(197, 85, 59, 0.2)', paddingBottom: '10px', display: 'inline-block' }}>Key Features & Amenities</h3>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '20px' }}>
+                      <style>{`
+                        .amenity-card {
+                          background: linear-gradient(145deg, #ffffff 0%, #fff8f2 100%);
+                          border: 1.5px solid rgba(230, 126, 34, 0.3);
+                          border-radius: 16px;
+                          padding: 25px 15px;
+                          display: flex;
+                          flex-direction: column;
+                          align-items: center;
+                          justify-content: center;
+                          text-align: center;
+                          gap: 15px;
+                          color: #333;
+                          box-shadow: 0 4px 15px rgba(230, 126, 34, 0.08);
+                          transition: all 0.3s ease;
+                        }
+                        .amenity-card:hover {
+                          transform: translateY(-6px);
+                          box-shadow: 0 12px 25px rgba(230, 126, 34, 0.3);
+                          border-color: #e67e22;
+                        }
+                      `}</style>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
                         {listItems.map((item, idx) => (
-                          <div key={idx} style={{
-                            backgroundColor: '#fff',
-                            backgroundImage: 'linear-gradient(to right, rgba(197, 85, 59, 0.05), rgba(255, 255, 255, 0))',
-                            borderTop: '1px solid rgba(197, 85, 59, 0.15)',
-                            borderRight: '1px solid rgba(197, 85, 59, 0.15)',
-                            borderBottom: '1px solid rgba(197, 85, 59, 0.15)',
-                            borderLeft: '4px solid var(--primary)',
-                            borderRadius: '12px',
-                            padding: '16px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '15px',
-                            color: '#333',
-                            fontWeight: '600',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-                            transition: 'all 0.3s ease'
-                          }}>
-                            <div style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(197, 85, 59, 0.15)' }}>
-                              {getAmenityIcon(item)}
+                          <div key={idx} className="amenity-card">
+                            <div style={{ fontSize: '3rem', lineHeight: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '5px' }}>
+                              {getAmenityEmoji(item)}
                             </div>
-                            <span style={{ flex: 1, fontSize: '0.95rem', lineHeight: '1.4' }}>{item}</span>
+                            <span style={{ fontSize: '0.9rem', lineHeight: '1.4', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item}</span>
                           </div>
                         ))}
                       </div>
@@ -196,13 +208,6 @@ export default async function RoomDetails({ params }) {
               );
             })()}
 
-            {/* Action Buttons */}
-            <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#25D366', color: '#fff', padding: '12px 30px', borderRadius: '50px', textDecoration: 'none', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '10px', transition: 'all 0.3s ease' }}>
-                <svg xmlns="http://www.w3.org/-2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
-                Book Now via WhatsApp
-              </a>
-            </div>
 
             {/* Gallery (if sub_images exist) */}
             {room.sub_images && room.sub_images.length > 0 && (
