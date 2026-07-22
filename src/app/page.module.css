@@ -444,6 +444,16 @@
     bottom: -50px;
     right: -100px;
   }
+
+  .roomsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .roomsGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Mango Branch Decoration */
