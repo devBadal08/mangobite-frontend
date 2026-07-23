@@ -10,7 +10,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "admin.themangobitehotel.com",
-        port: "8000",
         pathname: "/storage/**",
       },
     ],

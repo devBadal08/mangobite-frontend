@@ -45,7 +45,12 @@ export async function generateMetadata({ params }) {
   const { id } = await params;
   let title = 'Room Details | Best Hotel in Mandvi Kutch';
   try {
-    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`);
+    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json'
+      }
+    });
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
@@ -69,7 +74,13 @@ export default async function RoomDetails({ params }) {
 
   let room = null;
   try {
-    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, { cache: 'no-store' });
+    const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, { 
+      cache: 'no-store',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json'
+      }
+    });
     if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
       const data = await res.json();
       if (data && data.status && data.data) {
@@ -252,11 +263,13 @@ export default async function RoomDetails({ params }) {
         <div className="room-main-card">
           <div className="hero-split-layout">
             <div className="hero-image-box">
-              {mainImageUrl ? (
-                <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'cover' }} />
-              ) : (
-                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image Available</div>
-              )}
+              <div style={{ position: 'absolute', inset: 0 }}>
+                {mainImageUrl ? (
+                  <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'cover' }} priority={true} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image Available</div>
+                )}
+              </div>
             </div>
             
             <div className="hero-details-box">
