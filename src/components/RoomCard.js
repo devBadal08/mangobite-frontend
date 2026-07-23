@@ -16,7 +16,6 @@ export default function RoomCard({ id, title, description, imageSrc, price, show
         ) : (
           <div className={styles.placeholderImage}>Room Image</div>
         )}
-        <div className={styles.priceTag}>{price}</div>
       </div>
       <div className={styles.content}>
         <h3 className={styles.title}>{title}</h3>
@@ -31,9 +30,13 @@ export default function RoomCard({ id, title, description, imageSrc, price, show
           }} 
         />
         
+        <div style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--primary)', marginTop: 'auto', marginBottom: '15px' }}>
+          {price}
+        </div>
+
         <div className={styles.footer} style={{ display: 'flex', gap: '10px' }}>
           <Link href={`/rooms/${id}`} className={styles.bookButton} style={{ background: 'transparent', color: 'var(--primary)', border: '1px solid var(--primary)', fontSize: '0.9rem', padding: '10px 15px' }}>
-            View More Details
+            Details
           </Link>
           {showBookNow && (
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className={styles.bookButton} style={{ fontSize: '0.9rem', padding: '10px 15px' }}>
