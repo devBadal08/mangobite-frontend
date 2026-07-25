@@ -1,29 +1,42 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import BackButton from '@/components/BackButton';
+import RoomGalleryClient from '@/components/RoomGalleryClient';
+import { notFound } from 'next/navigation'; // ✅ Import notFound properly
 import { Check, Maximize, Users, BedDouble, Snowflake, Wifi, Tv, Bath, Droplet, Sparkles, Shirt, Ban, Heart, Coffee, Star, Smile, Bell } from 'lucide-react';
 
-const getAmenityEmoji = (text) => {
+const getAmenityIcon = (text) => {
   const t = text.toLowerCase();
-  if (t.includes('room size')) return '📏';
-  if (t.includes('occupancy') || t.includes('adult') || t.includes('family') || t.includes('families') || t.includes('group') || t.includes('friend')) return '👥';
-  if (t.includes('couple')) return '💑';
-  if (t.includes('bed')) return '🛏️';
-  if (t.includes('air conditioning') || t.includes(' ac ') || t.includes('ac room')) return '❄️';
-  if (t.includes('wi-fi') || t.includes('wifi')) return '📶';
-  if (t.includes('tv') || t.includes('television')) return '📺';
-  if (t.includes('bathroom') || t.includes('hot & cold') || t.includes('shower')) return '🛀';
-  if (t.includes('drinking water') || t.includes('room service') || t.includes('tea')) return '☕';
-  if (t.includes('toiletries') || t.includes('towel')) return '🧴';
-  if (t.includes('housekeeping')) return '🧹';
-  if (t.includes('wardrobe')) return '🚪';
-  if (t.includes('smoking')) return '🚭';
-  if (t.includes('recommend')) return '⭐';
-  if (t.includes('comfort') || t.includes('peaceful') || t.includes('relaxing')) return '😌';
-  return '✨';
+  // Added 3D drop-shadow filter directly to the icon
+  const iconProps = { 
+    size: 42, 
+    color: '#d35400', 
+    strokeWidth: 1.5,
+    style: { filter: 'drop-shadow(3px 5px 5px rgba(211, 84, 0, 0.5))' } 
+  };
+  
+  if (t.includes('room size')) return <Maximize {...iconProps} />;
+  if (t.includes('occupancy') || t.includes('adult') || t.includes('family') || t.includes('families') || t.includes('group') || t.includes('friend')) return <Users {...iconProps} />;
+  if (t.includes('couple')) return <Heart {...iconProps} />;
+  if (t.includes('bed')) return <BedDouble {...iconProps} />;
+  if (t.includes('air conditioning') || t.includes(' ac ') || t.includes('ac room')) return <Snowflake {...iconProps} />;
+  if (t.includes('wi-fi') || t.includes('wifi')) return <Wifi {...iconProps} />;
+  if (t.includes('tv') || t.includes('television')) return <Tv {...iconProps} />;
+  if (t.includes('bathroom') || t.includes('hot & cold') || t.includes('shower')) return <Bath {...iconProps} />;
+  if (t.includes('drinking water') || t.includes('room service') || t.includes('tea')) return <Coffee {...iconProps} />;
+  if (t.includes('toiletries') || t.includes('towel')) return <Droplet {...iconProps} />;
+  if (t.includes('housekeeping')) return <Sparkles {...iconProps} />;
+  if (t.includes('wardrobe')) return <Shirt {...iconProps} />;
+  if (t.includes('smoking')) return <Ban {...iconProps} />;
+  if (t.includes('recommend')) return <Star {...iconProps} />;
+  if (t.includes('comfort') || t.includes('peaceful') || t.includes('relaxing')) return <Smile {...iconProps} />;
+  return <Check {...iconProps} />;
 };
 
-// 👇 यह फंक्शन जरूरी है क्योंकि आपका output: 'export' सेट है 👇
+// ✅ REMOVED: export const dynamic = 'force-static';
+// ✅ REMOVED: export const fetchCache = 'force-cache';
+export const revalidate = 3600; // ✅ Added ISR: This will revalidate the page every 1 hour if API data changes
+
 export async function generateStaticParams() {
   try {
     const res = await fetch('https://admin.themangobitehotel.com/api/rooms', {
@@ -43,7 +56,8 @@ export async function generateStaticParams() {
   } catch (error) {
     console.error('Failed to fetch rooms for static params:', error);
   }
-  return [{ id: '1' }, { id: '2' }, { id: '3' }];
+  // ✅ Return empty array instead of fake IDs to prevent 404 crash during build
+  return [];
 }
 
 export async function generateMetadata({ params }) {
@@ -53,6 +67,7 @@ export async function generateMetadata({ params }) {
   let title = 'Room Details | Best Hotel in Mandvi Kutch';
   try {
     const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, {
+      next: { revalidate: 3600 }, // ✅ Replaced 'force-cache' with ISR
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         'Accept': 'application/json'
@@ -84,8 +99,8 @@ export default async function RoomDetails({ params }) {
   let apiDebugStatus = "Pending";
 
   try {
-    // Fetching Data at build time (static export compatible - no cache: 'no-store')
     const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, {
+      next: { revalidate: 3600 }, // ✅ Replaced 'force-cache' with ISR
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         'Accept': 'application/json'
@@ -110,21 +125,9 @@ export default async function RoomDetails({ params }) {
     apiDebugStatus = `Fetch Error: ${error.message}`;
   }
 
-  // Debug Screen
+  // ✅ Trigger 404 safely now that force-static is removed
   if (!room) {
-    return (
-      <div style={{ padding: '150px 20px', minHeight: '100vh', textAlign: 'center', backgroundColor: '#fcfaf8' }}>
-        <h1 style={{ color: 'red', marginBottom: '20px' }}>⚠️ Data Fetch Issue</h1>
-        <p style={{ fontSize: '1.2rem', marginBottom: '10px' }}><strong>Requested Room ID:</strong> {id}</p>
-        <p style={{ fontSize: '1.2rem', marginBottom: '20px' }}><strong>API Status:</strong> {apiDebugStatus}</p>
-        <p style={{ color: '#666', maxWidth: '600px', margin: '0 auto 30px' }}>
-          404 Error इसी वजह से आ रहा था क्योंकि सर्वर को API से इस ID का रूम नहीं मिल रहा है। कृपया चेक करें कि API सही डेटा दे रही है या नहीं।
-        </p>
-        <Link href="/rooms" style={{ padding: '10px 20px', backgroundColor: 'var(--primary)', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
-          Go Back to Rooms
-        </Link>
-      </div>
-    );
+    notFound();
   }
 
   // Handle Main Image URL
@@ -222,27 +225,59 @@ export default async function RoomDetails({ params }) {
           </div>
 
           <div className="room-content-area">
+            {room.sub_images && room.sub_images.length > 0 && (
+              <RoomGalleryClient 
+                title={room.title}
+                images={room.sub_images.map(img => {
+                  let url = img;
+                  if (!url.startsWith('/images/')) {
+                    url = url.startsWith('/storage')
+                      ? `https://admin.themangobitehotel.com${url}`
+                      : `https://admin.themangobitehotel.com/storage/${url}`;
+                  }
+                  return url;
+                })}
+              />
+            )}
+
             {listItems.length > 0 && (
               <div style={{ marginBottom: '40px', paddingTop: '20px' }}>
                 <h3 style={{ color: 'var(--primary)', marginBottom: '25px', fontSize: '1.5rem', borderBottom: '2px solid rgba(197, 85, 59, 0.2)', paddingBottom: '10px', display: 'inline-block' }}>Key Features & Amenities</h3>
                 <style>{`
                   .amenity-card {
-                    background: linear-gradient(145deg, #ffffff 0%, #fff8f2 100%);
-                    border: 1.5px solid rgba(230, 126, 34, 0.3); border-radius: 16px;
+                    background: #ffffff;
+                    border: 1px solid rgba(255, 255, 255, 0.4); 
+                    border-radius: 16px;
                     padding: 25px 15px; display: flex; flex-direction: column;
                     align-items: center; justify-content: center; text-align: center; gap: 15px;
-                    color: #333; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.08); transition: all 0.3s ease;
+                    color: #333; 
+                    box-shadow: 
+                      -8px -8px 15px rgba(255, 255, 255, 0.8),
+                      8px 8px 15px rgba(211, 84, 0, 0.1),
+                      inset 2px 2px 4px rgba(255, 255, 255, 1);
+                    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
                   }
                   .amenity-card:hover {
-                    transform: translateY(-6px); box-shadow: 0 12px 25px rgba(230, 126, 34, 0.3);
-                    border-color: #e67e22;
+                    transform: translateY(-5px); 
+                    box-shadow: 
+                      -10px -10px 20px rgba(255, 255, 255, 1),
+                      10px 10px 20px rgba(211, 84, 0, 0.15),
+                      inset 2px 2px 4px rgba(255, 255, 255, 1);
+                  }
+                  .icon-3d-wrapper {
+                    display: flex; align-items: center; justify-content: center;
+                    width: 75px; height: 75px;
+                    border-radius: 50%;
+                    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+                    box-shadow:  5px 5px 10px rgba(211, 84, 0, 0.1), -5px -5px 10px #ffffff;
+                    margin-bottom: 10px;
                   }
                 `}</style>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '25px', padding: '10px' }}>
                   {listItems.map((item, idx) => (
                     <div key={idx} className="amenity-card">
-                      <div style={{ fontSize: '3rem', lineHeight: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '5px' }}>
-                        {getAmenityEmoji(item)}
+                      <div className="icon-3d-wrapper">
+                        {getAmenityIcon(item)}
                       </div>
                       <span style={{ fontSize: '0.9rem', lineHeight: '1.4', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item}</span>
                     </div>
@@ -266,26 +301,6 @@ export default async function RoomDetails({ params }) {
               </div>
             </div>
 
-            {room.sub_images && room.sub_images.length > 0 && (
-              <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
-                <h3 style={{ color: 'var(--primary)', marginBottom: '20px', fontSize: '1.5rem' }}>Room Gallery</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
-                  {room.sub_images.map((img, idx) => {
-                    let subImgUrl = img;
-                    if (!subImgUrl.startsWith('/images/')) {
-                      subImgUrl = subImgUrl.startsWith('/storage')
-                        ? `https://admin.themangobitehotel.com${subImgUrl}`
-                        : `https://admin.themangobitehotel.com/storage/${subImgUrl}`;
-                    }
-                    return (
-                      <div key={idx} style={{ position: 'relative', height: '200px', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
-                        <Image src={subImgUrl} alt={`${room.title} - Image ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>

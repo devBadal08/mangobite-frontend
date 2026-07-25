@@ -79,64 +79,64 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       {errorMsg && (
         <div style={{ backgroundColor: '#fee2e2', color: '#ef4444', padding: '1rem', borderRadius: '4px', fontSize: '0.9rem' }}>
           {errorMsg}
         </div>
       )}
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Name</label>
+        <label style={{ display: 'block', marginBottom: '0.2rem', fontWeight: 'bold', fontSize: '0.9rem' }}>Name</label>
         <input
           type="text"
           name="name"
           required
           value={formData.name}
           onChange={handleChange}
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+          style={{ width: '100%', padding: '0.5rem 0.6rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.9rem' }}
           placeholder="Your Name"
         />
       </div>
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Email</label>
+        <label style={{ display: 'block', marginBottom: '0.2rem', fontWeight: 'bold', fontSize: '0.9rem' }}>Email</label>
         <input
           type="email"
           name="email"
           required
           value={formData.email}
           onChange={handleChange}
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+          style={{ width: '100%', padding: '0.5rem 0.6rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.9rem' }}
           placeholder="Your Email"
         />
       </div>
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Phone Number</label>
+        <label style={{ display: 'block', marginBottom: '0.2rem', fontWeight: 'bold', fontSize: '0.9rem' }}>Phone Number</label>
         <input
           type="tel"
           name="phone_no"
           required
           value={formData.phone_no}
           onChange={handleChange}
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}
+          style={{ width: '100%', padding: '0.5rem 0.6rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.9rem' }}
           placeholder="Your Phone Number"
         />
       </div>
       <div>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Message</label>
+        <label style={{ display: 'block', marginBottom: '0.2rem', fontWeight: 'bold', fontSize: '0.9rem' }}>Message</label>
         <textarea
           name="message"
           required
           value={formData.message}
           onChange={handleChange}
-          rows="4"
-          style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', resize: 'vertical' }}
+          rows="3"
+          style={{ width: '100%', padding: '0.5rem 0.6rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', resize: 'vertical', fontSize: '0.9rem' }}
           placeholder="How can we help you?"
         ></textarea>
       </div>
       <button
         type="submit"
         className="btn btn-primary"
-        style={{ marginTop: '1rem', opacity: isSubmitting ? 0.7 : 1 }}
+        style={{ marginTop: '0.5rem', opacity: isSubmitting ? 0.7 : 1 }}
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Sending...' : 'Send Message'}

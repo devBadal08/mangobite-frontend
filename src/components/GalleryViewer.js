@@ -151,8 +151,8 @@ export default function GalleryViewer({ galleries }) {
 
         {/* Lightbox Popup */}
         {selectedMedia && (
-          <div className={styles.lightbox} onClick={() => setSelectedMedia(null)}>
-            <button className={styles.closeBtn} onClick={() => setSelectedMedia(null)}>Close ✕</button>
+          <div className={styles.lightbox} onClick={() => setSelectedMedia(null)} style={{ zIndex: 2147483640 }}>
+            <button className={styles.closeBtn} onClick={() => setSelectedMedia(null)} style={{ top: '120px', right: 'clamp(10px, 5vw, 30px)', zIndex: 2147483647 }}>Close ✕</button>
             <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
               {isVideo(selectedMedia) ? (
                 <video src={selectedMedia} controls autoPlay className={styles.lightboxMedia} />

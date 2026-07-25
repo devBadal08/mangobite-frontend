@@ -14,8 +14,10 @@
   --accent-light: #FEF5E7;
 
   --dark: #1E1E1E;
-  --text-main: #111111; /* Very dark text */
-  --text-muted: #2D3748; /* Darker gray */
+  --text-main: #111111;
+  /* Very dark text */
+  --text-muted: #2D3748;
+  /* Darker gray */
 
   --background: #FDF5E6;
   /* Warm Sand/Beige */
@@ -120,11 +122,14 @@ a {
 
 @media (max-width: 1024px) {
   html {
-    font-size: 14px; /* Only reduce font size on tablets/mobiles */
+    font-size: 14px;
+    /* Only reduce font size on tablets/mobiles */
   }
+
   .main-content {
     padding-top: 80px;
   }
+
   .container {
     padding: 0 1.2rem;
   }
@@ -132,7 +137,8 @@ a {
 
 @media (max-width: 425px) {
   .container {
-    padding: 0 10px; /* Tighter padding for small mobiles to maximize space */
+    padding: 0 10px;
+    /* Tighter padding for small mobiles to maximize space */
   }
 }
 
@@ -145,34 +151,35 @@ a {
 @media (max-width: 1024px) {
   .responsive-grid {
     grid-template-columns: 1fr !important;
-    gap: 1.5rem; /* Reduce gap on mobile/tablet */
+    gap: 1.5rem;
+    /* Reduce gap on mobile/tablet */
   }
 }
 
 @media (max-width: 425px) {
   .responsive-grid {
-    gap: 1rem; /* Even tighter gap for very small mobile */
+    gap: 1rem;
+    /* Even tighter gap for very small mobile */
   }
 }
 
 /* Decorative Graphics */
 .contact-graphic {
   position: absolute;
-  top: -160px;
-  /* Thoda aur uper (moved up by 20px) */
-  left: -10px;
-  width: 200px;
+  top: -125px;
+  left: 0px;
+  width: 150px;
   z-index: 10;
   pointer-events: none;
 }
 
 .contact-wrapper {
   position: relative;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
 .contact-card {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -207,8 +214,9 @@ a {
 
 .section-title {
   text-align: center;
-  font-size: 2.8rem;
-  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
   position: relative;
   display: inline-block;
   left: 50%;
@@ -220,9 +228,11 @@ a {
 
 @media (max-width: 1024px) {
   .section-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
   }
+
   .section-title::after {
     display: block;
     bottom: -8px;
@@ -233,9 +243,11 @@ a {
 
 @media (max-width: 425px) {
   .section-title {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
   }
+
   .section-title::after {
     display: block;
     bottom: -5px;
@@ -272,8 +284,8 @@ a {
   align-items: center;
   justify-content: center;
   padding: 0.8rem 2rem;
-  border-radius: 2px;
-  /* Sharper edges for heritage feel */
+  border-radius: var(--radius-md);
+  /* Curved corners like cards */
   font-weight: 600;
   font-family: var(--font-body);
   letter-spacing: 0.5px;
@@ -428,9 +440,11 @@ a {
   0% {
     box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 12px rgba(243, 156, 18, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(243, 156, 18, 0);
   }
@@ -518,12 +532,15 @@ a {
    ======================================== */
 
 @media (min-width: 1800px) {
-  html, body {
+
+  html,
+  body {
     font-size: 18px;
   }
 
   .main-content {
-    padding-top: 90px; /* Compact header on 4K */
+    padding-top: 90px;
+    /* Compact header on 4K */
   }
 
   .container {
@@ -549,15 +566,32 @@ a {
     border-radius: var(--radius-lg);
   }
 
-  h1 { font-size: 3.5rem; }
-  h2 { font-size: 3rem; }
-  h3 { font-size: 2rem; }
-  h4 { font-size: 1.6rem; }
-  p  { font-size: 1.2rem; line-height: 1.8; }
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1.6rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
 }
 
 @media (min-width: 2500px) {
-  html, body {
+
+  html,
+  body {
     font-size: 22px;
   }
 
@@ -580,9 +614,24 @@ a {
     padding: 1.2rem 3rem;
   }
 
-  h1 { font-size: 5rem; }
-  h2 { font-size: 4rem; }
-  h3 { font-size: 2.8rem; }
-  h4 { font-size: 2rem; }
-  p  { font-size: 1.5rem; line-height: 2; }
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+
+  h3 {
+    font-size: 2.8rem;
+  }
+
+  h4 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+    line-height: 2;
+  }
 }

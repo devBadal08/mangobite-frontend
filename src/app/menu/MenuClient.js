@@ -47,7 +47,7 @@ export default function MenuClient() {
     <>
       <ScrollReveal animation="fade-down" duration={1000}>
         <div className="container" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '2rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', marginTop: '1.5rem', color: '#000', marginBottom: '1rem' }}>
             A Culinary Journey
           </h1>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>

@@ -41,7 +41,7 @@ export default function GalleryClient() {
         </div>
 
         <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--dark)', marginBottom: '1rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', marginTop: '1.5rem', color: '#000', marginBottom: '1rem' }}>
             A Glimpse of Luxury
           </h1>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem' }}>

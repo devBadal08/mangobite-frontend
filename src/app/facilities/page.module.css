@@ -114,6 +114,10 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-bottom: 4px solid var(--accent);
   text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .facilityCard:hover {
@@ -149,6 +153,8 @@
   list-style: none;
   padding: 0;
   text-align: left;
+  flex-grow: 1;
+  width: 100%;
 }
 
 .item {
