@@ -3,63 +3,14 @@
 }
 
 .glassIndexWrapper {
-  margin: 2rem auto 4rem auto;
+  margin: 0 auto 4rem auto;
   max-width: 1000px;
-  padding: 2rem 2rem 1rem 2rem;
+  padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  
-  /* Giant Thick Spiral Book Theme */
-  background: 
-    linear-gradient(to right, #6d4c41 0px, #6d4c41 45px, transparent 45px), /* Brown strip for spiral */
-    linear-gradient(to right, #2a1a17 0%, #3e2723 3%, #4e342e 10%, #3e2723 90%, #2a1a17 100%);
-  border-radius: 5px 15px 15px 5px;
-  padding-left: 3rem; /* Space for spiral */
-  
-  /* Giant 3D Page Stacking Effect */
-  box-shadow: 
-    inset 15px 0 20px rgba(0, 0, 0, 0.4), /* Inner spine shadow */
-    1px 1px 0px #fff, 
-    2px 2px 0px #d7ccc8, 
-    3px 3px 0px #fff, 
-    4px 4px 0px #d7ccc8, 
-    5px 5px 0px #fff, 
-    6px 6px 0px #d7ccc8, 
-    7px 7px 0px #fff,
-    8px 8px 0px #d7ccc8,
-    9px 9px 0px #fff,
-    10px 10px 0px #d7ccc8,
-    20px 25px 40px rgba(0,0,0,0.6); /* Ground shadow */
-    
-  transform-style: preserve-3d;
-  transform: perspective(1500px) rotateX(2deg) rotateY(-2deg); /* Laying flat like a giant book */
-}
-
-/* Giant Spiral Holes */
-.glassIndexWrapper::before {
-  content: '';
-  position: absolute;
-  top: 15px; bottom: 15px; left: 10px;
-  width: 15px;
-  background-image: radial-gradient(circle at center, #111 40%, transparent 45%);
-  background-size: 100% 30px;
-  background-position: center;
-  z-index: 2;
-}
-
-/* Giant Silver Wire Coils */
-.glassIndexWrapper::after {
-  content: '';
-  position: absolute;
-  top: 15px; bottom: 15px; left: -5px;
-  width: 25px;
-  background-image: linear-gradient(-20deg, transparent 35%, #777 38%, #eee 45%, #555 52%, transparent 55%);
-  background-size: 100% 30px;
-  background-position: center;
-  z-index: 3;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+  background: transparent;
 }
 
 .glassIndexHeader {
@@ -77,9 +28,8 @@
 
 .glassTitle {
   font-family: var(--font-heading);
-  color: #FFD700; /* Gold ink on dark paper */
+  color: var(--primary);
   font-size: clamp(1.5rem, 4vw, 2.2rem);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -219,8 +169,7 @@
 .categoryIndexName {
   font-family: var(--font-heading);
   font-size: 1.25rem;
-  color: #fff; /* White text on dark book */
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  color: var(--dark);
   text-align: center;
   max-width: 110px;
   line-height: 1.2;

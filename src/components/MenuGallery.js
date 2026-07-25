@@ -90,40 +90,6 @@ export default function MenuGallery({ menuData }) {
 
   return (
     <div className={styles.galleryWrapper}>
-      {/* Visual Category Index with Glassmorphism */}
-      <div className={`${styles.glassIndexWrapper} animate-fade-in-up`}>
-        <div className={styles.glassIndexHeader}>
-          <Image src="/images/mb-logo.png" alt="Mango Bite Logo" width={60} height={60} className={styles.glassLogo} />
-          <h2 className={styles.glassTitle}>Our Delicious Menu</h2>
-        </div>
-        
-        <div className={styles.categoryScrollWrapper}>
-          <button className={`${styles.catScrollBtn} ${styles.catScrollLeft}`} onClick={scrollCategoriesLeft}>
-            <ChevronLeft size={24} />
-          </button>
-          
-          <div className={styles.categoryIndexContainer} ref={categoryScrollRef}>
-            {menuData.map((category, idx) => (
-              <div key={`idx-${category.id}`} className={styles.categoryIndexItem} onClick={() => handleCategoryClick(idx)}>
-                <div className={styles.categoryThumbWrapper}>
-                  <Image
-                    src={category.image || '/images/custom_restaurant.jpg'}
-                    alt={category.name}
-                    fill
-                    className={styles.categoryThumb}
-                  />
-                </div>
-                <span className={styles.categoryIndexName}>{category.name}</span>
-              </div>
-            ))}
-          </div>
-
-          <button className={`${styles.catScrollBtn} ${styles.catScrollRight}`} onClick={scrollCategoriesRight}>
-            <ChevronRight size={24} />
-          </button>
-        </div>
-      </div>
-
       <div
         ref={bookContainerRef}
         className={`${styles.bookContainer} animate-fade-in-up`}
@@ -262,6 +228,40 @@ export default function MenuGallery({ menuData }) {
         >
           <ChevronRight size={36} />
         </button>
+      </div>
+
+      {/* Visual Category Index */}
+      <div className={`${styles.glassIndexWrapper} animate-fade-in-up`}>
+        <div className={styles.glassIndexHeader}>
+          <Image src="/images/mb-logo.png" alt="Mango Bite Logo" width={60} height={60} className={styles.glassLogo} />
+          <h2 className={styles.glassTitle}>Our Delicious Menu</h2>
+        </div>
+        
+        <div className={styles.categoryScrollWrapper}>
+          <button className={`${styles.catScrollBtn} ${styles.catScrollLeft}`} onClick={scrollCategoriesLeft}>
+            <ChevronLeft size={24} />
+          </button>
+          
+          <div className={styles.categoryIndexContainer} ref={categoryScrollRef}>
+            {menuData.map((category, idx) => (
+              <div key={`idx-${category.id}`} className={styles.categoryIndexItem} onClick={() => handleCategoryClick(idx)}>
+                <div className={styles.categoryThumbWrapper}>
+                  <Image
+                    src={category.image || '/images/custom_restaurant.jpg'}
+                    alt={category.name}
+                    fill
+                    className={styles.categoryThumb}
+                  />
+                </div>
+                <span className={styles.categoryIndexName}>{category.name}</span>
+              </div>
+            ))}
+          </div>
+
+          <button className={`${styles.catScrollBtn} ${styles.catScrollRight}`} onClick={scrollCategoriesRight}>
+            <ChevronRight size={24} />
+          </button>
+        </div>
       </div>
     </div>
   );
