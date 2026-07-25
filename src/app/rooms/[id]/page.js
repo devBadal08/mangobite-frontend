@@ -84,9 +84,8 @@ export default async function RoomDetails({ params }) {
   let apiDebugStatus = "Pending";
 
   try {
-    // Fetching Data Serverside
+    // Fetching Data at build time (static export compatible - no cache: 'no-store')
     const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, {
-      cache: 'no-store', // Always fetch fresh data
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         'Accept': 'application/json'
