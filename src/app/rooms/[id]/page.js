@@ -1,93 +1,114 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import BackButton from '@/components/BackButton';
-import RoomGalleryClient from '@/components/RoomGalleryClient';
-import { notFound } from 'next/navigation'; // ✅ Import notFound properly
-import { Check, Maximize, Users, BedDouble, Snowflake, Wifi, Tv, Bath, Droplet, Sparkles, Shirt, Ban, Heart, Coffee, Star, Smile, Bell } from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import BackButton from "@/components/BackButton";
+import RoomGalleryClient from "@/components/RoomGalleryClient";
+import { notFound } from "next/navigation"; // ✅ Import notFound properly
+import {
+  Check,
+  Maximize,
+  Users,
+  BedDouble,
+  Snowflake,
+  Wifi,
+  Tv,
+  Bath,
+  Droplet,
+  Sparkles,
+  Shirt,
+  Ban,
+  Heart,
+  Coffee,
+  Star,
+  Smile,
+  Bell,
+} from "lucide-react";
 
 const getAmenityIcon = (text) => {
   const t = text.toLowerCase();
   // Added 3D drop-shadow filter directly to the icon
-  const iconProps = { 
-    size: 42, 
-    color: '#d35400', 
+  const iconProps = {
+    size: 42,
+    color: "#d35400",
     strokeWidth: 1.5,
-    style: { filter: 'drop-shadow(3px 5px 5px rgba(211, 84, 0, 0.5))' } 
+    style: { filter: "drop-shadow(3px 5px 5px rgba(211, 84, 0, 0.5))" },
   };
-  
-  if (t.includes('room size')) return <Maximize {...iconProps} />;
-  if (t.includes('occupancy') || t.includes('adult') || t.includes('family') || t.includes('families') || t.includes('group') || t.includes('friend')) return <Users {...iconProps} />;
-  if (t.includes('couple')) return <Heart {...iconProps} />;
-  if (t.includes('bed')) return <BedDouble {...iconProps} />;
-  if (t.includes('air conditioning') || t.includes(' ac ') || t.includes('ac room')) return <Snowflake {...iconProps} />;
-  if (t.includes('wi-fi') || t.includes('wifi')) return <Wifi {...iconProps} />;
-  if (t.includes('tv') || t.includes('television')) return <Tv {...iconProps} />;
-  if (t.includes('bathroom') || t.includes('hot & cold') || t.includes('shower')) return <Bath {...iconProps} />;
-  if (t.includes('drinking water') || t.includes('room service') || t.includes('tea')) return <Coffee {...iconProps} />;
-  if (t.includes('toiletries') || t.includes('towel')) return <Droplet {...iconProps} />;
-  if (t.includes('housekeeping')) return <Sparkles {...iconProps} />;
-  if (t.includes('wardrobe')) return <Shirt {...iconProps} />;
-  if (t.includes('smoking')) return <Ban {...iconProps} />;
-  if (t.includes('recommend')) return <Star {...iconProps} />;
-  if (t.includes('comfort') || t.includes('peaceful') || t.includes('relaxing')) return <Smile {...iconProps} />;
+
+  if (t.includes("room size")) return <Maximize {...iconProps} />;
+  if (
+    t.includes("occupancy") ||
+    t.includes("adult") ||
+    t.includes("family") ||
+    t.includes("families") ||
+    t.includes("group") ||
+    t.includes("friend")
+  )
+    return <Users {...iconProps} />;
+  if (t.includes("couple")) return <Heart {...iconProps} />;
+  if (t.includes("bed")) return <BedDouble {...iconProps} />;
+  if (
+    t.includes("air conditioning") ||
+    t.includes(" ac ") ||
+    t.includes("ac room")
+  )
+    return <Snowflake {...iconProps} />;
+  if (t.includes("wi-fi") || t.includes("wifi")) return <Wifi {...iconProps} />;
+  if (t.includes("tv") || t.includes("television"))
+    return <Tv {...iconProps} />;
+  if (
+    t.includes("bathroom") ||
+    t.includes("hot & cold") ||
+    t.includes("shower")
+  )
+    return <Bath {...iconProps} />;
+  if (
+    t.includes("drinking water") ||
+    t.includes("room service") ||
+    t.includes("tea")
+  )
+    return <Coffee {...iconProps} />;
+  if (t.includes("toiletries") || t.includes("towel"))
+    return <Droplet {...iconProps} />;
+  if (t.includes("housekeeping")) return <Sparkles {...iconProps} />;
+  if (t.includes("wardrobe")) return <Shirt {...iconProps} />;
+  if (t.includes("smoking")) return <Ban {...iconProps} />;
+  if (t.includes("recommend")) return <Star {...iconProps} />;
+  if (t.includes("comfort") || t.includes("peaceful") || t.includes("relaxing"))
+    return <Smile {...iconProps} />;
   return <Check {...iconProps} />;
 };
 
-// ✅ REMOVED: export const dynamic = 'force-static';
-// ✅ REMOVED: export const fetchCache = 'force-cache';
-export const revalidate = 3600; // ✅ Added ISR: This will revalidate the page every 1 hour if API data changes
-
-export async function generateStaticParams() {
-  try {
-    const res = await fetch('https://admin.themangobitehotel.com/api/rooms', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'application/json'
-      }
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.status && data.data) {
-        return data.data.map((room) => ({
-          id: room.id.toString(),
-        }));
-      }
-    }
-  } catch (error) {
-    console.error('Failed to fetch rooms for static params:', error);
-  }
-  // ✅ Return empty array instead of fake IDs to prevent 404 crash during build
-  return [];
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const id = resolvedParams?.id;
 
-  let title = 'Room Details | Best Hotel in Mandvi Kutch';
+  let title = "Room Details | Best Hotel in Mandvi Kutch";
   try {
     const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, {
       next: { revalidate: 3600 }, // ✅ Replaced 'force-cache' with ISR
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'application/json'
-      }
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        Accept: "application/json",
+      },
     });
     if (res.ok) {
       const data = await res.json();
       if (data && data.status && data.data) {
-        const room = data.data.find(r => r.id.toString() === id);
+        const room = data.data.find((r) => r.id.toString() === id);
         if (room) {
           title = `${room.title} | Mango Bite Hotel Mandvi`;
         }
       }
     }
-  } catch (error) { }
+  } catch (error) {}
 
   return {
     title,
     description: `Book the ${title} at Mango Bite Hotel & Restaurant in Mandvi, Kutch. The best luxury rooms and cheap stays featuring traditional artistry.`,
-    keywords: 'best luxury rooms in mandvi, a.c. rooms in kutch, deluxe hotel rooms mandvi, cheap and best stay in kutch, mango bite hotel rooms, mandvi beach hotel rooms',
+    keywords:
+      "best luxury rooms in mandvi, a.c. rooms in kutch, deluxe hotel rooms mandvi, cheap and best stay in kutch, mango bite hotel rooms, mandvi beach hotel rooms",
   };
 }
 
@@ -102,16 +123,17 @@ export default async function RoomDetails({ params }) {
     const res = await fetch(`https://admin.themangobitehotel.com/api/rooms`, {
       next: { revalidate: 3600 }, // ✅ Replaced 'force-cache' with ISR
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'application/json'
-      }
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        Accept: "application/json",
+      },
     });
 
     if (res.ok) {
       const data = await res.json();
       apiDebugStatus = "API Request Success";
       if (data && data.status && data.data) {
-        room = data.data.find(r => r.id.toString() === id.toString());
+        room = data.data.find((r) => r.id.toString() === id.toString());
         if (!room) {
           apiDebugStatus = `Success, but Room ID ${id} not found in array.`;
         }
@@ -132,35 +154,44 @@ export default async function RoomDetails({ params }) {
 
   // Handle Main Image URL
   let mainImageUrl = room.image;
-  if (mainImageUrl && !mainImageUrl.startsWith('/images/')) {
-    mainImageUrl = mainImageUrl.startsWith('/storage')
+  if (mainImageUrl && !mainImageUrl.startsWith("/images/")) {
+    mainImageUrl = mainImageUrl.startsWith("/storage")
       ? `https://admin.themangobitehotel.com${mainImageUrl}`
       : `https://admin.themangobitehotel.com/storage/${mainImageUrl}`;
   }
 
   // WhatsApp setup
-  const whatsappNumber = '918490991577';
-  const whatsappMessage = encodeURIComponent(`Hello, I would like to book the ${room.title}.`);
+  const whatsappNumber = "918490991577";
+  const whatsappMessage = encodeURIComponent(
+    `Hello, I would like to book the ${room.title}.`,
+  );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   // Process Description
-  let cleanDesc = room.description || '';
-  cleanDesc = cleanDesc.replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/gi, '');
-  cleanDesc = cleanDesc.replace(/<p>[^<]*?(?:<strong>)?(?:Room Information|Why Choose This Room\?|Room Amenities|Room Features)(?:<\/strong>)?[^<]*?<\/p>/gi, '');
+  let cleanDesc = room.description || "";
+  cleanDesc = cleanDesc.replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/gi, "");
+  cleanDesc = cleanDesc.replace(
+    /<p>[^<]*?(?:<strong>)?(?:Room Information|Why Choose This Room\?|Room Amenities|Room Features)(?:<\/strong>)?[^<]*?<\/p>/gi,
+    "",
+  );
 
   const listItems = [];
   const liRegex = /<li[^>]*>(.*?)<\/li>/gi;
   let match;
-  while ((match = liRegex.exec(room.description || '')) !== null) {
-    listItems.push(match[1].replace(/<[^>]*>?/gm, '').trim());
+  while ((match = liRegex.exec(room.description || "")) !== null) {
+    listItems.push(match[1].replace(/<[^>]*>?/gm, "").trim());
   }
-  cleanDesc = cleanDesc.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, '');
+  cleanDesc = cleanDesc.replace(/<ul[^>]*>[\s\S]*?<\/ul>/gi, "");
 
   return (
-    <div className="room-page-wrapper" style={{
-      background: 'linear-gradient(135deg, #fcfaf8 0%, #f4eee6 100%)',
-      minHeight: '100vh', position: 'relative'
-    }}>
+    <div
+      className="room-page-wrapper"
+      style={{
+        background: "linear-gradient(135deg, #fcfaf8 0%, #f4eee6 100%)",
+        minHeight: "100vh",
+        position: "relative",
+      }}
+    >
       <style>{`
         .room-page-wrapper { padding: 100px 15px 40px; }
         .room-main-card {
@@ -197,28 +228,79 @@ export default async function RoomDetails({ params }) {
         }
       `}</style>
 
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <BackButton style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', marginBottom: '20px', textDecoration: 'none', fontWeight: '600', backgroundColor: '#fff', padding: '8px 16px', borderRadius: '50px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <BackButton
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            color: "var(--primary)",
+            marginBottom: "20px",
+            textDecoration: "none",
+            fontWeight: "600",
+            backgroundColor: "#fff",
+            padding: "8px 16px",
+            borderRadius: "50px",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+          }}
+        >
           &larr; Back
         </BackButton>
 
         <div className="room-main-card">
           <div className="hero-split-layout">
             <div className="hero-image-box">
-              <div style={{ position: 'absolute', inset: 0 }}>
+              <div style={{ position: "absolute", inset: 0 }}>
                 {mainImageUrl ? (
-                  <Image src={mainImageUrl} alt={room.title} fill style={{ objectFit: 'cover' }} priority={true} />
+                  <Image
+                    src={mainImageUrl}
+                    alt={room.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    priority={true}
+                  />
                 ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image Available</div>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    No Image Available
+                  </div>
                 )}
               </div>
             </div>
 
             <div className="hero-details-box">
-              <div style={{ display: 'inline-block', backgroundColor: 'rgba(197, 85, 59, 0.1)', color: 'var(--primary)', padding: '6px 15px', borderRadius: '20px', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px', alignSelf: 'flex-start', fontWeight: '700' }}>Premium Stay</div>
+              <div
+                style={{
+                  display: "inline-block",
+                  backgroundColor: "rgba(197, 85, 59, 0.1)",
+                  color: "var(--primary)",
+                  padding: "6px 15px",
+                  borderRadius: "20px",
+                  fontSize: "0.85rem",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  marginBottom: "20px",
+                  alignSelf: "flex-start",
+                  fontWeight: "700",
+                }}
+              >
+                Premium Stay
+              </div>
               <h1 className="hero-title-text">{room.title}</h1>
               <div
-                style={{ lineHeight: '1.8', color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '10px' }}
+                style={{
+                  lineHeight: "1.8",
+                  color: "var(--text-muted)",
+                  fontSize: "1.1rem",
+                  marginBottom: "10px",
+                }}
                 dangerouslySetInnerHTML={{ __html: cleanDesc }}
               />
             </div>
@@ -226,12 +308,12 @@ export default async function RoomDetails({ params }) {
 
           <div className="room-content-area">
             {room.sub_images && room.sub_images.length > 0 && (
-              <RoomGalleryClient 
+              <RoomGalleryClient
                 title={room.title}
-                images={room.sub_images.map(img => {
+                images={room.sub_images.map((img) => {
                   let url = img;
-                  if (!url.startsWith('/images/')) {
-                    url = url.startsWith('/storage')
+                  if (!url.startsWith("/images/")) {
+                    url = url.startsWith("/storage")
                       ? `https://admin.themangobitehotel.com${url}`
                       : `https://admin.themangobitehotel.com/storage/${url}`;
                   }
@@ -241,8 +323,19 @@ export default async function RoomDetails({ params }) {
             )}
 
             {listItems.length > 0 && (
-              <div style={{ marginBottom: '40px', paddingTop: '20px' }}>
-                <h3 style={{ color: 'var(--primary)', marginBottom: '25px', fontSize: '1.5rem', borderBottom: '2px solid rgba(197, 85, 59, 0.2)', paddingBottom: '10px', display: 'inline-block' }}>Key Features & Amenities</h3>
+              <div style={{ marginBottom: "40px", paddingTop: "20px" }}>
+                <h3
+                  style={{
+                    color: "var(--primary)",
+                    marginBottom: "25px",
+                    fontSize: "1.5rem",
+                    borderBottom: "2px solid rgba(197, 85, 59, 0.2)",
+                    paddingBottom: "10px",
+                    display: "inline-block",
+                  }}
+                >
+                  Key Features & Amenities
+                </h3>
                 <style>{`
                   .amenity-card {
                     background: #ffffff;
@@ -273,34 +366,105 @@ export default async function RoomDetails({ params }) {
                     margin-bottom: 10px;
                   }
                 `}</style>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '25px', padding: '10px' }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fill, minmax(220px, 1fr))",
+                    gap: "25px",
+                    padding: "10px",
+                  }}
+                >
                   {listItems.map((item, idx) => (
                     <div key={idx} className="amenity-card">
                       <div className="icon-3d-wrapper">
                         {getAmenityIcon(item)}
                       </div>
-                      <span style={{ fontSize: '0.9rem', lineHeight: '1.4', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item}</span>
+                      <span
+                        style={{
+                          fontSize: "0.9rem",
+                          lineHeight: "1.4",
+                          fontWeight: "700",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {item}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            <div style={{
-              marginTop: '30px', padding: '20px 30px', backgroundColor: '#fff',
-              borderRadius: '16px', boxShadow: '0 5px 25px rgba(0,0,0,0.06)',
-              border: '1px solid rgba(197, 85, 59, 0.1)', display: 'flex',
-              flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px'
-            }}>
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#25D366', color: '#fff', padding: '15px 30px', borderRadius: '50px', textDecoration: 'none', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '10px', transition: 'all 0.3s ease', fontSize: '1.1rem', boxShadow: '0 5px 15px rgba(37, 211, 102, 0.3)' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+            <div
+              style={{
+                marginTop: "30px",
+                padding: "20px 30px",
+                backgroundColor: "#fff",
+                borderRadius: "16px",
+                boxShadow: "0 5px 25px rgba(0,0,0,0.06)",
+                border: "1px solid rgba(197, 85, 59, 0.1)",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "20px",
+              }}
+            >
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: "#25D366",
+                  color: "#fff",
+                  padding: "15px 30px",
+                  borderRadius: "50px",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  transition: "all 0.3s ease",
+                  fontSize: "1.1rem",
+                  boxShadow: "0 5px 15px rgba(37, 211, 102, 0.3)",
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  stroke="none"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+                </svg>
                 Book Now via WhatsApp
               </a>
-              <div style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--primary)', textAlign: 'right' }}>
-                ₹{parseInt(room.price).toLocaleString('en-IN')} <span style={{ fontSize: '1.1rem', fontWeight: '500', opacity: 0.8, color: 'var(--text-muted)' }}>/night</span>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "800",
+                  color: "var(--primary)",
+                  textAlign: "right",
+                }}
+              >
+                ₹{parseInt(room.price).toLocaleString("en-IN")}{" "}
+                <span
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: "500",
+                    opacity: 0.8,
+                    color: "var(--text-muted)",
+                  }}
+                >
+                  /night
+                </span>
               </div>
             </div>
-
           </div>
         </div>
       </div>
