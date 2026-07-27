@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${lato.variable} ${playfair.variable}`}>
         <Header />
-        <main className="main-content">
+        <main className="main-content" style={{ paddingTop: 'clamp(90px, 10vh, 160px)' }}>
           {children}
         </main>
         <Footer />

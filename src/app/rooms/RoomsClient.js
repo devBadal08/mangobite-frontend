@@ -41,7 +41,7 @@ export default function RoomsClient() {
     <>
       <ScrollReveal animation="fade-up" duration={1000}>
         <div className="container" style={{ textAlign: 'center', paddingTop: '0.5rem', paddingBottom: '0.2rem' }}>
-          <h1 className="section-title" style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', margin: '1.5rem auto 1rem auto', color: '#000', textAlign: 'center' }}>
             Heritage Luxury Rooms
           </h1>
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>

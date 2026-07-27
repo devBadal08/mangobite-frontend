@@ -104,7 +104,7 @@ a {
 
 .main-content {
   min-height: 100vh;
-  padding-top: 80px;
+  padding-top: 6rem;
 }
 
 .container {
@@ -127,7 +127,7 @@ a {
   }
 
   .main-content {
-    padding-top: 80px;
+    padding-top: 6rem;
   }
 
   .container {
@@ -218,9 +218,10 @@ a {
   margin-top: 1.5rem;
   margin-bottom: 2rem;
   position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--secondary);
 }
 
@@ -268,8 +269,8 @@ a {
 }
 
 .section-title.left-title {
-  left: 0;
-  transform: none;
+  margin-left: 0;
+  margin-right: 0;
   text-align: left;
 }
 
