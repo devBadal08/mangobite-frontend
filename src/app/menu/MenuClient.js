@@ -53,7 +53,10 @@ export default function MenuClient() {
           <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
             Discover our rich, pure-vegetarian multi-cuisine menu crafted with authentic flavors.
           </p>
-          <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1.5rem auto', borderRadius: '3px' }}></div>
+          <div style={{ width: '150px', height: '5px', backgroundColor: '#FFD700', margin: '0 auto 1rem auto', borderRadius: '3px' }}></div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 2.5vw, 3.5rem)', color: 'var(--primary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0', fontWeight: 'bold' }}>
+            Our Delicious Menu
+          </h2>
         </div>
       </ScrollReveal>
 
@@ -61,9 +64,9 @@ export default function MenuClient() {
         <ScrollReveal animation="fade-up" delay={200}>
           <div className={`container ${styles.menuContainer}`}>
             {loading ? (
-               <div style={{ textAlign: 'center', padding: '4rem 0' }}>
-                 <h3 style={{ color: 'var(--primary)' }}>Loading Menu...</h3>
-               </div>
+              <div style={{ textAlign: 'center', padding: '4rem 0' }}>
+                <h3 style={{ color: 'var(--primary)' }}>Loading Menu...</h3>
+              </div>
             ) : (
               <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Loading Menu...</div>}>
                 <MenuGallery menuData={menuData} />

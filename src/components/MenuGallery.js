@@ -233,8 +233,7 @@ export default function MenuGallery({ menuData }) {
       {/* Visual Category Index */}
       <div className={`${styles.glassIndexWrapper} animate-fade-in-up`}>
         <div className={styles.glassIndexHeader}>
-          <Image src="/images/mb-logo.png" alt="Mango Bite Logo" width={60} height={60} className={styles.glassLogo} />
-          <h2 className={styles.glassTitle}>Our Delicious Menu</h2>
+          <h2 className={styles.glassTitle}>Menu Category</h2>
         </div>
         
         <div className={styles.categoryScrollWrapper}>
