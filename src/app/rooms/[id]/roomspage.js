@@ -81,6 +81,8 @@ export default async function Roomspage({ params }) {
   const id = resolvedParams?.id;
 
   let room = null;
+  let prevId = null;
+  let nextId = null;
   let apiDebugStatus = "Pending";
 
   try {
@@ -97,7 +99,13 @@ export default async function Roomspage({ params }) {
       const data = await res.json();
       apiDebugStatus = "API Request Success";
       if (data && data.status && data.data) {
-        room = data.data.find((r) => r.id.toString() === id.toString());
+        const rooms = data.data;
+        const currentIndex = rooms.findIndex((r) => r.id.toString() === id.toString());
+        if (currentIndex !== -1) {
+          room = rooms[currentIndex];
+          if (currentIndex > 0) prevId = rooms[currentIndex - 1].id;
+          if (currentIndex < rooms.length - 1) nextId = rooms[currentIndex + 1].id;
+        }
         if (!room) {
           apiDebugStatus = `Success, but Room ID ${id} not found in array.`;
         }
@@ -172,7 +180,7 @@ export default async function Roomspage({ params }) {
       }}
     >
       <style>{`
-        .room-page-wrapper { padding: 100px 15px 40px; }
+        .room-page-wrapper { padding: 20px 15px 40px; }
         .room-main-card {
           display: flex; flex-direction: column; gap: 20px;
           background-color: #ffffff; border: 1px solid rgba(197, 85, 59, 0.2);
@@ -197,7 +205,7 @@ export default async function Roomspage({ params }) {
         .room-content-area { padding: 10px; margin-top: 15px; }
         
         @media (min-width: 768px) {
-          .room-page-wrapper { padding: 120px 0 60px; }
+          .room-page-wrapper { padding: 40px 0 60px; }
           .room-main-card { padding: 30px; gap: 40px; border-radius: 20px; box-shadow: 0 0 50px rgba(0,0,0,0.08); }
           .hero-split-layout { flex-direction: row; align-items: flex-start; gap: 30px; }
           .hero-image-box { flex: 1 1 50%; min-height: 400px; border-radius: 15px; position: sticky; top: 120px; }
@@ -208,24 +216,6 @@ export default async function Roomspage({ params }) {
       `}</style>
 
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
-        <BackButton
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            color: "var(--primary)",
-            marginBottom: "20px",
-            textDecoration: "none",
-            fontWeight: "600",
-            backgroundColor: "#fff",
-            padding: "8px 16px",
-            borderRadius: "50px",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-          }}
-        >
-          &larr; Back
-        </BackButton>
-
         <div className="room-main-card">
           <div className="hero-split-layout">
             <div className="hero-image-box">
@@ -445,6 +435,33 @@ export default async function Roomspage({ params }) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', paddingTop: '1rem' }}>
+          
+          <div style={{ flex: 1, textAlign: 'left' }}>
+            {prevId && (
+              <Link href={`/rooms/${prevId}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '50px', backgroundColor: '#fff', color: 'var(--primary)', fontWeight: '600', textDecoration: 'none', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+                <span style={{ fontSize: '1.2rem' }}>&larr;</span> Previous Room
+              </Link>
+            )}
+          </div>
+
+          <div style={{ flex: 1, textAlign: 'center' }}>
+            <Link href="/rooms" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>
+              Back to Rooms
+            </Link>
+          </div>
+
+          <div style={{ flex: 1, textAlign: 'right' }}>
+            {nextId && (
+              <Link href={`/rooms/${nextId}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '50px', backgroundColor: '#fff', color: 'var(--primary)', fontWeight: '600', textDecoration: 'none', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+                Next Room <span style={{ fontSize: '1.2rem' }}>&rarr;</span>
+              </Link>
+            )}
+          </div>
+
         </div>
       </div>
     </div>
